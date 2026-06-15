@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="BenchAI: site estatico preparado para GitHub Pages."
+    >
+    <title>BenchAI</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <header class="site-header" aria-label="Cabecalho">
+      <a class="brand" href="./" aria-label="BenchAI home">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span>BenchAI</span>
+      </a>
+      <nav class="nav" aria-label="Principal">
+        <a href="#sobre">Sobre</a>
+        <a href="#status">Status</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="intro-title">
+        <div class="intro-copy">
+          <p class="eyebrow">HTML estatico para GitHub Pages</p>
+          <h1 id="intro-title">BenchAI</h1>
+          <p>
+            Base simples para publicar um site rapido, versionado no GitHub e
+            servido como GitHub Pages sem etapa de build.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="#sobre">Ver estrutura</a>
+            <a class="button secondary" href="https://github.com/bmb-bezerra/benchai">Repositorio</a>
+          </div>
+        </div>
+
+        <aside class="status-panel" aria-label="Resumo tecnico">
+          <div>
+            <span class="metric-label">Deploy</span>
+            <strong>GitHub Actions</strong>
+          </div>
+          <div>
+            <span class="metric-label">Build</span>
+            <strong>Nenhum</strong>
+          </div>
+          <div>
+            <span class="metric-label">Fonte</span>
+            <strong>/site</strong>
+          </div>
+        </aside>
+      </section>
+
+      <section id="sobre" class="section" aria-labelledby="sobre-title">
+        <div>
+          <p class="eyebrow">Sobre</p>
+          <h2 id="sobre-title">Pronto para conteudo estatico</h2>
+        </div>
+        <p>
+          Edite esta pagina, adicione novas paginas HTML e mantenha os assets
+          dentro de <code>site/assets</code>. Caminhos relativos funcionam bem
+          com GitHub Pages em repositorios de projeto.
+        </p>
+      </section>
+
+      <section id="status" class="feature-grid" aria-label="Status do setup">
+        <article>
+          <span class="feature-kicker">01</span>
+          <h2>Publicacao automatica</h2>
+          <p>Pushes para <code>main</code> geram um artefato do Pages e publicam a pasta <code>site/</code>.</p>
+        </article>
+        <article>
+          <span class="feature-kicker">02</span>
+          <h2>Sem dependencias</h2>
+          <p>HTML e CSS puros, sem gerenciador de pacotes, runtime ou instalacao local.</p>
+        </article>
+        <article>
+          <span class="feature-kicker">03</span>
+          <h2>Controle simples</h2>
+          <p>A pagina 404 e o arquivo <code>.nojekyll</code> ja estao incluidos no artefato publicado.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer id="contato" class="site-footer">
+      <span>BenchAI</span>
+      <a href="https://github.com/bmb-bezerra/benchai">github.com/bmb-bezerra/benchai</a>
+    </footer>
+  </body>
+</html>
