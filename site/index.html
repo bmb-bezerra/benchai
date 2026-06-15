@@ -1,93 +1,1615 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta
-      name="description"
-      content="BenchAI: site estatico preparado para GitHub Pages."
-    >
-    <title>BenchAI</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
-  </head>
-  <body>
-    <header class="site-header" aria-label="Cabecalho">
-      <a class="brand" href="./" aria-label="BenchAI home">
-        <span class="brand-mark" aria-hidden="true">B</span>
-        <span>BenchAI</span>
-      </a>
-      <nav class="nav" aria-label="Principal">
-        <a href="#sobre">Sobre</a>
-        <a href="#status">Status</a>
-        <a href="#contato">Contato</a>
-      </nav>
-    </header>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Playbook de Roteamento de Modelos no Cursor</title>
+  <meta name="description" content="Guia interno para escolher modelos no Cursor por tipo de tarefa, risco, sensibilidade de dados, custo de atenção e validação." />
+  <meta name="theme-color" content="#111827" />
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-2: #f8fafc;
+      --surface-3: #eef2f7;
+      --ink: #111827;
+      --ink-2: #344054;
+      --muted: #667085;
+      --faint: #98a2b3;
+      --line: #d9e0ea;
+      --line-soft: rgba(17,24,39,.08);
+      --brand: #4f46e5;
+      --brand-2: #0f766e;
+      --brand-soft: #eef2ff;
+      --good: #067647;
+      --good-soft: #ecfdf3;
+      --warn: #b54708;
+      --warn-soft: #fffaeb;
+      --bad: #b42318;
+      --bad-soft: #fef3f2;
+      --blue: #175cd3;
+      --blue-soft: #eff8ff;
+      --purple: #6d28d9;
+      --purple-soft: #f4f3ff;
+      --radius-xs: 8px;
+      --radius-sm: 12px;
+      --radius-md: 18px;
+      --radius-lg: 26px;
+      --shadow-sm: 0 1px 2px rgba(16,24,40,.04);
+      --shadow-md: 0 16px 40px rgba(16,24,40,.08);
+      --shadow-lg: 0 28px 90px rgba(16,24,40,.14);
+      --sidebar: 286px;
+      --max: 1440px;
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
 
-    <main>
-      <section class="intro" aria-labelledby="intro-title">
-        <div class="intro-copy">
-          <p class="eyebrow">HTML estatico para GitHub Pages</p>
-          <h1 id="intro-title">BenchAI</h1>
-          <p>
-            Base simples para publicar um site rapido, versionado no GitHub e
-            servido como GitHub Pages sem etapa de build.
-          </p>
-          <div class="actions">
-            <a class="button primary" href="#sobre">Ver estrutura</a>
-            <a class="button secondary" href="https://github.com/bmb-bezerra/benchai">Repositorio</a>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font);
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% -12%, rgba(79,70,229,.18), transparent 34rem),
+        radial-gradient(circle at 98% 2%, rgba(15,118,110,.16), transparent 32rem),
+        linear-gradient(180deg, #fbfcff 0%, var(--bg) 40%, #eef2f7 100%);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: inherit; }
+    button, input, select, textarea { font: inherit; }
+    button { -webkit-tap-highlight-color: transparent; }
+    ::selection { background: rgba(79,70,229,.18); }
+
+    .skip-link {
+      position: absolute;
+      left: 14px;
+      top: -44px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: var(--ink);
+      color: #fff;
+      z-index: 200;
+      transition: top .15s ease;
+    }
+    .skip-link:focus { top: 14px; }
+
+    .shell {
+      width: min(100%, var(--max));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: var(--sidebar) minmax(0, 1fr);
+      gap: 22px;
+      padding: 18px;
+    }
+
+    .side {
+      position: sticky;
+      top: 18px;
+      align-self: start;
+      height: calc(100vh - 36px);
+      overflow: auto;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(17,24,39,.98), rgba(20,28,49,.98)),
+        #111827;
+      color: #fff;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .brand {
+      display: grid;
+      gap: 14px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-weight: 860;
+      letter-spacing: -.08em;
+      background: linear-gradient(135deg, #6366f1, #14b8a6);
+      box-shadow: 0 20px 40px rgba(99,102,241,.28);
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+    }
+    .brand small {
+      display: block;
+      color: rgba(255,255,255,.58);
+      margin-top: 4px;
+      font-size: 12px;
+    }
+    .side-status {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.74);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .side-status strong { color: #fff; }
+    .nav-label {
+      margin: 20px 0 9px;
+      color: rgba(255,255,255,.42);
+      font-size: 11px;
+      letter-spacing: .14em;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .nav {
+      display: grid;
+      gap: 6px;
+    }
+    .nav a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 10px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: rgba(255,255,255,.67);
+      transition: .16s ease;
+      line-height: 1.25;
+    }
+    .nav a:hover, .nav a:focus-visible { color: #fff; background: rgba(255,255,255,.08); outline: 0; }
+    .nav a.active { color: #fff; background: linear-gradient(135deg, rgba(79,70,229,.95), rgba(15,118,110,.82)); }
+    .nav-index {
+      width: 26px;
+      height: 26px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      font-size: 11px;
+      font-weight: 800;
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.64);
+    }
+    .nav a.active .nav-index { color: #fff; background: rgba(255,255,255,.18); }
+    .side-actions {
+      display: grid;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .side-button {
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.85);
+      padding: 11px 12px;
+      cursor: pointer;
+      text-align: left;
+      transition: .16s ease;
+    }
+    .side-button:hover { background: rgba(255,255,255,.12); color: #fff; }
+
+    .main {
+      min-width: 0;
+      padding-bottom: 48px;
+    }
+    .main > *,
+    .hero-layout > *,
+    .router > *,
+    .bench-grid > * {
+      min-width: 0;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      display: grid;
+      grid-template-columns: auto minmax(260px, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px 0 16px;
+      backdrop-filter: blur(16px);
+    }
+    .topbar::before {
+      content: "";
+      position: absolute;
+      inset: 0 -18px 0 -18px;
+      z-index: -1;
+      background: linear-gradient(180deg, rgba(251,252,255,.92), rgba(251,252,255,.76));
+      border-bottom: 1px solid rgba(217,224,234,.68);
+    }
+    .mobile-menu {
+      display: none;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.88);
+      color: var(--ink-2);
+      padding: 11px 12px;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+    .search {
+      position: relative;
+      min-width: 0;
+    }
+    .search input {
+      width: 100%;
+      height: 46px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.88);
+      color: var(--ink);
+      outline: none;
+      padding: 0 14px 0 42px;
+      box-shadow: var(--shadow-sm);
+      transition: .16s ease;
+    }
+    .search input:focus {
+      border-color: rgba(79,70,229,.55);
+      box-shadow: 0 0 0 4px rgba(79,70,229,.10);
+    }
+    .search-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--faint);
+      font-weight: 800;
+    }
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.88);
+      color: var(--ink-2);
+      padding: 11px 12px;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: .16s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .button:hover { border-color: rgba(79,70,229,.35); transform: translateY(-1px); }
+    .button.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      padding: 34px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 85% 5%, rgba(20,184,166,.28), transparent 24rem),
+        linear-gradient(135deg, #111827 0%, #1e1b4b 52%, #064e3b 100%);
+      box-shadow: var(--shadow-lg);
+      isolation: isolate;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 999px;
+      right: -220px;
+      top: -250px;
+      background: radial-gradient(circle, rgba(255,255,255,.20), transparent 62%);
+      z-index: -1;
+    }
+    .hero-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(300px, .88fr);
+      gap: 26px;
+      align-items: end;
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: rgba(255,255,255,.68);
+      font-size: 12px;
+      font-weight: 830;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+    }
+    .hero h2 {
+      margin: 0;
+      max-width: 900px;
+      font-size: clamp(34px, 5vw, 66px);
+      line-height: .95;
+      letter-spacing: -.058em;
+    }
+    .hero p {
+      margin: 18px 0 0;
+      color: rgba(255,255,255,.75);
+      max-width: 830px;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .hero-action {
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 15px;
+      background: rgba(255,255,255,.10);
+      color: #fff;
+      padding: 12px 14px;
+      text-decoration: none;
+      font-weight: 780;
+      transition: .16s ease;
+    }
+    .hero-action:first-child { background: #fff; color: #111827; border-color: #fff; }
+    .hero-action:hover { transform: translateY(-1px); }
+    .status-panel {
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.10);
+      border-radius: 22px;
+      padding: 18px;
+      backdrop-filter: blur(12px);
+    }
+    .status-panel h3 {
+      margin: 0 0 12px;
+      color: rgba(255,255,255,.68);
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .status-item {
+      display: grid;
+      grid-template-columns: 10px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 10px 0;
+      border-top: 1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.82);
+      line-height: 1.45;
+    }
+    .status-item:first-of-type { border-top: 0; padding-top: 0; }
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      margin-top: 6px;
+      background: #34d399;
+      box-shadow: 0 0 0 4px rgba(52,211,153,.12);
+    }
+    .status-dot.warn { background: #fbbf24; box-shadow: 0 0 0 4px rgba(251,191,36,.12); }
+    .status-dot.bad { background: #f87171; box-shadow: 0 0 0 4px rgba(248,113,113,.12); }
+
+    .section {
+      scroll-margin-top: 92px;
+      margin-top: 24px;
+    }
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 0 0 14px;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(25px, 2.7vw, 38px);
+      letter-spacing: -.04em;
+      line-height: 1.05;
+    }
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 760px;
+    }
+
+    .grid { display: grid; gap: 14px; }
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid.auto { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+
+    .card {
+      border: 1px solid var(--line-soft);
+      border-radius: 22px;
+      background: rgba(255,255,255,.84);
+      box-shadow: var(--shadow-sm);
+      padding: 18px;
+    }
+    .card.strong { box-shadow: var(--shadow-md); }
+    .card h3 { margin: 0 0 8px; letter-spacing: -.025em; }
+    .card p { margin: 0; color: var(--muted); line-height: 1.58; }
+    .card .meta { color: var(--muted); font-size: 13px; line-height: 1.45; }
+
+    .kpi {
+      display: grid;
+      gap: 16px;
+      min-height: 168px;
+    }
+    .kpi-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 820;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .kpi-value {
+      font-size: 26px;
+      font-weight: 860;
+      line-height: 1.02;
+      letter-spacing: -.045em;
+    }
+
+    .tag-row { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.70);
+      color: var(--ink-2);
+      font-size: 12px;
+      font-weight: 760;
+      white-space: nowrap;
+    }
+    .tag.good { color: var(--good); background: var(--good-soft); border-color: rgba(6,118,71,.20); }
+    .tag.warn { color: var(--warn); background: var(--warn-soft); border-color: rgba(181,71,8,.20); }
+    .tag.bad { color: var(--bad); background: var(--bad-soft); border-color: rgba(180,35,24,.20); }
+    .tag.brand { color: #3730a3; background: var(--brand-soft); border-color: rgba(79,70,229,.20); }
+    .tag.blue { color: var(--blue); background: var(--blue-soft); border-color: rgba(23,92,211,.20); }
+    .tag.purple { color: var(--purple); background: var(--purple-soft); border-color: rgba(109,40,217,.20); }
+
+    .callout {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      border: 1px solid rgba(181,71,8,.24);
+      background: var(--warn-soft);
+      border-radius: 22px;
+      padding: 16px;
+      color: var(--ink-2);
+      line-height: 1.58;
+    }
+    .callout .icon {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: rgba(181,71,8,.10);
+      color: var(--warn);
+      font-weight: 900;
+    }
+    .callout strong { color: var(--ink); }
+
+    .router {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(320px, 1.05fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .field {
+      display: grid;
+      gap: 7px;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.70);
+    }
+    .field label {
+      color: var(--ink-2);
+      font-weight: 780;
+      font-size: 13px;
+    }
+    select {
+      width: 100%;
+      min-height: 42px;
+      padding: 9px 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+      outline: none;
+    }
+    select:focus { border-color: rgba(79,70,229,.55); box-shadow: 0 0 0 4px rgba(79,70,229,.10); }
+
+    .result {
+      position: relative;
+      overflow: hidden;
+      min-height: 100%;
+      color: #fff;
+      border-radius: 26px;
+      padding: 24px;
+      background: linear-gradient(135deg, #111827, #1e1b4b 55%, #0f766e);
+      box-shadow: var(--shadow-md);
+    }
+    .result::before {
+      content: "";
+      position: absolute;
+      inset: -90px -120px auto auto;
+      width: 300px;
+      height: 300px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255,255,255,.18), transparent 66%);
+    }
+    .result > * { position: relative; }
+    .result-label {
+      color: rgba(255,255,255,.60);
+      font-size: 12px;
+      font-weight: 840;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .result-model {
+      margin-top: 10px;
+      font-size: clamp(30px, 4vw, 54px);
+      line-height: .96;
+      letter-spacing: -.055em;
+      font-weight: 880;
+      overflow-wrap: anywhere;
+    }
+    .result-mode { color: rgba(255,255,255,.75); margin: 12px 0 18px; }
+    .result .tag { color: #fff; background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.14); }
+    .result-detail {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .result-box {
+      padding: 13px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 16px;
+      background: rgba(255,255,255,.08);
+      line-height: 1.55;
+      color: rgba(255,255,255,.78);
+    }
+    .result-box strong { color: #fff; display: block; margin-bottom: 4px; }
+
+    .matrix-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 980px;
+    }
+    th, td {
+      padding: 15px 16px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #fbfcff;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: .08em;
+      font-weight: 850;
+    }
+    tr:last-child td { border-bottom: 0; }
+    td { color: var(--ink-2); line-height: 1.45; }
+    td strong { color: var(--ink); }
+    .table-note { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+    .model-card {
+      display: grid;
+      gap: 12px;
+      min-height: 236px;
+      border: 1px solid var(--line-soft);
+      border-radius: 22px;
+      background: rgba(255,255,255,.84);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+      transition: .16s ease;
+    }
+    .model-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: rgba(79,70,229,.22); }
+    .model-card h3 { margin: 0; font-size: 20px; letter-spacing: -.03em; }
+    .model-card p { margin: 0; color: var(--muted); line-height: 1.52; }
+    .model-card ul { margin: 0; padding-left: 18px; color: var(--ink-2); line-height: 1.55; }
+    .model-card li { margin: 4px 0; }
+
+    .policy-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .policy-card { border-left: 5px solid var(--good); }
+    .policy-card.warn { border-left-color: var(--warn); }
+    .policy-card.bad { border-left-color: var(--bad); }
+    .policy-card.blue { border-left-color: var(--blue); }
+
+    .checklist {
+      display: grid;
+      gap: 9px;
+    }
+    .check-item {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.66);
+      color: var(--ink-2);
+      line-height: 1.48;
+    }
+    .check-badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      color: var(--good);
+      background: rgba(6,118,71,.10);
+      font-weight: 900;
+    }
+
+    .bench-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, .9fr) minmax(0, 1.1fr);
+      gap: 14px;
+      align-items: start;
+    }
+    .bar-list { display: grid; gap: 10px; }
+    .bar-row {
+      display: grid;
+      grid-template-columns: 205px minmax(120px, 1fr) 62px;
+      align-items: center;
+      gap: 10px;
+    }
+    .bar-label {
+      font-size: 13px;
+      color: var(--ink-2);
+      font-weight: 700;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .bar-track {
+      height: 30px;
+      border: 1px solid rgba(17,24,39,.06);
+      border-radius: 999px;
+      background: var(--surface-3);
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(79,70,229,.88), rgba(15,118,110,.78));
+    }
+    .bar-value { text-align: right; font-variant-numeric: tabular-nums; font-weight: 800; }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+    .source-card {
+      display: grid;
+      gap: 10px;
+      min-height: 166px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      text-decoration: none;
+      background: rgba(255,255,255,.78);
+      transition: .16s ease;
+    }
+    .source-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: rgba(79,70,229,.28); }
+    .source-card strong { letter-spacing: -.015em; }
+    .source-card span.desc { color: var(--muted); font-size: 13px; line-height: 1.48; }
+
+    .source-card.is-hidden, .model-card.is-hidden, tr.is-hidden, .card.is-hidden, .callout.is-hidden { display: none !important; }
+
+    .foot {
+      margin-top: 28px;
+      padding: 20px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(17,24,39,.42);
+      z-index: 45;
+      display: none;
+    }
+    .overlay.open { display: block; }
+
+    @media (max-width: 1180px) {
+      .shell { grid-template-columns: 1fr; }
+      .side {
+        position: fixed;
+        inset: 12px auto 12px 12px;
+        width: min(360px, calc(100vw - 24px));
+        transform: translateX(calc(-100% - 24px));
+        transition: transform .20s ease;
+        z-index: 60;
+      }
+      .side.open { transform: translateX(0); }
+      .mobile-menu { display: inline-flex; }
+      .hero-layout, .router, .bench-grid { grid-template-columns: 1fr; }
+      .policy-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      .shell { padding: 12px; }
+      .topbar { grid-template-columns: auto 1fr; }
+      .topbar::before { inset: 0; }
+      .top-actions { grid-column: 1 / -1; justify-content: flex-start; }
+      .hero { padding: 24px; border-radius: 24px; }
+      .grid.two, .grid.three, .grid.four, .form-grid, .policy-grid { grid-template-columns: 1fr; }
+      .section-head { align-items: flex-start; flex-direction: column; }
+      .bar-row { grid-template-columns: 1fr; gap: 6px; }
+      .bar-value { text-align: left; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .side, .topbar, .overlay, .hero-actions, .side-actions { display: none !important; }
+      .shell { display: block; max-width: none; padding: 0; }
+      .hero, .card, .matrix-wrap { box-shadow: none !important; }
+      .hero { color: #111827; background: #fff; border: 1px solid #ddd; }
+      .hero p, .eyebrow, .status-panel, .status-item { color: #344054; }
+      .status-panel { border-color: #ddd; background: #fff; }
+      .section { break-inside: avoid; }
+      a { text-decoration: none; }
+      table { min-width: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="overlay" id="overlay" aria-hidden="true"></div>
+  <div class="shell">
+    <aside class="side" id="sidebar" aria-label="Navegação principal">
+      <div class="brand">
+        <div class="brand-row">
+          <div class="brand-mark" aria-hidden="true">MR</div>
+          <div>
+            <h1>Model Routing<br />Playbook</h1>
+            <small>Cursor · engenharia · governança</small>
           </div>
         </div>
-
-        <aside class="status-panel" aria-label="Resumo tecnico">
-          <div>
-            <span class="metric-label">Deploy</span>
-            <strong>GitHub Actions</strong>
-          </div>
-          <div>
-            <span class="metric-label">Build</span>
-            <strong>Nenhum</strong>
-          </div>
-          <div>
-            <span class="metric-label">Fonte</span>
-            <strong>/site</strong>
-          </div>
-        </aside>
-      </section>
-
-      <section id="sobre" class="section" aria-labelledby="sobre-title">
-        <div>
-          <p class="eyebrow">Sobre</p>
-          <h2 id="sobre-title">Pronto para conteudo estatico</h2>
+        <div class="side-status">
+          <div><strong>Atualizado:</strong> 15 jun. 2026</div>
+          <div><strong>Status crítico:</strong> Fable 5 em quarentena/suspenso. Não usar como rota ativa.</div>
+          <div><strong>Formato:</strong> HTML único, pronto para GitHub Pages.</div>
         </div>
-        <p>
-          Edite esta pagina, adicione novas paginas HTML e mantenha os assets
-          dentro de <code>site/assets</code>. Caminhos relativos funcionam bem
-          com GitHub Pages em repositorios de projeto.
-        </p>
+      </div>
+      <div class="nav-label">Seções</div>
+      <nav class="nav" id="sideNav"></nav>
+      <div class="side-actions">
+        <button class="side-button" id="printBtn" type="button">Exportar / imprimir PDF</button>
+        <a class="side-button" href="#publicacao" style="text-decoration:none">Como publicar no GitHub Pages</a>
+      </div>
+    </aside>
+
+    <main class="main" id="conteudo">
+      <div class="topbar" role="region" aria-label="Barra de ações">
+        <button class="mobile-menu" id="menuBtn" type="button" aria-controls="sidebar" aria-expanded="false">☰ Navegação</button>
+        <div class="search">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input id="searchInput" type="search" placeholder="Buscar por modelo, tarefa, risco, benchmark ou fonte…" autocomplete="off" />
+        </div>
+        <div class="top-actions">
+          <a class="button" href="#recomendador">Abrir recomendador</a>
+          <button class="button" id="clearSearch" type="button">Limpar busca</button>
+          <button class="button primary" id="quickPrint" type="button">PDF</button>
+        </div>
+      </div>
+
+      <section class="hero" id="inicio">
+        <div class="hero-layout">
+          <div>
+            <p class="eyebrow">Guia interno para escolher modelo sem desperdiçar atenção</p>
+            <h2>Roteie pelo risco da tarefa, não pelo hype do modelo.</h2>
+            <p>
+              A versão revisada transforma o playbook em uma página de consulta rápida para engenharia: primeiro recomenda o modelo, depois mostra por que, quais cuidados tomar e como validar o resultado. O conteúdo também separa fatos atuais, benchmarks e política interna.
+            </p>
+            <div class="hero-actions">
+              <a class="hero-action" href="#recomendador">Decidir agora</a>
+              <a class="hero-action" href="#matriz">Ver matriz</a>
+              <a class="hero-action" href="#governanca">Ver governança</a>
+            </div>
+          </div>
+          <div class="status-panel" aria-label="Resumo operacional">
+            <h3>Roteamento revisado</h3>
+            <div class="status-item"><span class="status-dot"></span><div><strong>Default:</strong> Composer 2.5 Standard para implementação comum com plano claro.</div></div>
+            <div class="status-item"><span class="status-dot"></span><div><strong>Decisão cara:</strong> Claude Opus 4.8 para arquitetura, revisão qualitativa e contexto grande.</div></div>
+            <div class="status-item"><span class="status-dot"></span><div><strong>Terminal/debug:</strong> GPT-5.5 em esforço alto/xhigh para loop comando → log → correção.</div></div>
+            <div class="status-item"><span class="status-dot warn"></span><div><strong>Fable 5:</strong> manter como histórico/watchlist; não recomendar enquanto suspenso ou sem aprovação explícita.</div></div>
+            <div class="status-item"><span class="status-dot bad"></span><div><strong>Confidencial:</strong> contexto mínimo, Privacy Mode/ZDR confirmado, sem segredos, sem logs crus.</div></div>
+          </div>
+        </div>
       </section>
 
-      <section id="status" class="feature-grid" aria-label="Status do setup">
-        <article>
-          <span class="feature-kicker">01</span>
-          <h2>Publicacao automatica</h2>
-          <p>Pushes para <code>main</code> geram um artefato do Pages e publicam a pasta <code>site/</code>.</p>
-        </article>
-        <article>
-          <span class="feature-kicker">02</span>
-          <h2>Sem dependencias</h2>
-          <p>HTML e CSS puros, sem gerenciador de pacotes, runtime ou instalacao local.</p>
-        </article>
-        <article>
-          <span class="feature-kicker">03</span>
-          <h2>Controle simples</h2>
-          <p>A pagina 404 e o arquivo <code>.nojekyll</code> ja estao incluidos no artefato publicado.</p>
-        </article>
+      <section class="section" id="diagnostico">
+        <div class="section-head">
+          <div>
+            <h2>Diagnóstico da versão inicial</h2>
+            <p>O material estava bem encaminhado, mas precisava sair de “relatório visual” para “ferramenta de decisão operacional”.</p>
+          </div>
+        </div>
+        <div class="grid three">
+          <div class="card kpi searchable" data-search="diagnóstico pertinente routing composer opus gpt">
+            <div>
+              <div class="kpi-label">Pertinente</div>
+              <div class="kpi-value">Sim, com ajustes</div>
+            </div>
+            <p>O eixo principal está correto: escolher modelo por tarefa, risco e custo de atenção. Isso é mais útil para uma equipe do que ranquear modelos de forma absoluta.</p>
+          </div>
+          <div class="card kpi searchable" data-search="problema fable suspenso retenção atualização">
+            <div>
+              <div class="kpi-label">Correção crítica</div>
+              <div class="kpi-value">Fable 5 saiu da rota ativa</div>
+            </div>
+            <p>O original recomendava Fable 5 para obras longas. Na versão nova, ele vira watchlist/quarentena por suspensão de acesso e exigência de governança.</p>
+          </div>
+          <div class="card kpi searchable" data-search="github pages estático sem dependências público interno">
+            <div>
+              <div class="kpi-label">GitHub Pages</div>
+              <div class="kpi-value">HTML único</div>
+            </div>
+            <p>Sem build, sem frameworks e sem dependências externas. Este repositório publica a pasta <code>site/</code> via GitHub Actions.</p>
+          </div>
+        </div>
+        <div class="callout searchable" data-search="fable suspensão status política dados retenção zero data retention">
+          <div class="icon">!</div>
+          <div>
+            <strong>Decisão editorial principal:</strong> evitei apresentar Fable 5 como recomendação ativa. Mesmo que o benchmark histórico do Cursor seja forte, uma página acessível a toda a empresa deve privilegiar disponibilidade real, compliance e previsibilidade operacional. Quando/ se o acesso voltar, ele deve ficar atrás de uma regra de aprovação, não como default.
+          </div>
+        </div>
       </section>
+
+      <section class="section" id="recomendador">
+        <div class="section-head">
+          <div>
+            <h2>Recomendador interativo</h2>
+            <p>Escolha o cenário e receba a rota sugerida, modo de uso, prompt operacional e cautela.</p>
+          </div>
+        </div>
+        <div class="router">
+          <div class="card strong">
+            <div class="form-grid">
+              <div class="field">
+                <label for="taskSelect">Tipo de tarefa</label>
+                <select id="taskSelect">
+                  <option value="daily">Implementação comum</option>
+                  <option value="architecture">Arquitetura / decisão técnica</option>
+                  <option value="terminal">Terminal / build / CI / debug</option>
+                  <option value="review">Code review crítico</option>
+                  <option value="frontend">Front-end / UI / screenshot</option>
+                  <option value="largeContext">Repo grande / contexto massivo</option>
+                  <option value="migration">Migração / feature ponta a ponta</option>
+                  <option value="simple">Microtarefa mecânica</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="complexitySelect">Complexidade</label>
+                <select id="complexitySelect">
+                  <option value="low">Baixa</option>
+                  <option value="medium" selected>Média</option>
+                  <option value="high">Alta</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="sensitivitySelect">Sensibilidade do código</label>
+                <select id="sensitivitySelect">
+                  <option value="public">Público / open source</option>
+                  <option value="internal" selected>Interno comum</option>
+                  <option value="confidential">Confidencial / cliente / estratégico</option>
+                  <option value="regulated">Regulado / PII / segredo / credenciais</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="scopeSelect">Escopo esperado</label>
+                <select id="scopeSelect">
+                  <option value="single">1 arquivo / patch curto</option>
+                  <option value="few" selected>Alguns arquivos</option>
+                  <option value="many">Muitos arquivos</option>
+                  <option value="unknown">Escopo desconhecido</option>
+                </select>
+              </div>
+            </div>
+            <div style="margin-top:14px" class="checklist">
+              <div class="check-item"><div class="check-badge">✓</div><div>Em tarefa ambígua, peça plano antes de permitir edição.</div></div>
+              <div class="check-item"><div class="check-badge">✓</div><div>Em tarefa sensível, reduza contexto e valide política de retenção.</div></div>
+              <div class="check-item"><div class="check-badge">✓</div><div>Em terminal, salve comandos e resultados para auditoria do PR.</div></div>
+            </div>
+          </div>
+          <div class="result" aria-live="polite">
+            <div class="result-label">Modelo recomendado</div>
+            <div class="result-model" id="recModel">Composer 2.5</div>
+            <p class="result-mode" id="recMode">Standard / Normal</p>
+            <div class="tag-row" id="recTags"></div>
+            <div class="result-detail">
+              <div class="result-box"><strong>Por que</strong><span id="recWhy"></span></div>
+              <div class="result-box"><strong>Prompt operacional</strong><span id="recPrompt"></span></div>
+              <div class="result-box"><strong>Cautela</strong><span id="recCaution"></span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="matriz">
+        <div class="section-head">
+          <div>
+            <h2>Matriz de decisão</h2>
+            <p>Use esta tabela quando quiser uma regra direta, sem abrir o recomendador.</p>
+          </div>
+        </div>
+        <div class="matrix-wrap searchable" data-search="matriz tarefa modelo modo usar evitar composer opus gpt gemini fable">
+          <table>
+            <thead>
+              <tr>
+                <th>Cenário</th>
+                <th>Rota recomendada</th>
+                <th>Modo</th>
+                <th>Use quando</th>
+                <th>Evite / escale</th>
+              </tr>
+            </thead>
+            <tbody id="matrixBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="modelos">
+        <div class="section-head">
+          <div>
+            <h2>Perfis de modelos</h2>
+            <p>Cards com status, melhor encaixe e pontos de atenção para uso por engenharia.</p>
+          </div>
+        </div>
+        <div class="model-grid" id="modelGrid"></div>
+      </section>
+
+      <section class="section" id="governanca">
+        <div class="section-head">
+          <div>
+            <h2>Governança por sensibilidade</h2>
+            <p>A regra de modelo só é válida depois da regra de dados. Para uma página publicada no GitHub Pages, esse bloco evita interpretações perigosas.</p>
+          </div>
+        </div>
+        <div class="policy-grid">
+          <div class="card policy-card searchable" data-search="público open source dados públicos permitido">
+            <span class="tag good">Público / OSS</span>
+            <h3>Baixo risco</h3>
+            <p>Use a matriz normal. Ainda assim, não envie tokens, dumps, chaves ou dados pessoais.</p>
+          </div>
+          <div class="card policy-card blue searchable" data-search="interno comum empresa privacidade">
+            <span class="tag blue">Interno comum</span>
+            <h3>Uso padrão</h3>
+            <p>Privacy Mode ativo, contexto mínimo e validação por testes. Escolha modelos premium só se o custo de errar justificar.</p>
+          </div>
+          <div class="card policy-card warn searchable" data-search="confidencial cliente estratégico aprovação">
+            <span class="tag warn">Confidencial</span>
+            <h3>Aprovação necessária</h3>
+            <p>Sem logs crus, sem arquivos com segredo comercial, sem Fable/watchlist. Peça plano antes de editar.</p>
+          </div>
+          <div class="card policy-card bad searchable" data-search="regulado pii credenciais dados sensíveis segredo">
+            <span class="tag bad">Regulado / PII</span>
+            <h3>Restrição forte</h3>
+            <p>Não enviar dados reais. Trabalhe com exemplos sintéticos, trechos redigidos e autorização explícita.</p>
+          </div>
+        </div>
+        <div class="grid two" style="margin-top:14px">
+          <div class="card searchable" data-search="checklist antes de usar repositório sensível segredos tokens pii env">
+            <h3>Checklist antes de enviar contexto</h3>
+            <div class="checklist">
+              <div class="check-item"><div class="check-badge">✓</div><div>Remover segredos, tokens, chaves, dumps, arquivos <code>.env</code> e logs com PII.</div></div>
+              <div class="check-item"><div class="check-badge">✓</div><div>Confirmar Privacy Mode/ZDR e política do provedor antes de usar repositório de cliente.</div></div>
+              <div class="check-item"><div class="check-badge">✓</div><div>Pedir plano, arquivos afetados e riscos antes de permitir alterações multi-arquivo.</div></div>
+              <div class="check-item"><div class="check-badge">✓</div><div>Exigir validação: testes, lint, typecheck, comandos executados e resumo auditável.</div></div>
+              <div class="check-item"><div class="check-badge">✓</div><div>Verificar dependências sugeridas: pacote, mantenedor, licença, popularidade e typosquatting.</div></div>
+            </div>
+          </div>
+          <div class="card searchable" data-search="riscos owasp prompt injection supply chain excessive agency informação sensível">
+            <h3>Riscos que faltavam ficar mais explícitos</h3>
+            <p>Além de retenção, o playbook precisa tratar prompt injection indireto, divulgação de informação sensível, supply chain, output inseguro, excesso de agência e consumo sem limite.</p>
+            <div class="tag-row" style="margin-top:14px">
+              <span class="tag bad">Prompt injection</span>
+              <span class="tag bad">Sensitive disclosure</span>
+              <span class="tag warn">Supply chain</span>
+              <span class="tag warn">Excessive agency</span>
+              <span class="tag blue">Validação humana</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="benchmarks">
+        <div class="section-head">
+          <div>
+            <h2>Benchmarks: sinais, não oráculos</h2>
+            <p>Os números sustentam a rota, mas não substituem teste no repositório da empresa. Compare apenas benchmarks equivalentes.</p>
+          </div>
+        </div>
+        <div class="bench-grid">
+          <div class="card searchable" data-search="benchmarks terminal bench gpt opus composer artificial analysis cursor">
+            <h3>Leitura prática</h3>
+            <p>O sinal mais consistente para terminal/debug favorece GPT-5.5. Composer 2.5 é forte no eixo eficiência/custo. Opus 4.8 é melhor tratado como modelo de julgamento e autonomia complexa. Fable 5 fica como histórico enquanto suspenso.</p>
+            <div class="tag-row" style="margin-top:14px">
+              <span class="tag brand">Terminal ≠ arquitetura</span>
+              <span class="tag brand">CursorBench ≠ Terminal-Bench</span>
+              <span class="tag warn">Vendor score precisa contexto</span>
+            </div>
+          </div>
+          <div class="card searchable" data-search="terminal bench 2.1 codex cli gpt-5.5 claude code opus 4.8 gemini cli">
+            <h3>Terminal-Bench 2.1 — amostra relevante</h3>
+            <div class="bar-list" id="barList"></div>
+            <p class="meta" style="margin-top:12px">Maior é melhor. O benchmark mede combinação agente + modelo, não o modelo isolado.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="fontes">
+        <div class="section-head">
+          <div>
+            <h2>Fontes e rastreabilidade</h2>
+            <p>As fontes ficam visíveis porque a página será usada por outras pessoas da empresa. Isso facilita revisão e evita “verdades” sem contexto.</p>
+          </div>
+        </div>
+        <div class="source-grid" id="sourceGrid"></div>
+      </section>
+
+      <section class="section" id="publicacao">
+        <div class="section-head">
+          <div>
+            <h2>Publicação no GitHub Pages</h2>
+            <p>Este repositório já está preparado para publicar a pasta <code>site/</code> como page de consulta interna.</p>
+          </div>
+        </div>
+        <div class="grid two">
+          <div class="card searchable" data-search="github pages index html publicar repositório settings pages actions site workflow">
+            <h3>Como publicar</h3>
+            <div class="checklist">
+              <div class="check-item"><div class="check-badge">1</div><div>Mantenha esta página em <code>site/index.html</code>.</div></div>
+              <div class="check-item"><div class="check-badge">2</div><div>Faça commit e push para a branch <code>main</code>.</div></div>
+              <div class="check-item"><div class="check-badge">3</div><div>Em <strong>Settings → Pages</strong>, selecione <strong>GitHub Actions</strong> como fonte.</div></div>
+              <div class="check-item"><div class="check-badge">4</div><div>Defina um owner para revisar fontes/modelos quinzenalmente ou quando houver release relevante.</div></div>
+            </div>
+          </div>
+          <div class="card searchable" data-search="publicação segurança github pages público empresa sem segredos">
+            <h3>Cuidados por ser page compartilhada</h3>
+            <p>Não coloque nomes de clientes, URLs internas, arquitetura confidencial, tokens, exemplos reais de logs ou regras operacionais sensíveis no HTML. Mesmo se o repositório for privado, trate Pages como material de ampla circulação.</p>
+            <div class="tag-row" style="margin-top:14px">
+              <span class="tag bad">Sem segredos</span>
+              <span class="tag warn">Sem cliente real</span>
+              <span class="tag blue">Sem dependência externa</span>
+              <span class="tag good">Revisão periódica</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="foot">
+        Model Routing Playbook · versão GitHub Pages · revisar sempre que Cursor, OpenAI, Anthropic ou Google alterarem disponibilidade, retenção, pricing ou benchmarks relevantes.
+      </div>
     </main>
+  </div>
 
-    <footer id="contato" class="site-footer">
-      <span>BenchAI</span>
-      <a href="https://github.com/bmb-bezerra/benchai">github.com/bmb-bezerra/benchai</a>
-    </footer>
-  </body>
+  <script>
+    const sections = [
+      ["inicio", "Início"],
+      ["diagnostico", "Diagnóstico"],
+      ["recomendador", "Recomendador"],
+      ["matriz", "Matriz"],
+      ["modelos", "Modelos"],
+      ["governanca", "Governança"],
+      ["benchmarks", "Benchmarks"],
+      ["fontes", "Fontes"],
+      ["publicacao", "Publicação"]
+    ];
+
+    const matrixRows = [
+      {
+        scenario: "Implementação comum",
+        detail: "Endpoints, componentes, refactors localizados, testes simples.",
+        model: "Composer 2.5 Standard",
+        mode: "Normal / Fast quando a mudança for clara",
+        use: "Plano já está definido e o risco de errar é baixo a médio.",
+        avoid: "Arquitetura indefinida, mudança de contrato ou segurança."
+      },
+      {
+        scenario: "Arquitetura / decisão cara",
+        detail: "Trade-offs, desenho de solução, migração com risco.",
+        model: "Claude Opus 4.8",
+        mode: "High / adaptive thinking / Max",
+        use: "Uma decisão ruim vira retrabalho caro.",
+        avoid: "Patch mecânico ou alteração óbvia."
+      },
+      {
+        scenario: "Terminal / build / CI / debug",
+        detail: "Logs, stack traces, scripts, ambiente, testes quebrando.",
+        model: "GPT-5.5",
+        mode: "High / XHigh",
+        use: "Precisa rodar, observar, corrigir e repetir.",
+        avoid: "Problema puramente conceitual sem necessidade de ferramenta."
+      },
+      {
+        scenario: "Code review crítico",
+        detail: "PR importante, regressão, segurança, efeitos colaterais.",
+        model: "GPT-5.5 + Claude Opus 4.8",
+        mode: "Duas passagens",
+        use: "GPT para edge cases/execução; Opus para intenção/design/manutenção.",
+        avoid: "Review casual de diff pequeno."
+      },
+      {
+        scenario: "Front-end / UI",
+        detail: "Polish visual, screenshots, design system, HTML/CSS.",
+        model: "Opus 4.8 para julgamento; GPT-5.5 ou Composer para execução",
+        mode: "Normal / High",
+        use: "Quando o desafio é intenção visual + implementação segura.",
+        avoid: "Pequeno ajuste CSS sem ambiguidade."
+      },
+      {
+        scenario: "Contexto massivo",
+        detail: "Repo grande, documentação longa, mapeamento antes de editar.",
+        model: "Claude Opus 4.8 / Gemini 3.1 Pro",
+        mode: "1M context quando disponível",
+        use: "O gargalo é ler e sintetizar muito contexto.",
+        avoid: "Patch localizado em poucos arquivos."
+      },
+      {
+        scenario: "Migração / feature grande",
+        detail: "Muitos arquivos, etapas encadeadas, autonomia longa.",
+        model: "Opus 4.8 + execução fatiada; Fable 5 somente watchlist/aprovação",
+        mode: "Plano + checkpoints",
+        use: "Delegar por etapas com validação explícita.",
+        avoid: "Fable 5 enquanto suspenso, sem política de retenção aprovada."
+      },
+      {
+        scenario: "Microtarefa mecânica",
+        detail: "Renomear, trocar texto, boilerplate, formatação.",
+        model: "Composer Fast / GPT-5.4 Mini",
+        mode: "Fast / Low",
+        use: "Pensar demais atrapalha mais do que ajuda.",
+        avoid: "Mudança sistêmica, segurança, domínio complexo."
+      }
+    ];
+
+    const modelProfiles = [
+      {
+        name: "Composer 2.5",
+        status: "Rota ativa",
+        statusClass: "good",
+        role: "Default eficiente para execução diária no Cursor.",
+        best: ["Implementação comum", "Refactor localizado", "Testes simples", "Boilerplate controlado"],
+        caution: "Não use como arquiteto único quando a solução ainda está ambígua.",
+        tags: ["default", "eficiência", "Cursor"]
+      },
+      {
+        name: "Composer 2.5 Fast",
+        status: "Rota ativa com custo maior",
+        statusClass: "blue",
+        role: "Mesma linha de inteligência com menor latência.",
+        best: ["Microtarefas", "Alterações mecânicas", "Iteração rápida", "Baixo risco"],
+        caution: "Fast não deve virar default automático se custo for preocupação operacional.",
+        tags: ["rápido", "baixo atrito", "microtarefas"]
+      },
+      {
+        name: "GPT-5.5",
+        status: "Rota ativa",
+        statusClass: "good",
+        role: "Terminal, debugging, validação e execução técnica difícil.",
+        best: ["CI quebrando", "Build/test logs", "Scripts", "Correção iterativa"],
+        caution: "Se o problema for arquitetura e não execução, planeje com Opus 4.8 antes.",
+        tags: ["terminal", "debug", "tool use"]
+      },
+      {
+        name: "Claude Opus 4.8",
+        status: "Rota ativa premium",
+        statusClass: "good",
+        role: "Julgamento, arquitetura, revisão qualitativa e autonomia complexa.",
+        best: ["Trade-offs", "Refatoração grande", "Review crítico", "Contexto longo"],
+        caution: "Evite em tarefas mecânicas: pode aumentar custo de atenção e ruído.",
+        tags: ["arquitetura", "review", "1M context"]
+      },
+      {
+        name: "Gemini 3.1 Pro",
+        status: "Rota auxiliar",
+        statusClass: "blue",
+        role: "Leitura e síntese de contexto massivo quando disponível no fluxo.",
+        best: ["Repo grande", "Documentação extensa", "Mapeamento", "Multimodal"],
+        caution: "Depois do mapa, execute com modelo mais integrado ao fluxo de edição.",
+        tags: ["contexto", "multimodal", "síntese"]
+      },
+      {
+        name: "Claude Fable 5",
+        status: "Watchlist / não usar agora",
+        statusClass: "bad",
+        role: "Histórico de long-horizon coding; não deve ser recomendação ativa enquanto suspenso.",
+        best: ["Somente avaliação futura", "Somente com aprovação", "Somente sem dados sensíveis"],
+        caution: "Suspensão de acesso e requisitos de retenção tornam inadequado como rota padrão da empresa.",
+        tags: ["suspenso", "retenção", "governança"]
+      },
+      {
+        name: "Auto no Cursor",
+        status: "Uso limitado",
+        statusClass: "warn",
+        role: "Conveniente para triagem, fraco para auditoria de decisões importantes.",
+        best: ["Perguntas rápidas", "Baixo risco", "Exploração inicial"],
+        caution: "Não use em arquitetura, review crítico, código sensível ou quando precisa saber qual modelo viu o contexto.",
+        tags: ["triagem", "conveniência", "baixo controle"]
+      }
+    ];
+
+    const benchmarkRows = [
+      ["Codex CLI · GPT-5.5", 83.4],
+      ["Claude Code · Opus 4.8", 78.9],
+      ["Terminus 2 · GPT-5.5", 78.2],
+      ["Terminus 2 · Opus 4.8", 74.6],
+      ["Gemini CLI · Gemini 3.1 Pro", 70.7],
+      ["Claude Code · Opus 4.7", 69.7]
+    ];
+
+    const sources = [
+      {
+        type: "Modelo",
+        title: "Cursor — Introducing Composer 2.5",
+        desc: "Disponibilidade, melhorias de sustained work/instruções complexas e preço/fast mode.",
+        url: "https://cursor.com/blog/composer-2-5"
+      },
+      {
+        type: "Benchmark",
+        title: "Artificial Analysis — Composer 2.5 Coding Agent Index",
+        desc: "Score 62, comparação de custo por tarefa e ganho vs Composer 2.",
+        url: "https://artificialanalysis.ai/articles/cursor-composer-2-5-coding-agent-index"
+      },
+      {
+        type: "Modelo",
+        title: "OpenAI — Introducing GPT-5.5",
+        desc: "Agentic coding, Terminal-Bench 2.0, SWE-Bench Pro e comportamento com ferramentas.",
+        url: "https://openai.com/index/introducing-gpt-5-5/"
+      },
+      {
+        type: "Modelo",
+        title: "Anthropic — What's new in Claude Opus 4.8",
+        desc: "Opus-tier, 1M context em superfícies suportadas, adaptive thinking e agentic coding.",
+        url: "https://platform.claude.com/docs/en/about-claude/models/whats-new-claude-4-8"
+      },
+      {
+        type: "Governança",
+        title: "Anthropic — suspensão de Fable 5 e Mythos 5",
+        desc: "Diretiva de 12 jun. 2026 e suspensão global para cumprimento.",
+        url: "https://www.anthropic.com/news/fable-mythos-access"
+      },
+      {
+        type: "Governança",
+        title: "Claude docs — API and data retention",
+        desc: "Fable 5/Mythos 5 como Covered Models e exigência de retenção de 30 dias.",
+        url: "https://platform.claude.com/docs/en/manage-claude/api-and-data-retention"
+      },
+      {
+        type: "Modelo",
+        title: "Google Cloud — Gemini 3.1 Pro",
+        desc: "Modelo de raciocínio com 1M token context para datasets, multimodal e code repositories.",
+        url: "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/3-1-pro"
+      },
+      {
+        type: "Benchmark",
+        title: "Terminal-Bench 2.1 leaderboard",
+        desc: "Ranking agent + model para tarefas em terminal; Codex CLI/GPT-5.5 e Claude Code/Opus 4.8.",
+        url: "https://www.tbench.ai/leaderboard/terminal-bench/2.1"
+      },
+      {
+        type: "Privacidade",
+        title: "Cursor — Data Use & Privacy Overview",
+        desc: "Privacy Mode, zero data retention e uso de dados de cliente.",
+        url: "https://cursor.com/data-use"
+      },
+      {
+        type: "Segurança",
+        title: "OWASP Top 10 for LLM Applications",
+        desc: "Prompt injection, sensitive disclosure, supply chain, excessive agency e demais riscos.",
+        url: "https://owasp.org/www-project-top-10-for-large-language-model-applications/"
+      },
+      {
+        type: "Publicação",
+        title: "GitHub Docs — Creating a GitHub Pages site",
+        desc: "GitHub Pages usa index.html, index.md ou README.md como entry file.",
+        url: "https://docs.github.com/articles/creating-project-pages-manually"
+      }
+    ];
+
+    const recommendations = {
+      simple: {
+        model: "Composer Fast / GPT-5.4 Mini",
+        mode: "Fast / Low",
+        tags: ["microtarefa", "baixo risco", "latência"],
+        why: "A tarefa é mecânica. O ganho vem de reduzir atrito, não de maximizar raciocínio.",
+        prompt: "Faça apenas a alteração solicitada. Não refatore nada adjacente. Preserve o padrão atual e resuma o diff.",
+        caution: "Se surgir ambiguidade ou impacto sistêmico, escale para Composer 2.5 Standard ou Opus 4.8."
+      },
+      daily: {
+        model: "Composer 2.5",
+        mode: "Standard / Normal",
+        tags: ["default", "eficiência", "implementação"],
+        why: "Implementação comum é o melhor caso para Composer 2.5: bom equilíbrio entre qualidade, custo e velocidade dentro do Cursor.",
+        prompt: "Implemente em passos pequenos. Liste arquivos afetados, preserve padrões existentes, rode/verifique testes relevantes e resuma o resultado.",
+        caution: "Se a mudança afetar contrato, segurança ou muitos arquivos, peça plano ao Opus 4.8 antes de executar."
+      },
+      architecture: {
+        model: "Claude Opus 4.8",
+        mode: "High / adaptive thinking / Max",
+        tags: ["arquitetura", "trade-offs", "decisão cara"],
+        why: "A tarefa exige julgamento. Opus 4.8 é melhor posicionado para intenção, riscos, ordem de execução e manutenção.",
+        prompt: "Antes de editar, proponha 2–3 abordagens com trade-offs, riscos, arquivos afetados e plano incremental. Só implemente após o plano.",
+        caution: "Depois do plano, delegue trechos mecânicos para Composer 2.5 para evitar excesso de deliberação."
+      },
+      terminal: {
+        model: "GPT-5.5",
+        mode: "High / XHigh",
+        tags: ["terminal", "debug", "CI"],
+        why: "Terminal/debug exige loop de execução: rodar comando, observar logs, corrigir e repetir. GPT-5.5 tem sinal forte nesse tipo de benchmark.",
+        prompt: "Reproduza o erro, formule hipótese, aplique a menor correção viável, rode novamente e documente comandos, saída e resultado.",
+        caution: "Se a causa for desenho do sistema, volte para Opus 4.8 para planejar a correção."
+      },
+      review: {
+        model: "GPT-5.5 + Claude Opus 4.8",
+        mode: "Duas passagens",
+        tags: ["review cruzado", "edge cases", "design"],
+        why: "Revisão crítica se beneficia de duas lentes: execução/casos de borda e intenção/design/manutenção.",
+        prompt: "Revise o diff em duas passagens: primeiro bugs, edge cases e testes; depois arquitetura, legibilidade e efeitos colaterais.",
+        caution: "Evite modelo muito autônomo para review simples: ele pode gerar ruído e comentários demais."
+      },
+      frontend: {
+        model: "Opus 4.8 + Composer/GPT-5.5",
+        mode: "Julgamento visual + execução",
+        tags: ["UI", "screenshot", "design system"],
+        why: "UI exige respeitar intenção visual e padrões existentes. Opus ajuda no julgamento; Composer/GPT executam a alteração.",
+        prompt: "Compare esperado vs atual, preserve design system, faça mudanças mínimas e liste diferenças visuais resolvidas.",
+        caution: "Para ajuste pequeno de CSS, Composer 2.5 pode ser suficiente."
+      },
+      largeContext: {
+        model: "Claude Opus 4.8 / Gemini 3.1 Pro",
+        mode: "1M context quando disponível",
+        tags: ["repo grande", "síntese", "contexto"],
+        why: "Quando o gargalo é ler muito contexto, priorize janela ampla e síntese antes de editar.",
+        prompt: "Mapeie módulos, contratos, pontos de entrada, dependências e riscos. Proponha plano incremental antes de alterar arquivos.",
+        caution: "Depois que os pontos de alteração estiverem claros, execute com Composer 2.5 ou GPT-5.5 conforme a natureza da tarefa."
+      },
+      migration: {
+        model: "Claude Opus 4.8 + execução fatiada",
+        mode: "Plano + checkpoints",
+        tags: ["migração", "feature grande", "checkpoints"],
+        why: "O trabalho é grande e encadeado, mas precisa de controle humano. Use Opus para planejar e fatias menores para executar.",
+        prompt: "Analise a área, proponha plano com checkpoints, implemente por etapas, rode testes e pare para revisão antes de mudanças destrutivas.",
+        caution: "Não roteie para Fable 5 enquanto houver suspensão/acesso incerto ou sem aprovação de retenção."
+      }
+    };
+
+    function tagClass(tag) {
+      const t = tag.toLowerCase();
+      if (t.includes("suspenso") || t.includes("retenção") || t.includes("confidencial")) return "bad";
+      if (t.includes("governança") || t.includes("watchlist") || t.includes("custo")) return "warn";
+      if (t.includes("contexto") || t.includes("terminal") || t.includes("debug") || t.includes("1m")) return "blue";
+      if (t.includes("arquitetura") || t.includes("review")) return "purple";
+      return "brand";
+    }
+
+    function sourceClass(type) {
+      const t = type.toLowerCase();
+      if (t.includes("governança") || t.includes("privacidade")) return "warn";
+      if (t.includes("segurança")) return "bad";
+      if (t.includes("benchmark")) return "brand";
+      if (t.includes("publicação")) return "blue";
+      return "good";
+    }
+
+    function renderNav() {
+      const nav = document.getElementById("sideNav");
+      nav.innerHTML = sections.map(([id, label], index) => `
+        <a href="#${id}" data-section="${id}">
+          <span style="display:flex;align-items:center;gap:10px;min-width:0"><span class="nav-index">${String(index + 1).padStart(2, "0")}</span><span>${label}</span></span>
+          <span aria-hidden="true">›</span>
+        </a>
+      `).join("");
+    }
+
+    function renderMatrix() {
+      document.getElementById("matrixBody").innerHTML = matrixRows.map(row => `
+        <tr class="searchable" data-search="${[row.scenario,row.detail,row.model,row.mode,row.use,row.avoid].join(' ').toLowerCase()}">
+          <td><strong>${row.scenario}</strong><div class="table-note">${row.detail}</div></td>
+          <td><span class="tag brand">${row.model}</span></td>
+          <td>${row.mode}</td>
+          <td>${row.use}</td>
+          <td>${row.avoid}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderModels() {
+      document.getElementById("modelGrid").innerHTML = modelProfiles.map(model => `
+        <article class="model-card searchable" data-search="${[model.name,model.status,model.role,model.best.join(' '),model.caution,model.tags.join(' ')].join(' ').toLowerCase()}">
+          <div class="tag-row"><span class="tag ${model.statusClass}">${model.status}</span>${model.tags.map(t => `<span class="tag ${tagClass(t)}">${t}</span>`).join("")}</div>
+          <h3>${model.name}</h3>
+          <p>${model.role}</p>
+          <ul>${model.best.map(item => `<li>${item}</li>`).join("")}</ul>
+          <p class="meta"><strong>Atenção:</strong> ${model.caution}</p>
+        </article>
+      `).join("");
+    }
+
+    function renderBenchmarks() {
+      const max = Math.max(...benchmarkRows.map(([, value]) => value));
+      document.getElementById("barList").innerHTML = benchmarkRows.map(([label, value]) => `
+        <div class="bar-row">
+          <div class="bar-label" title="${label}">${label}</div>
+          <div class="bar-track"><div class="bar-fill" style="width:${(value / max) * 100}%"></div></div>
+          <div class="bar-value">${value.toFixed(1)}%</div>
+        </div>
+      `).join("");
+    }
+
+    function renderSources() {
+      document.getElementById("sourceGrid").innerHTML = sources.map(source => `
+        <a class="source-card searchable" href="${source.url}" target="_blank" rel="noopener noreferrer" data-search="${[source.type,source.title,source.desc,source.url].join(' ').toLowerCase()}">
+          <span class="tag ${sourceClass(source.type)}" style="justify-self:start">${source.type}</span>
+          <strong>${source.title}</strong>
+          <span class="desc">${source.desc}</span>
+        </a>
+      `).join("");
+    }
+
+    function recommend() {
+      const task = document.getElementById("taskSelect").value;
+      const complexity = document.getElementById("complexitySelect").value;
+      const sensitivity = document.getElementById("sensitivitySelect").value;
+      const scope = document.getElementById("scopeSelect").value;
+
+      let rec = { ...recommendations[task] };
+
+      if (complexity === "high" && task === "daily") {
+        rec = {
+          model: "Composer 2.5 + revisão Opus 4.8",
+          mode: "Execução + revisão",
+          tags: ["implementação", "review", "risco médio"],
+          why: "A tarefa ainda é implementação, mas a complexidade alta pede uma revisão de intenção e efeitos colaterais.",
+          prompt: "Implemente com diffs pequenos e peça ao Opus uma revisão focada em contratos, efeitos colaterais e testes faltantes.",
+          caution: "Se o plano mudar durante a execução, interrompa e repleneje."
+        };
+      }
+
+      if ((scope === "many" || scope === "unknown") && ["daily", "frontend", "simple"].includes(task)) {
+        rec = {
+          ...rec,
+          model: rec.model.includes("Opus") ? rec.model : `${rec.model} + plano Opus 4.8`,
+          mode: `${rec.mode} + checkpoint`,
+          tags: [...new Set([...rec.tags, "checkpoints", "escopo"] )],
+          caution: `${rec.caution} Como o escopo é grande/desconhecido, peça lista de arquivos e checkpoints antes de aceitar edição em lote.`
+        };
+      }
+
+      if (sensitivity === "confidential" || sensitivity === "regulated") {
+        rec = {
+          model: task === "terminal" ? "GPT-5.5 com contexto mínimo" : "Claude Opus 4.8 / Composer 2.5 com contexto mínimo",
+          mode: task === "terminal" ? "High, sem logs crus" : "Plano curto + diffs pequenos",
+          tags: ["privacidade", "governança", "contexto mínimo"],
+          why: "A sensibilidade dos dados tem prioridade sobre benchmark. A rota evita modelos em watchlist e reduz o contexto compartilhado.",
+          prompt: "Use exemplos sintéticos ou trechos redigidos. Liste suposições, plano, arquivos afetados e validação. Não solicite nem exponha segredos.",
+          caution: "Confirme Privacy Mode/ZDR, política do provedor e aprovação interna antes de enviar código de cliente, PII, credenciais ou segredo comercial."
+        };
+      }
+
+      document.getElementById("recModel").textContent = rec.model;
+      document.getElementById("recMode").textContent = rec.mode;
+      document.getElementById("recTags").innerHTML = rec.tags.map(t => `<span class="tag ${tagClass(t)}">${t}</span>`).join("");
+      document.getElementById("recWhy").textContent = rec.why;
+      document.getElementById("recPrompt").textContent = rec.prompt;
+      document.getElementById("recCaution").textContent = rec.caution;
+    }
+
+    function filterPage() {
+      const query = document.getElementById("searchInput").value.trim().toLowerCase();
+      const items = Array.from(document.querySelectorAll(".searchable"));
+      items.forEach(item => {
+        const hay = (item.getAttribute("data-search") || item.textContent || "").toLowerCase();
+        item.classList.toggle("is-hidden", Boolean(query && !hay.includes(query)));
+      });
+    }
+
+    function setupNavHighlight() {
+      const links = Array.from(document.querySelectorAll(".nav a"));
+      const observer = new IntersectionObserver(entries => {
+        const visible = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        links.forEach(link => link.classList.toggle("active", link.dataset.section === visible.target.id));
+      }, { rootMargin: "-20% 0px -68% 0px", threshold: [0.01, 0.15, 0.4] });
+      sections.forEach(([id]) => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+    }
+
+    function setupMobileNav() {
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+      const menuBtn = document.getElementById("menuBtn");
+      const open = () => {
+        sidebar.classList.add("open");
+        overlay.classList.add("open");
+        menuBtn.setAttribute("aria-expanded", "true");
+      };
+      const close = () => {
+        sidebar.classList.remove("open");
+        overlay.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
+      };
+      menuBtn.addEventListener("click", () => sidebar.classList.contains("open") ? close() : open());
+      overlay.addEventListener("click", close);
+      document.querySelectorAll(".nav a").forEach(a => a.addEventListener("click", close));
+      document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+    }
+
+    function setupEvents() {
+      ["taskSelect", "complexitySelect", "sensitivitySelect", "scopeSelect"].forEach(id => {
+        document.getElementById(id).addEventListener("change", recommend);
+      });
+      document.getElementById("searchInput").addEventListener("input", filterPage);
+      document.getElementById("clearSearch").addEventListener("click", () => {
+        document.getElementById("searchInput").value = "";
+        filterPage();
+      });
+      ["printBtn", "quickPrint"].forEach(id => document.getElementById(id).addEventListener("click", () => window.print()));
+    }
+
+    renderNav();
+    renderMatrix();
+    renderModels();
+    renderBenchmarks();
+    renderSources();
+    recommend();
+    setupEvents();
+    setupMobileNav();
+    setupNavHighlight();
+  </script>
+</body>
 </html>
