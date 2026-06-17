@@ -5,3 +5,11 @@ Thumbs.db
 .cache/
 dist/
 build/
+
+# Python local environment
+.venv/
+__pycache__/
+*.py[cod]
+
+# Local Codex workspace settings
+.codex/
