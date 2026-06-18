@@ -1,6 +1,6 @@
 # benchai
 
-Site estático para publicar um playbook de roteamento de modelos de IA no Cursor.
+Site estático para publicar um playbook de roteamento de ferramentas e modelos de IA para engenharia.
 
 O objetivo é manter uma consulta rápida para comparar modelos, orientar escolhas por tipo de tarefa, sensibilidade dos dados, risco operacional e evidências de benchmark. O site também registra critérios de governança e cuidados para uso de modelos em fluxos de engenharia.
 
@@ -8,11 +8,10 @@ O objetivo é manter uma consulta rápida para comparar modelos, orientar escolh
 
 - Página inicial com mapa do playbook.
 - Recomendador interativo de modelo por tarefa.
-- Matriz de decisão para uso no Cursor.
+- Matriz de decisão por cenário, risco e modo de uso.
 - Perfis de modelos e cuidados por sensibilidade de dados.
 - Leitura crítica de benchmarks públicos.
 - Fontes públicas e rastreabilidade.
-- Notas de publicação no GitHub Pages.
 
 ## Páginas
 
@@ -25,7 +24,6 @@ O site usa navegação real por arquivos HTML estáticos:
 - `site/governanca.html`: governança por sensibilidade de dados.
 - `site/benchmarks.html`: leitura crítica de benchmarks.
 - `site/fontes.html`: fontes públicas.
-- `site/publicacao.html`: fluxo de publicação.
 - `site/404.html`: página de erro para GitHub Pages.
 
 ## Cadência de atualização
@@ -82,7 +80,6 @@ Também confira localmente as páginas principais:
 - `http://localhost:8000/governanca.html`
 - `http://localhost:8000/benchmarks.html`
 - `http://localhost:8000/fontes.html`
-- `http://localhost:8000/publicacao.html`
 
 ## Publicação
 
