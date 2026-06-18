@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Modelos - BenchAI</title>
-    <meta name="description" content="Perfis de ferramentas e modelos de IA, com status, melhor encaixe e pontos de cautela.">
+    <meta name="description" content="Perfis de famílias e modelos de IA, com status, esforço de raciocínio, melhor encaixe e pontos de cautela.">
     <meta name="theme-color" content="#f5f5f7">
     <link rel="stylesheet" href="assets/css/styles.css">
   </head>
   <body data-page="modelos">
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-    <div class="overlay" id="overlay" aria-hidden="true"></div>
+    <button class="sidebar-reveal" id="sidebarReveal" type="button" aria-controls="sidebar" aria-expanded="true" aria-label="Mostrar sidebar" title="Mostrar sidebar"><span aria-hidden="true">☰</span></button>
 
     <div class="app-shell">
       <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
@@ -18,45 +18,35 @@
           <span class="brand-mark" aria-hidden="true">BAI</span>
           <span><span class="brand-title">BenchAI</span></span>
         </a>
-        <div class="side-meta">
-          <div><strong>Atualizado:</strong> 18 jun. 2026</div>
-          <div><strong>Critério:</strong> risco da tarefa antes do hype do modelo.</div>
-        </div>
+        <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-controls="sidebar" aria-label="Ocultar sidebar" title="Ocultar sidebar">‹</button>
         <div class="nav-label">Navegação</div>
         <nav class="nav-list" id="siteNav"></nav>
         <div class="side-actions">
+          <a class="side-cta" href="recomendador.html">
+            <span>Decidir agora</span>
+            <small>Abrir recomendador</small>
+          </a>
           <button class="side-button" type="button" data-print>Exportar PDF</button>
-          <a class="side-button" href="fontes.html">Ver fontes públicas</a>
+        </div>
+        <div class="side-meta">
+          <div><strong>Atualizado:</strong> 18 jun. 2026</div>
         </div>
       </aside>
 
       <main class="main" id="conteudo">
-        <header class="topbar" role="region" aria-label="Barra de ações">
-          <button class="menu-button" id="menuBtn" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
-          <div class="search">
-            <span class="search-icon" aria-hidden="true">⌕</span>
-            <input id="searchInput" type="search" placeholder="Buscar..." autocomplete="off">
-            <span class="search-count" id="searchCount">todos</span>
-          </div>
-          <div class="top-actions">
-            <a class="button" href="benchmarks.html">Ver benchmarks</a>
-            <button class="button primary" type="button" data-print>PDF</button>
-          </div>
-        </header>
-
         <section class="page-hero">
           <p class="eyebrow">Modelos</p>
-          <h1>Perfis curtos para decisões recorrentes.</h1>
-          <p>Status, melhor encaixe e pontos de atenção para uso por engenharia em diferentes fluxos de trabalho.</p>
+          <h1>Modelo não é ferramenta.</h1>
+          <p>Use esta página para entender famílias, effort e cautelas. A interface de trabalho fica separada em IDEs.</p>
         </section>
 
         <section class="section">
           <div class="section-head">
             <div>
-              <h2>Perfis de modelos</h2>
-              <p>Use os cards como registry interno. Para decisão contextual, prefira o recomendador.</p>
+              <h2>Famílias e modos</h2>
+              <p>Compare modelos por função operacional: terminal, review, contexto longo, self-hosting ou custo.</p>
             </div>
-            <span class="section-chip">registry interno</span>
+            <span class="section-chip">modelo + effort</span>
           </div>
           <div class="model-grid" id="modelGrid"></div>
         </section>

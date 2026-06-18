@@ -10,7 +10,7 @@
   </head>
   <body data-page="benchmarks">
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-    <div class="overlay" id="overlay" aria-hidden="true"></div>
+    <button class="sidebar-reveal" id="sidebarReveal" type="button" aria-controls="sidebar" aria-expanded="true" aria-label="Mostrar sidebar" title="Mostrar sidebar"><span aria-hidden="true">☰</span></button>
 
     <div class="app-shell">
       <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
@@ -18,59 +18,48 @@
           <span class="brand-mark" aria-hidden="true">BAI</span>
           <span><span class="brand-title">BenchAI</span></span>
         </a>
-        <div class="side-meta">
-          <div><strong>Atualizado:</strong> 18 jun. 2026</div>
-          <div><strong>Critério:</strong> risco da tarefa antes do hype do modelo.</div>
-        </div>
+        <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-controls="sidebar" aria-label="Ocultar sidebar" title="Ocultar sidebar">‹</button>
         <div class="nav-label">Navegação</div>
         <nav class="nav-list" id="siteNav"></nav>
         <div class="side-actions">
+          <a class="side-cta" href="recomendador.html">
+            <span>Decidir agora</span>
+            <small>Abrir recomendador</small>
+          </a>
           <button class="side-button" type="button" data-print>Exportar PDF</button>
-          <a class="side-button" href="fontes.html">Ver fontes públicas</a>
+        </div>
+        <div class="side-meta">
+          <div><strong>Atualizado:</strong> 18 jun. 2026</div>
         </div>
       </aside>
 
       <main class="main" id="conteudo">
-        <header class="topbar" role="region" aria-label="Barra de ações">
-          <button class="menu-button" id="menuBtn" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
-          <div class="search">
-            <span class="search-icon" aria-hidden="true">⌕</span>
-            <input id="searchInput" type="search" placeholder="Buscar..." autocomplete="off">
-            <span class="search-count" id="searchCount">todos</span>
-          </div>
-          <div class="top-actions">
-            <a class="button" href="fontes.html">Ver fontes</a>
-            <button class="button primary" type="button" data-print>PDF</button>
-          </div>
-        </header>
-
         <section class="page-hero">
           <p class="eyebrow">Benchmarks</p>
           <h1>Benchmarks orientam, validação decide.</h1>
-          <p>Os números ajudam a escolher a rota, mas o teste no repositório confirma a decisão. Compare apenas cenários equivalentes.</p>
+          <p>Compare benchmark, versão, ferramenta, modelo, scaffold e effort. O teste no repositório continua sendo a decisão final.</p>
         </section>
 
         <section class="section">
           <div class="section-head">
             <div>
-              <h2>Leitura prática</h2>
-              <p>Terminal/debug exige loop de ferramenta. Arquitetura exige julgamento. Implementação comum exige eficiência no fluxo do time.</p>
+              <h2>Evidência curada</h2>
+              <p>Entram aqui apenas números úteis para decisão operacional, com status da fonte e data de verificação.</p>
             </div>
-            <span class="section-chip">sinal técnico</span>
+            <span class="section-chip">verificado em 2026-06-18</span>
           </div>
-          <div class="bench-grid">
-            <div class="terminal-card searchable" data-search="terminal bench comando benchmark task suite laboratório">
-              <span class="tag brand" style="justify-self:start">Terminal-Bench style</span>
-              <h3>Como interpretar</h3>
-              <p>O benchmark mede combinação agente + modelo. Use como sinal para tarefas em terminal, não como ranking universal de inteligência.</p>
-              <code>task -> agente + modelo -> validação local -> evidência no PR</code>
+          <div class="benchmark-list" id="benchmarkList"></div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <h2>Como ler</h2>
+              <p>O mesmo modelo pode mudar muito quando troca ferramenta, prompt, effort ou harness de execução.</p>
             </div>
-            <div class="card searchable" data-search="swe bench verified claude sonnet opus gpt-4.1 deepseek">
-              <h3>SWE-Bench Verified - amostra rastreável</h3>
-              <div class="bar-list" id="barList"></div>
-              <p class="meta" style="margin-top:12px">Maior é melhor. O benchmark mede combinação agente + modelo, não o modelo isolado.</p>
-            </div>
+            <span class="section-chip">benchmark != decisão</span>
           </div>
+          <div class="source-grid" id="benchmarkNotes"></div>
         </section>
 
         <div class="foot">BenchAI · leitura crítica de benchmarks.</div>

@@ -10,7 +10,7 @@
   </head>
   <body data-page="recomendador">
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-    <div class="overlay" id="overlay" aria-hidden="true"></div>
+    <button class="sidebar-reveal" id="sidebarReveal" type="button" aria-controls="sidebar" aria-expanded="true" aria-label="Mostrar sidebar" title="Mostrar sidebar"><span aria-hidden="true">☰</span></button>
 
     <div class="app-shell">
       <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
@@ -18,36 +18,26 @@
           <span class="brand-mark" aria-hidden="true">BAI</span>
           <span><span class="brand-title">BenchAI</span></span>
         </a>
-        <div class="side-meta">
-          <div><strong>Atualizado:</strong> 18 jun. 2026</div>
-          <div><strong>Critério:</strong> risco da tarefa antes do hype do modelo.</div>
-        </div>
+        <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-controls="sidebar" aria-label="Ocultar sidebar" title="Ocultar sidebar">‹</button>
         <div class="nav-label">Navegação</div>
         <nav class="nav-list" id="siteNav"></nav>
         <div class="side-actions">
+          <a class="side-cta" href="recomendador.html">
+            <span>Decidir agora</span>
+            <small>Abrir recomendador</small>
+          </a>
           <button class="side-button" type="button" data-print>Exportar PDF</button>
-          <a class="side-button" href="fontes.html">Ver fontes públicas</a>
+        </div>
+        <div class="side-meta">
+          <div><strong>Atualizado:</strong> 18 jun. 2026</div>
         </div>
       </aside>
 
       <main class="main" id="conteudo">
-        <header class="topbar" role="region" aria-label="Barra de ações">
-          <button class="menu-button" id="menuBtn" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
-          <div class="search">
-            <span class="search-icon" aria-hidden="true">⌕</span>
-            <input id="searchInput" type="search" placeholder="Buscar..." autocomplete="off">
-            <span class="search-count" id="searchCount">todos</span>
-          </div>
-          <div class="top-actions">
-            <a class="button" href="matriz.html">Ver matriz</a>
-            <button class="button primary" type="button" data-print>PDF</button>
-          </div>
-        </header>
-
         <section class="page-hero">
           <p class="eyebrow">Recomendador</p>
           <h1>Escolha a rota antes de escolher o modelo.</h1>
-          <p>Use os controles para combinar tipo de tarefa, complexidade, sensibilidade do código e escopo esperado.</p>
+          <p>Use os controles para combinar tarefa, complexidade, sensibilidade, escopo, ferramenta, modelo e effort.</p>
         </section>
 
         <section class="section">
@@ -59,7 +49,7 @@
             <span class="section-chip">recomendador vivo</span>
           </div>
           <div class="decision-lab">
-            <div class="card strong searchable" data-search="tipo de tarefa complexidade sensibilidade escopo modelo">
+            <div class="card strong">
               <div class="form-grid">
                 <div class="field">
                   <label for="taskSelect">Tipo de tarefa</label>
@@ -104,14 +94,14 @@
               <div class="checklist">
                 <div class="check-item"><div class="check-badge">A</div><div>Se a tarefa está ambígua, peça plano antes de aceitar edição.</div></div>
                 <div class="check-item"><div class="check-badge">B</div><div>Se o código é sensível, reduza contexto e valide retenção.</div></div>
-                <div class="check-item"><div class="check-badge">C</div><div>Se envolve terminal, registre comandos, logs úteis e resultado.</div></div>
+                <div class="check-item"><div class="check-badge">C</div><div>Se envolve terminal, registre comandos, logs úteis, scaffold e resultado.</div></div>
               </div>
             </div>
 
             <div class="result" aria-live="polite">
               <div class="result-label">Rota recomendada</div>
               <div class="result-model" id="recModel">Cursor / GitHub Copilot</div>
-              <p class="result-mode" id="recMode">Standard / Normal</p>
+              <p class="result-mode" id="recMode">IDE + validação local · effort: normal</p>
               <div class="tag-row" id="recTags"></div>
               <div class="result-detail">
                 <div class="result-box"><strong>Por que</strong><span id="recWhy"></span></div>
@@ -119,6 +109,30 @@
                 <div class="result-box"><strong>Cautela</strong><span id="recCaution"></span></div>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section class="section" id="matriz">
+          <div class="section-head">
+            <div>
+              <h2>Matriz de decisão</h2>
+              <p>Rota recomendada, modo, quando usar e quando escalar para outra abordagem ou controle de dados.</p>
+            </div>
+            <span class="section-chip">tarefa -> rota</span>
+          </div>
+          <div class="matrix-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Cenário</th>
+                  <th>Rota recomendada</th>
+                  <th>Modo</th>
+                  <th>Use quando</th>
+                  <th>Evite / escale</th>
+                </tr>
+              </thead>
+              <tbody id="matrixBody"></tbody>
+            </table>
           </div>
         </section>
 

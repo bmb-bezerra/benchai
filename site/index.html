@@ -10,7 +10,7 @@
   </head>
   <body data-page="home">
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-    <div class="overlay" id="overlay" aria-hidden="true"></div>
+    <button class="sidebar-reveal" id="sidebarReveal" type="button" aria-controls="sidebar" aria-expanded="true" aria-label="Mostrar sidebar" title="Mostrar sidebar"><span aria-hidden="true">☰</span></button>
 
     <div class="app-shell">
       <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
@@ -20,108 +20,65 @@
             <span class="brand-title">BenchAI</span>
           </span>
         </a>
-        <div class="side-meta">
-          <div><strong>Atualizado:</strong> 18 jun. 2026</div>
-          <div><strong>Critério:</strong> risco da tarefa antes do hype do modelo.</div>
-        </div>
+        <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-controls="sidebar" aria-label="Ocultar sidebar" title="Ocultar sidebar">‹</button>
         <div class="nav-label">Navegação</div>
         <nav class="nav-list" id="siteNav"></nav>
         <div class="side-actions">
+          <a class="side-cta" href="recomendador.html">
+            <span>Decidir agora</span>
+            <small>Abrir recomendador</small>
+          </a>
           <button class="side-button" type="button" data-print>Exportar PDF</button>
-          <a class="side-button" href="fontes.html">Ver fontes públicas</a>
+        </div>
+        <div class="side-meta">
+          <div><strong>Atualizado:</strong> 18 jun. 2026</div>
         </div>
       </aside>
 
       <main class="main" id="conteudo">
-        <header class="topbar" role="region" aria-label="Barra de ações">
-          <button class="menu-button" id="menuBtn" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
-          <div class="search">
-            <span class="search-icon" aria-hidden="true">⌕</span>
-            <input id="searchInput" type="search" placeholder="Buscar..." autocomplete="off">
-            <span class="search-count" id="searchCount">todos</span>
-          </div>
-          <div class="top-actions">
-            <a class="button" href="recomendador.html">Abrir recomendador</a>
-            <button class="button primary" type="button" data-print>PDF</button>
-          </div>
-        </header>
-
-        <section class="hero">
-          <div class="hero-copy">
-            <p class="eyebrow">BenchAI</p>
-            <h1>Roteie por risco.</h1>
-            <p>
-              Um playbook de engenharia para escolher entre Copilot, Cursor, Claude Code, Codex, Gemini,
-              Amazon Q, Qwen, DeepSeek e Tabnine por tarefa, sensibilidade, custo de errar e evidência pública.
-            </p>
-            <div class="hero-actions">
-              <a class="hero-action primary" href="recomendador.html">Decidir agora</a>
-              <a class="hero-action" href="benchmarks.html">Ver evidência</a>
-              <a class="hero-action" href="governanca.html">Checar governança</a>
-            </div>
-          </div>
-
-          <div class="hero-panel" aria-label="Resumo visual de evidências">
-            <div class="panel-head">
-              <div>
-                <strong>Panorama operacional</strong>
-                <span>Adoção, benchmark e governança na mesma leitura.</span>
-              </div>
-              <span class="status-pill">SNAPSHOT / 2026-06-18</span>
-            </div>
-            <div class="leader-list">
-              <div class="leader-row searchable" data-search="github copilot adoção github pr review enterprise agentes">
-                <span class="rank">01</span>
-                <div>
-                  <div class="leader-name">GitHub Copilot</div>
-                  <div class="leader-meta">Adoção, GitHub-first, PR review e agentes</div>
-                </div>
-                <div class="leader-score">escala</div>
-              </div>
-              <div class="leader-row searchable" data-search="claude code claude 4 swe bench arquitetura tarefa longa">
-                <span class="rank">02</span>
-                <div>
-                  <div class="leader-name">Claude Code / Claude 4</div>
-                  <div class="leader-meta">Tarefas longas, refactor e revisão crítica</div>
-                </div>
-                <div class="leader-score">72.7</div>
-              </div>
-              <div class="leader-row searchable" data-search="openai codex gpt-4.1 api automação diff">
-                <span class="rank">03</span>
-                <div>
-                  <div class="leader-name">OpenAI Codex / GPT-4.1</div>
-                  <div class="leader-meta">API, diffs, automação e pipelines</div>
-                </div>
-                <div class="leader-score">54.6</div>
-              </div>
-            </div>
-            <div class="command-card">
-              <span class="panel-note">Prompt operacional recomendado</span>
-              <code>planeje -> altere em diffs pequenos -> rode validação -> registre evidência</code>
-            </div>
-          </div>
+        <section class="page-hero">
+          <p class="eyebrow">BenchAI</p>
+          <h1>Roteie por risco.</h1>
+          <p>
+            Um playbook de engenharia para escolher ferramenta, modelo, scaffold e effort por tarefa,
+            sensibilidade dos dados, custo de errar e evidência pública.
+          </p>
         </section>
 
-        <div class="snapshot-grid" aria-label="Métricas resumidas">
-          <div class="snapshot searchable" data-search="stack overflow 2025 uso ai tools adoção">
-            <div class="snapshot-label">Adoção AI</div>
+        <div class="snapshot-grid" aria-label="Sinais operacionais">
+          <div class="snapshot">
+            <div class="snapshot-label">IA já é rotina</div>
             <div class="snapshot-value">84%</div>
             <p>Stack Overflow 2025: usam ou planejam usar AI tools no processo de desenvolvimento.</p>
           </div>
-          <div class="snapshot searchable" data-search="stack overflow 2025 confiança precisão revisão humana">
+          <div class="snapshot">
+            <div class="snapshot-label">Uso diário profissional</div>
+            <div class="snapshot-value">50,6%</div>
+            <p>Profissionais que usam AI tools diariamente no fluxo de desenvolvimento.</p>
+          </div>
+          <div class="snapshot">
             <div class="snapshot-label">Desconfiança</div>
             <div class="snapshot-value">46%</div>
-            <p>Mais devs desconfiam da precisão do que confiam. Revisão humana continua obrigatória.</p>
+            <p>33% confiam na precisão. Mais devs desconfiam do que confiam, então revisão humana continua obrigatória.</p>
           </div>
-          <div class="snapshot searchable" data-search="governança dados sensibilidade público interno confidencial regulado">
-            <div class="snapshot-label">Gates de dados</div>
-            <div class="snapshot-value">4</div>
-            <p>Público, interno, confidencial e regulado antes de escolher modelo.</p>
+          <div class="snapshot">
+            <div class="snapshot-label">Ferramentas especializadas</div>
+            <div class="snapshot-value">74%</div>
+            <p>JetBrains AI Pulse: adoção de ferramentas especializadas de desenvolvimento no trabalho.</p>
           </div>
-          <div class="snapshot searchable" data-search="fontes rastreabilidade benchmarks modelos segurança privacidade">
-            <div class="snapshot-label">Fontes</div>
-            <div class="snapshot-value">15</div>
-            <p>Fontes públicas e relatório local usados para atualização consciente do playbook.</p>
+          <div class="snapshot signal-card">
+            <div class="snapshot-label">Terminal mede agente + modelo</div>
+            <div class="snapshot-value">83,4</div>
+            <p>Codex CLI + GPT-5.5 lidera o recorte Terminal-Bench 2.1 verificado.</p>
+          </div>
+          <div class="snapshot signal-card">
+            <div class="snapshot-label">Verified virou histórico</div>
+            <div class="snapshot-value">Pro</div>
+            <p>SWE-Bench Verified não é mais ranking principal para frontier coding.</p>
+          </div>
+          <div class="snapshot signal-card prompt-snapshot">
+            <div class="snapshot-label">Prompt operacional</div>
+            <code>tarefa -> risco -> ferramenta + modelo + effort -> validação local</code>
           </div>
         </div>
 
@@ -134,20 +91,20 @@
             <span class="section-chip">decisão prática</span>
           </div>
           <div class="overview-grid">
-            <a class="source-card searchable" href="recomendador.html" data-search="recomendador modelo tarefa complexidade sensibilidade escopo">
+            <a class="source-card" href="recomendador.html">
               <span class="tag brand" style="justify-self:start">01</span>
               <strong>Recomendador</strong>
               <span class="desc">Informe tarefa, complexidade, dados e escopo para receber uma rota inicial.</span>
             </a>
-            <a class="source-card searchable" href="matriz.html" data-search="matriz rota modelo modo usar evitar">
+            <a class="source-card" href="recomendador.html#matriz">
               <span class="tag brand" style="justify-self:start">02</span>
-              <strong>Matriz</strong>
-              <span class="desc">Compare modelos por cenário, modo de uso e pontos de atenção.</span>
+              <strong>Matriz no recomendador</strong>
+              <span class="desc">Compare rotas por cenário dentro da mesma página de decisão.</span>
             </a>
-            <a class="source-card searchable" href="governanca.html" data-search="governança dados sensibilidade pii segredo cliente privacidade">
+            <a class="source-card" href="ides.html">
               <span class="tag brand" style="justify-self:start">03</span>
-              <strong>Governança</strong>
-              <span class="desc">Avalie exposição de dados antes de enviar contexto ao modelo.</span>
+              <strong>IDEs</strong>
+              <span class="desc">Escolha o ambiente de trabalho antes de automatizar com agentes.</span>
             </a>
           </div>
         </section>
@@ -156,21 +113,21 @@
           <div class="section-head">
             <div>
               <h2>Critérios de leitura</h2>
-              <p>Use BenchAI como uma camada de decisão antes da ferramenta: risco, dados e evidência determinam a rota.</p>
+              <p>Use BenchAI como uma camada de decisão antes da ferramenta: risco, dados, scaffold e evidência determinam a rota.</p>
             </div>
             <span class="section-chip">critérios</span>
           </div>
           <div class="evidence-grid">
-            <div class="card searchable" data-search="rota operacional decisão contexto risco dados evidência">
+            <div class="card">
               <span class="tag blue">Rota operacional</span>
               <h3>Decida com contexto suficiente</h3>
               <p>Cada recomendação combina impacto da tarefa, sensibilidade do repositório e evidência disponível.</p>
             </div>
-            <div class="card searchable" data-search="decisão operacional modelo risco tarefa atenção validação">
+            <div class="card">
               <div class="audit-list">
                 <div class="audit-item"><span class="audit-badge">01</span><div><strong>Impacto da tarefa:</strong> mudanças críticas pedem modelo mais forte e validação explícita.</div></div>
                 <div class="audit-item"><span class="audit-badge">02</span><div><strong>Dados no contexto:</strong> reduza exposição antes de copiar código, logs ou prompts.</div></div>
-                <div class="audit-item"><span class="audit-badge">03</span><div><strong>Evidência:</strong> registre benchmark, teste local ou revisão que sustentou a escolha.</div></div>
+                <div class="audit-item"><span class="audit-badge">03</span><div><strong>Scaffold e effort:</strong> compare ferramenta + modelo + modo, não apenas o nome do modelo.</div></div>
               </div>
             </div>
           </div>

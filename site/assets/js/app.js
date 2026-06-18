@@ -1,53 +1,51 @@
 const navItems = [
-  ["home", "Início", "./"],
-  ["recomendador", "Recomendador", "recomendador.html"],
-  ["matriz", "Matriz", "matriz.html"],
-  ["modelos", "Modelos", "modelos.html"],
-  ["governanca", "Governança", "governanca.html"],
-  ["benchmarks", "Benchmarks", "benchmarks.html"],
-  ["fontes", "Fontes", "fontes.html"]
+  { id: "home", label: "Início", href: "./", index: "1" },
+  { id: "modelos", label: "Modelos", href: "modelos.html", index: "2" },
+  { id: "benchmarks", label: "Benchmarks", href: "benchmarks.html", index: "3" },
+  { id: "ides", label: "IDEs", href: "ides.html", index: "4" },
+  { id: "fontes", label: "Fontes", href: "fontes.html", index: "5" }
 ];
 
 const matrixRows = [
   {
     scenario: "Adoção GitHub-first",
-    detail: "Autocomplete, chat no IDE, PR review, issues, CLI e agentes no GitHub.",
+    detail: "Autocomplete, chat no IDE, PR review, issues e agentes dentro do GitHub.",
     model: "GitHub Copilot",
-    mode: "IDE + GitHub + agent mode quando necessário",
-    use: "A organização já trabalha em GitHub e quer rollout amplo com baixa fricção.",
-    avoid: "Repositório sensível sem política de dados aprovada ou custo de uso sem controle."
+    mode: "IDE + GitHub + agent mode com limites",
+    use: "O time já trabalha em GitHub e precisa de adoção ampla com baixa fricção.",
+    avoid: "Código sensível sem política de dados, orçamento de agentes ou revisão humana."
   },
   {
-    scenario: "AI IDE como fluxo principal",
-    detail: "Edição diária, navegação de codebase, tarefas multi-arquivo e automações.",
-    model: "Cursor / Windsurf",
-    mode: "IDE local + agentes/cloud quando o escopo justificar",
-    use: "O time quer trabalhar dentro de um editor agentic, com contexto do repositório e automações.",
-    avoid: "Uso sem checkpoints, sem limite de contexto ou sem validação local."
+    scenario: "Terminal / build / CI / debug",
+    detail: "Loop comando, log, patch, teste e repetição com evidência no terminal.",
+    model: "Codex CLI + GPT-5.5",
+    mode: "Agente em terminal + effort alto quando o risco subir",
+    use: "A tarefa depende de shell, testes, build, logs ou reprodução de falha.",
+    avoid: "Ambiente sem sandbox, sem limite de comandos ou com logs contendo segredos."
   },
   {
-    scenario: "Tarefa longa / decisão cara",
-    detail: "Refatoração, arquitetura, investigação, revisão sofisticada e execução com ferramentas.",
-    model: "Claude Code / Claude 4",
+    scenario: "Arquitetura / tarefa longa",
+    detail: "Refatoração, investigação, revisão sofisticada e decisão cara.",
+    model: "Claude Code / Claude Opus ou Sonnet",
     mode: "Plano primeiro, execução por etapas",
-    use: "O custo de errar é alto e a tarefa exige julgamento ou foco sustentado.",
-    avoid: "Microtarefa mecânica ou alteração óbvia que só precisa de latência baixa."
+    use: "O custo de errar é alto e a tarefa exige leitura ampla e julgamento.",
+    avoid: "Patch mecânico simples, onde custo e latência pesam mais que profundidade."
   },
   {
-    scenario: "Automação via API / pipeline",
-    detail: "Geração programática, diffs, revisão automatizada, bots e integrações próprias.",
-    model: "OpenAI Codex / GPT-4.1",
-    mode: "API, CLI ou agente isolado por tarefa",
-    use: "O objetivo é integrar IA em produto, pipeline ou rotina de engenharia.",
-    avoid: "Enviar código sensível sem ZDR/retention aprovado ou sem sandbox de execução."
+    scenario: "AI IDE como fluxo diário",
+    detail: "Edição diária, navegação de codebase, tarefas multi-arquivo e automações.",
+    model: "Cursor / Copilot",
+    mode: "IDE + checkpoints + validação local",
+    use: "O time quer velocidade no editor com contexto do repositório.",
+    avoid: "Alterações em lote sem diff pequeno, teste local e revisão."
   },
   {
     scenario: "Google Cloud / contexto longo",
-    detail: "Code Assist, Vertex/AI Studio, repositórios grandes e contexto multimodal.",
-    model: "Gemini Code Assist / Gemini Pro",
-    mode: "IDE + Vertex/AI Studio quando a pilha for Google",
-    use: "O time já está no ecossistema Google Cloud ou precisa de janela de contexto ampla.",
-    avoid: "Loops muito interativos quando latência observada atrapalhar a cadência."
+    detail: "Code Assist, Gemini CLI, agentes, repos grandes e contexto de 1M tokens.",
+    model: "Gemini Code Assist / Gemini CLI",
+    mode: "IDE + terminal + HiTL",
+    use: "A pilha já está em Google Cloud ou o gargalo é contexto amplo.",
+    avoid: "Escolher por janela de contexto sem medir latência e qualidade no repo."
   },
   {
     scenario: "AWS / modernização Java",
@@ -58,93 +56,84 @@ const matrixRows = [
     avoid: "Comparar com modelos frontier como ranking universal de inteligência."
   },
   {
-    scenario: "Soberania / self-hosting",
-    detail: "VPC, on-prem, air gap, custo unitário baixo ou necessidade de controle local.",
-    model: "Qwen3-Coder-Next / DeepSeek-V3",
-    mode: "Open-weight, API compatível ou serving próprio",
-    use: "Privacidade, custo e controle de implantação pesam mais que conveniência SaaS.",
-    avoid: "Usar sem observabilidade, avaliação interna e engenharia de serving."
-  },
-  {
     scenario: "Privacidade enterprise",
     detail: "Ambientes regulados, políticas rígidas, VPC/on-prem e controle de dados.",
-    model: "Tabnine / implantação privada",
+    model: "Tabnine / ferramenta aprovada",
     mode: "Enterprise controls antes de benchmark",
     use: "A regra de dados impede SaaS genérico ou exige implantação isolada.",
     avoid: "Escolher só por benchmark quando compliance é o critério dominante."
+  },
+  {
+    scenario: "Soberania / self-hosting",
+    detail: "VPC, on-prem, air gap, custo unitário baixo ou controle local.",
+    model: "Qwen / DeepSeek",
+    mode: "Open-weight, API compatível ou serving próprio",
+    use: "Privacidade, custo e controle de implantação pesam mais que conveniência SaaS.",
+    avoid: "Usar sem observabilidade, benchmark interno e engenharia de serving."
   }
 ];
 
 const modelProfiles = [
   {
-    name: "GitHub Copilot",
-    status: "Rota ativa",
+    name: "GPT-5.5",
+    status: "Frontier coding",
     statusClass: "good",
-    role: "Melhor encaixe para adoção organizacional GitHub-first.",
-    best: ["Autocomplete e chat", "PR review", "Agent mode", "Governança em GitHub"],
-    caution: "Controle uso de agentes, custo e política de dados antes de escalar.",
-    tags: ["adoção", "GitHub", "PR"]
+    role: "Modelo forte para agentes em terminal, debugging e automação com ferramenta.",
+    best: ["Codex CLI", "Terminal-Bench", "SWE-Bench Pro", "reasoning effort"],
+    caution: "Números de SWE-Bench Pro vêm de tabela do fornecedor; valide no repositório antes de padronizar.",
+    tags: ["frontier", "terminal", "effort"]
   },
   {
-    name: "Cursor",
-    status: "Rota ativa",
+    name: "GPT-5.4",
+    status: "Baseline recente",
     statusClass: "blue",
-    role: "AI IDE para execução diária com contexto de codebase.",
-    best: ["Implementação", "Navegação de repo", "Automations", "Agentes no editor"],
-    caution: "Use checkpoints e validação local em alterações multi-arquivo.",
-    tags: ["AI IDE", "Cursor", "agentes"]
+    role: "Ponto de comparação útil para medir ganho incremental de modelos GPT mais novos.",
+    best: ["comparação", "automação", "API", "tarefas com ferramenta"],
+    caution: "Não use como ranking isolado: scaffold, effort e agente mudam o resultado.",
+    tags: ["baseline", "fornecedor", "comparação"]
   },
   {
-    name: "Windsurf / Devin Desktop",
-    status: "Rota alternativa",
-    statusClass: "blue",
-    role: "AI IDE com agente cloud para automação, PR review e handoff mais autônomo.",
-    best: ["Editor agentic", "PR reviews", "MCP", "Devin cloud"],
-    caution: "Use com checkpoints explícitos: autonomia longa aumenta risco, custo e dependência do harness.",
-    tags: ["AI IDE", "cloud agent", "review"]
-  },
-  {
-    name: "Claude Code / Claude 4",
-    status: "Rota ativa",
+    name: "Claude Opus 4.8",
+    status: "Refactor e review",
     statusClass: "good",
-    role: "Tarefas longas, refatoração e revisão com julgamento.",
-    best: ["Arquitetura", "Refactor multiarquivo", "Review crítico", "Claude Code"],
-    caution: "Evite em patch mecânico simples se custo/latência forem relevantes.",
-    tags: ["arquitetura", "review", "agentes"]
+    role: "Rota forte para tarefas longas, revisão crítica e execução com Claude Code.",
+    best: ["arquitetura", "review", "Terminal-Bench", "Claude Code"],
+    caution: "Prefira quando profundidade compensa custo/latência; para microtarefas, é excesso.",
+    tags: ["julgamento", "review", "agentes"]
   },
   {
-    name: "OpenAI Codex / GPT-4.1",
-    status: "Rota ativa",
+    name: "Claude 5 Fable",
+    status: "Sinal novo",
+    statusClass: "blue",
+    role: "Entrada recente no Terminal-Bench 2.1, com desempenho próximo do topo em Claude Code.",
+    best: ["Terminal-Bench 2.1", "Claude Code", "execução longa", "comparação"],
+    caution: "Adição verificada fora do relatório; confirme disponibilidade e política antes de recomendar como default.",
+    tags: ["novo", "verificado", "pendente"]
+  },
+  {
+    name: "Claude Sonnet 4.6",
+    status: "Equilíbrio",
     statusClass: "good",
-    role: "Integração via API, automação programática e diffs auditáveis.",
-    best: ["API-first", "Codex CLI", "Bots internos", "Aider/diff editing"],
-    caution: "Isole execução e retenção antes de automatizar repositórios sensíveis.",
-    tags: ["API", "Codex", "automação"]
+    role: "Boa rota para execução recorrente quando custo, latência e qualidade precisam equilibrar.",
+    best: ["implementação", "review", "Claude Code", "tarefas médias"],
+    caution: "Não substitui benchmark interno em fluxos críticos ou repositórios sensíveis.",
+    tags: ["equilíbrio", "coding", "review"]
   },
   {
-    name: "Gemini Code Assist",
-    status: "Rota auxiliar",
-    statusClass: "blue",
-    role: "Boa opção quando Google Cloud, Vertex e contexto longo são centrais.",
-    best: ["Google Cloud", "Repo grande", "Code Assist", "GitHub reviews"],
-    caution: "Meça latência real no fluxo do time antes de tornar default.",
-    tags: ["Google Cloud", "contexto", "IDE"]
+    name: "Gemini 3.1 Pro / Gemini 3",
+    status: "Google + contexto",
+    statusClass: "good",
+    role: "Família relevante quando contexto longo, Google Cloud e agentes no terminal importam.",
+    best: ["1M tokens", "Gemini CLI", "Code Assist", "Google Cloud"],
+    caution: "Contexto longo não corrige instrução ruim; teste latência, grounding e revisão humana.",
+    tags: ["contexto", "Google", "terminal"]
   },
   {
-    name: "Amazon Q Developer",
-    status: "Rota ativa AWS",
-    statusClass: "blue",
-    role: "Modernização, revisão e automação para times AWS-first.",
-    best: ["Java modernization", "AWS", "CLI", "Security review"],
-    caution: "Use quando a pilha AWS for parte do problema, não como benchmark universal.",
-    tags: ["AWS", "modernização", "segurança"]
-  },
-  {
-    name: "Qwen3-Coder-Next",
+    name: "Qwen / Qwen3-Coder",
     status: "Open-weight",
     statusClass: "warn",
-    role: "Candidato forte para self-hosting e agentes com controle local.",
-    best: ["VPC/on-prem", "Soberania", "Serving próprio", "Agentic coding"],
+    role: "Candidato para self-hosting, soberania e workloads onde controle local pesa.",
+    best: ["VPC/on-prem", "serving próprio", "custo", "agentic coding"],
     caution: "Exige avaliação interna, serving, telemetria e política de atualização.",
     tags: ["open-weight", "self-hosting", "soberania"]
   },
@@ -153,27 +142,154 @@ const modelProfiles = [
     status: "Open-weight / baixo custo",
     statusClass: "warn",
     role: "Opção para custo unitário baixo, API compatível e execução controlada.",
-    best: ["Alto volume", "Pesquisa interna", "Prototipagem local", "Serving aberto"],
+    best: ["alto volume", "pesquisa interna", "prototipagem local", "serving aberto"],
     caution: "Não substitui revisão de segurança, benchmark interno e política de dados.",
     tags: ["baixo custo", "open-weight", "API"]
-  },
-  {
-    name: "Tabnine",
-    status: "Enterprise privado",
-    statusClass: "good",
-    role: "Rota para compliance, VPC, on-prem e ambientes regulados.",
-    best: ["Privacidade", "VPC", "On-prem", "Air gap"],
-    caution: "Escolha por restrição de dados, não por ranking frontier isolado.",
-    tags: ["privacidade", "enterprise", "air gap"]
   }
 ];
 
 const benchmarkRows = [
-  ["Gemini 3.1 Pro · SWE-Bench Verified", 80.6],
-  ["Claude Sonnet 4 · SWE-Bench Verified", 72.7],
-  ["Claude Opus 4 · SWE-Bench Verified", 72.5],
-  ["GPT-4.1 · SWE-Bench Verified", 54.6],
-  ["DeepSeek-V3 · SWE Verified", 42.0]
+  {
+    benchmark: "Terminal-Bench",
+    version: "2.1",
+    tool: "Codex CLI",
+    model: "GPT-5.5",
+    score: "83,4%",
+    value: 83.4,
+    uncertainty: "± 2,2",
+    scaffold: "agente em terminal",
+    effort: "não informado",
+    sourceStatus: "verificado",
+    sourceDate: "2026-06-18",
+    sourceUrl: "https://www.tbench.ai/leaderboard/terminal-bench/2.1",
+    note: "Melhor sinal atual para tarefas de terminal/debug dentro das fontes verificadas."
+  },
+  {
+    benchmark: "Terminal-Bench",
+    version: "2.1",
+    tool: "Claude Code",
+    model: "Claude 5 Fable",
+    score: "83,1%",
+    value: 83.1,
+    uncertainty: "± 2,0",
+    scaffold: "agente em terminal",
+    effort: "não informado",
+    sourceStatus: "verificado",
+    sourceDate: "2026-06-18",
+    sourceUrl: "https://www.tbench.ai/leaderboard/terminal-bench/2.1",
+    note: "Adição curada fora do relatório; usar como sinal novo, não como default sem checar disponibilidade."
+  },
+  {
+    benchmark: "Terminal-Bench",
+    version: "2.1",
+    tool: "Claude Code",
+    model: "Claude Opus 4.8",
+    score: "78,9%",
+    value: 78.9,
+    uncertainty: "± 2,5",
+    scaffold: "agente em terminal",
+    effort: "não informado",
+    sourceStatus: "verificado",
+    sourceDate: "2026-06-18",
+    sourceUrl: "https://www.tbench.ai/leaderboard/terminal-bench/2.1",
+    note: "Forte para execução com julgamento e tarefas longas em terminal."
+  },
+  {
+    benchmark: "Terminal-Bench",
+    version: "2.1",
+    tool: "Gemini CLI",
+    model: "Gemini 3.1 Pro",
+    score: "70,7%",
+    value: 70.7,
+    uncertainty: "± 2,9",
+    scaffold: "agente em terminal",
+    effort: "não informado",
+    sourceStatus: "verificado",
+    sourceDate: "2026-06-18",
+    sourceUrl: "https://www.tbench.ai/leaderboard/terminal-bench/2.1",
+    note: "Sinal relevante quando Google Cloud, Gemini CLI ou contexto amplo fazem parte do fluxo."
+  },
+  {
+    benchmark: "Terminal-Bench",
+    version: "2.0",
+    tool: "Codex",
+    model: "GPT-5.5",
+    score: "82,7%",
+    value: 82.7,
+    uncertainty: "",
+    scaffold: "divulgado pela OpenAI",
+    effort: "não informado",
+    sourceStatus: "fornecedor",
+    sourceDate: "2026-06-18",
+    sourceUrl: "https://openai.com/index/introducing-gpt-5-5/",
+    note: "Bom para leitura de tendência, mas não substitui o leaderboard público por versão."
+  },
+  {
+    benchmark: "SWE-Bench Pro",
+    version: "publicação OpenAI",
+    tool: "Codex",
+    model: "GPT-5.5",
+    score: "58,6%",
+    value: 58.6,
+    uncertainty: "",
+    scaffold: "comparativo do fornecedor",
+    effort: "não informado",
+    sourceStatus: "fornecedor",
+    sourceDate: "2026-06-18",
+    sourceUrl: "https://openai.com/index/introducing-gpt-5-5/",
+    note: "Usar como evidência de fornecedor; comparar com cuidado contra dados independentes."
+  },
+  {
+    benchmark: "Aider Polyglot",
+    version: "leaderboard",
+    tool: "Aider",
+    model: "GPT-5",
+    score: "88,0%",
+    value: 88.0,
+    uncertainty: "",
+    scaffold: "diff editing",
+    effort: "high",
+    sourceStatus: "verificado",
+    sourceDate: "2026-06-18",
+    sourceUrl: "https://aider.chat/docs/leaderboards/",
+    note: "Mostra que effort muda resultado; high supera medium e low no mesmo benchmark."
+  },
+  {
+    benchmark: "Aider Polyglot",
+    version: "leaderboard",
+    tool: "Aider",
+    model: "GPT-5",
+    score: "86,7%",
+    value: 86.7,
+    uncertainty: "",
+    scaffold: "diff editing",
+    effort: "medium",
+    sourceStatus: "verificado",
+    sourceDate: "2026-06-18",
+    sourceUrl: "https://aider.chat/docs/leaderboards/",
+    note: "Alternativa quando custo/latência precisam equilibrar desempenho."
+  }
+];
+
+const benchmarkNotes = [
+  {
+    title: "SWE-Bench Verified virou histórico",
+    status: "histórico",
+    desc: "Não usar como ranking principal de frontier coding; priorizar SWE-Bench Pro, Terminal-Bench e validação local.",
+    url: "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/"
+  },
+  {
+    title: "Compare scaffold, não só modelo",
+    status: "crítico",
+    desc: "Terminal-Bench mede agente + modelo. Aider mede diff editing. O número muda quando a ferramenta muda.",
+    url: "https://www.tbench.ai/leaderboard/terminal-bench/2.1"
+  },
+  {
+    title: "Validação local decide",
+    status: "prático",
+    desc: "Benchmarks orientam a rota inicial; teste do repositório, logs e revisão humana confirmam a escolha.",
+    url: "recomendador.html"
+  }
 ];
 
 const sources = [
@@ -190,82 +306,132 @@ const sources = [
     url: "https://www.tbench.ai/"
   },
   {
-    type: "Survey",
+    type: "Adoção",
     title: "Stack Overflow Developer Survey 2025 - AI",
-    desc: "Uso de AI tools, confiança, agentes, produtividade e preocupações com precisão, segurança e privacidade.",
-    url: "https://survey.stackoverflow.co/2025/ai/"
+    desc: "84% usam ou planejam usar AI tools; 50,6% dos profissionais usam diariamente; confiança ainda é baixa.",
+    url: "https://survey.stackoverflow.co/2025/ai/",
+    status: "verificado",
+    verifiedAt: "2026-06-18"
+  },
+  {
+    type: "Adoção",
+    title: "JetBrains AI Pulse 2026",
+    desc: "Sinal de mercado: 90% usam IA no trabalho e 74% adotaram ferramentas especializadas de desenvolvimento.",
+    url: "https://blog.jetbrains.com/research/2026/04/which-ai-coding-tools-do-developers-actually-use-at-work/",
+    status: "verificado",
+    verifiedAt: "2026-06-18"
+  },
+  {
+    type: "Benchmark",
+    title: "Terminal-Bench 2.1",
+    desc: "Leaderboard público para agentes em terminal; separa ferramenta, modelo, versão e intervalo de confiança.",
+    url: "https://www.tbench.ai/leaderboard/terminal-bench/2.1",
+    status: "verificado",
+    verifiedAt: "2026-06-18"
+  },
+  {
+    type: "Benchmark",
+    title: "Aider LLM Leaderboards",
+    desc: "Benchmark polyglot de edição por diff; útil para comparar impacto de reasoning effort.",
+    url: "https://aider.chat/docs/leaderboards/",
+    status: "verificado",
+    verifiedAt: "2026-06-18"
+  },
+  {
+    type: "Benchmark",
+    title: "OpenAI - Introducing GPT-5.5",
+    desc: "Publicação com números de Terminal-Bench 2.0, SWE-Bench Pro e comparativos de fornecedor.",
+    url: "https://openai.com/index/introducing-gpt-5-5/",
+    status: "fornecedor",
+    verifiedAt: "2026-06-18"
+  },
+  {
+    type: "Benchmark",
+    title: "OpenAI - SWE-Bench Verified no longer measures frontier coding",
+    desc: "Justificativa para tratar SWE-Bench Verified como histórico e priorizar SWE-Bench Pro.",
+    url: "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/",
+    status: "verificado",
+    verifiedAt: "2026-06-18"
   },
   {
     type: "Plataforma",
     title: "GitHub Copilot",
     desc: "Copilot em IDE, GitHub, CLI, modelos selecionáveis, agentes e controles corporativos.",
-    url: "https://github.com/features/copilot"
+    url: "https://github.com/features/copilot",
+    status: "verificado",
+    verifiedAt: "2026-06-18"
   },
   {
     type: "Plataforma",
     title: "Cursor",
     desc: "AI IDE com agente, Composer, CLI, automations, GitHub, SDK e fluxos de revisão.",
-    url: "https://cursor.com/"
+    url: "https://cursor.com/",
+    status: "verificado",
+    verifiedAt: "2026-06-18"
   },
   {
     type: "Modelo",
-    title: "OpenAI - Introducing GPT-4.1 in the API",
-    desc: "Coding, instruction following, long context, SWE-Bench Verified, Aider polyglot e preços por token.",
-    url: "https://openai.com/index/gpt-4-1/"
+    title: "Anthropic - Claude Opus 4.8",
+    desc: "Referência oficial para Claude Opus 4.8, Claude Code e leitura de benchmark do fornecedor.",
+    url: "https://www.anthropic.com/news/claude-opus-4-8",
+    status: "fornecedor",
+    verifiedAt: "2026-06-18"
   },
   {
     type: "Modelo",
-    title: "Anthropic - Introducing Claude 4",
-    desc: "Claude Opus 4, Sonnet 4, Claude Code GA, SWE-Bench, Terminal-Bench e pricing oficial.",
-    url: "https://www.anthropic.com/news/claude-4"
-  },
-  {
-    type: "Modelo",
-    title: "Google DeepMind - Gemini Pro",
-    desc: "Model card e visão de capacidades do Gemini Pro usados como referência para contexto longo e coding.",
-    url: "https://deepmind.google/models/gemini/pro/"
+    title: "Anthropic - Claude Sonnet 4.6",
+    desc: "Referência oficial para Sonnet 4.6 como modelo de equilíbrio em coding e agentes.",
+    url: "https://www.anthropic.com/news/claude-sonnet-4-6",
+    status: "fornecedor",
+    verifiedAt: "2026-06-18"
   },
   {
     type: "Plataforma",
     title: "Gemini Code Assist",
-    desc: "Code Assist para times, IDEs, Google Cloud e fluxos de desenvolvimento assistido.",
-    url: "https://codeassist.google/products/business"
-  },
-  {
-    type: "Plataforma",
-    title: "Windsurf",
-    desc: "Editor agentic, agentes cloud e revisão de PR como alternativa ao fluxo AI IDE principal.",
-    url: "https://windsurf.com/"
+    desc: "Code Assist Standard/Enterprise com Gemini 3, Gemini CLI, agent mode e contexto de 1M tokens.",
+    url: "https://codeassist.google/products/business",
+    status: "verificado",
+    verifiedAt: "2026-06-18"
   },
   {
     type: "Plataforma",
     title: "Amazon Q Developer",
     desc: "Assistente da AWS para IDE, CLI, revisão, segurança e modernização de código.",
-    url: "https://aws.amazon.com/q/developer/"
+    url: "https://aws.amazon.com/q/developer/",
+    status: "verificado",
+    verifiedAt: "2026-06-18"
   },
   {
     type: "Open-weight",
-    title: "Qwen3-Coder-Next Technical Report",
-    desc: "Modelo open-weight especializado em coding agents, SWE-Bench, Terminal-Bench e inferência eficiente.",
-    url: "https://arxiv.org/abs/2603.00729"
+    title: "Qwen Coder",
+    desc: "Rota open-weight para avaliação interna, self-hosting e controle de implantação.",
+    url: "https://qwenlm.github.io/",
+    status: "pendente",
+    verifiedAt: "2026-06-18"
   },
   {
     type: "Open-weight",
     title: "DeepSeek-V3 Technical Report",
-    desc: "Modelo MoE open-weight, avaliações de código e foco em custo/eficiência de inferência.",
-    url: "https://arxiv.org/abs/2412.19437"
+    desc: "Modelo MoE open-weight; usar como rota de custo/controle após avaliação interna.",
+    url: "https://arxiv.org/abs/2412.19437",
+    status: "pendente",
+    verifiedAt: "2026-06-18"
   },
   {
     type: "Privacidade",
     title: "Tabnine",
     desc: "Assistente enterprise com opções voltadas a privacidade, controle de dados, VPC, on-prem e air gap.",
-    url: "https://www.tabnine.com/"
+    url: "https://www.tabnine.com/",
+    status: "verificado",
+    verifiedAt: "2026-06-18"
   },
   {
     type: "Segurança",
     title: "OWASP Top 10 for LLM Applications",
     desc: "Prompt injection, sensitive disclosure, supply chain, excessive agency e demais riscos.",
-    url: "https://owasp.org/www-project-top-10-for-large-language-model-applications/"
+    url: "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+    status: "verificado",
+    verifiedAt: "2026-06-18"
   }
 ];
 
@@ -273,6 +439,7 @@ const recommendations = {
   simple: {
     model: "GitHub Copilot / Cursor",
     mode: "Autocomplete, chat curto ou edição local",
+    effort: "baixo",
     tags: ["microtarefa", "baixo risco", "latência"],
     why: "A tarefa é mecânica. O ganho vem de reduzir atrito, não de maximizar raciocínio.",
     prompt: "Faça apenas a alteração solicitada. Não refatore nada adjacente. Preserve o padrão atual e resuma o diff.",
@@ -281,30 +448,34 @@ const recommendations = {
   daily: {
     model: "Cursor / GitHub Copilot",
     mode: "IDE + validação local",
+    effort: "normal",
     tags: ["default", "eficiência", "implementação"],
     why: "Implementação comum se beneficia de ferramenta integrada ao editor e ao fluxo de PR, sem precisar de modelo premium em todo patch.",
     prompt: "Implemente em passos pequenos. Liste arquivos afetados, preserve padrões existentes, rode/verifique testes relevantes e resuma o resultado.",
     caution: "Se a mudança afetar contrato, segurança ou muitos arquivos, peça plano antes de executar."
   },
   architecture: {
-    model: "Claude Code / Claude 4",
+    model: "Claude Code / Claude Opus ou Sonnet",
     mode: "Plano + execução por etapas",
+    effort: "alto",
     tags: ["arquitetura", "trade-offs", "decisão cara"],
     why: "A tarefa exige julgamento, leitura de contexto e cuidado com efeitos colaterais.",
     prompt: "Antes de editar, proponha 2-3 abordagens com trade-offs, riscos, arquivos afetados e plano incremental. Só implemente após o plano.",
     caution: "Depois do plano, use ferramenta mais rápida para trechos mecânicos se isso reduzir custo e ruído."
   },
   terminal: {
-    model: "Claude Code / OpenAI Codex",
+    model: "Codex CLI + GPT-5.5",
     mode: "Loop comando -> log -> patch -> teste",
+    effort: "alto se houver falha crítica",
     tags: ["terminal", "debug", "CI"],
-    why: "Terminal/debug exige loop de ferramenta: rodar comando, observar logs, corrigir e repetir.",
+    why: "Terminal/debug exige loop de ferramenta. Terminal-Bench 2.1 favorece rotas com agente e modelo forte nesse cenário.",
     prompt: "Reproduza o erro, formule hipótese, aplique a menor correção viável, rode novamente e documente comandos, saída e resultado.",
-    caution: "Se a causa for desenho do sistema, volte para planejamento antes de insistir no loop de terminal."
+    caution: "Se o ambiente tiver segredos, faça redaction antes de enviar logs. Se virar desenho de sistema, volte para plano."
   },
   review: {
     model: "GitHub Copilot + Claude Code",
     mode: "PR review + revisão profunda",
+    effort: "normal/alto",
     tags: ["review cruzado", "edge cases", "design"],
     why: "Revisão crítica combina integração no GitHub com uma segunda leitura de intenção, segurança e manutenção.",
     prompt: "Revise o diff em duas passagens: primeiro bugs, edge cases e testes; depois arquitetura, legibilidade e efeitos colaterais.",
@@ -313,22 +484,25 @@ const recommendations = {
   frontend: {
     model: "Cursor + Claude Code / Codex",
     mode: "Julgamento visual + execução local",
+    effort: "normal",
     tags: ["UI", "screenshot", "design system"],
     why: "UI exige respeitar intenção visual, padrões existentes e verificação em viewport real.",
     prompt: "Compare esperado vs atual, preserve design system, faça mudanças mínimas e liste diferenças visuais resolvidas.",
     caution: "Para ajuste pequeno de CSS, uma ferramenta rápida no editor pode ser suficiente."
   },
   largeContext: {
-    model: "Gemini Code Assist / Claude Code / Cursor",
+    model: "Gemini Code Assist / Gemini CLI",
     mode: "Mapeamento antes de editar",
+    effort: "normal/alto",
     tags: ["repo grande", "síntese", "contexto"],
-    why: "Quando o gargalo é ler muito contexto, priorize janela ampla e síntese antes de editar.",
+    why: "Quando o gargalo é ler muito contexto, priorize janela ampla, grounding e síntese antes de editar.",
     prompt: "Mapeie módulos, contratos, pontos de entrada, dependências e riscos. Proponha plano incremental antes de alterar arquivos.",
     caution: "Depois que os pontos de alteração estiverem claros, execute em diffs pequenos com validação local."
   },
   migration: {
     model: "Amazon Q Developer / Claude Code / Codex",
     mode: "Plano + checkpoints + validação",
+    effort: "alto",
     tags: ["migração", "feature grande", "checkpoints"],
     why: "Migração e modernização precisam de controle por etapas. Amazon Q é especialmente relevante em stacks AWS/Java.",
     prompt: "Analise a área, proponha plano com checkpoints, implemente por etapas, rode testes e pare para revisão antes de mudanças destrutivas.",
@@ -339,9 +513,9 @@ const recommendations = {
 function tagClass(tag) {
   const t = tag.toLowerCase();
   if (t.includes("suspenso") || t.includes("retenção") || t.includes("confidencial")) return "bad";
-  if (t.includes("governança") || t.includes("watchlist") || t.includes("custo")) return "warn";
-  if (t.includes("contexto") || t.includes("terminal") || t.includes("debug") || t.includes("1m")) return "blue";
-  if (t.includes("arquitetura") || t.includes("review")) return "purple";
+  if (t.includes("governança") || t.includes("watchlist") || t.includes("custo") || t.includes("pendente")) return "warn";
+  if (t.includes("contexto") || t.includes("terminal") || t.includes("debug") || t.includes("1m") || t.includes("google")) return "blue";
+  if (t.includes("arquitetura") || t.includes("review") || t.includes("julgamento")) return "purple";
   return "brand";
 }
 
@@ -350,8 +524,29 @@ function sourceClass(type) {
   if (t.includes("governança") || t.includes("privacidade")) return "warn";
   if (t.includes("segurança")) return "bad";
   if (t.includes("benchmark")) return "brand";
+  if (t.includes("adoção")) return "good";
   if (t.includes("referência")) return "purple";
   return "good";
+}
+
+function sourceStatusClass(status = "verificado") {
+  if (status === "fornecedor") return "blue";
+  if (status === "pendente") return "warn";
+  if (status === "histórico") return "purple";
+  if (status === "crítico") return "bad";
+  return "good";
+}
+
+function sourceStatusLabel(status = "verificado") {
+  const labels = {
+    verificado: "verificado",
+    fornecedor: "fornecedor",
+    pendente: "pendente",
+    histórico: "histórico",
+    crítico: "crítico",
+    prático: "prático"
+  };
+  return labels[status] || status;
 }
 
 function renderNav() {
@@ -359,15 +554,45 @@ function renderNav() {
   if (!nav) return;
 
   const current = document.body.dataset.page || "home";
-  nav.innerHTML = navItems.map(([id, label, href], index) => {
+  nav.innerHTML = navItems.map(({ id, label, href, index }) => {
     const active = current === id ? ' aria-current="page"' : "";
     return `
       <a href="${href}"${active}>
-        <span class="nav-index">${String(index + 1).padStart(2, "0")}</span>
+        <span class="nav-index">${index}</span>
         <span>${label}</span>
       </a>
     `;
   }).join("");
+}
+
+function renderTopbar() {
+  if (document.querySelector(".site-topbar")) return;
+
+  const current = document.body.dataset.page || "home";
+  const topbar = document.createElement("header");
+  topbar.className = "site-topbar";
+  topbar.setAttribute("aria-label", "Navegação compacta");
+  topbar.innerHTML = `
+    <a class="topbar-brand" href="./">
+      <span class="topbar-mark" aria-hidden="true">BAI</span>
+      <span>BenchAI</span>
+    </a>
+    <nav class="topbar-nav" aria-label="Navegação principal compacta">
+      ${navItems.map(({ id, label, href, index }) => {
+        const active = current === id ? ' aria-current="page"' : "";
+        return `
+          <a href="${href}"${active}>
+            <span class="topbar-index">${index}</span>
+            <span>${label}</span>
+          </a>
+        `;
+      }).join("")}
+    </nav>
+    <button class="topbar-print" type="button" data-print>PDF</button>
+  `;
+
+  const shell = document.querySelector(".app-shell");
+  document.body.insertBefore(topbar, shell);
 }
 
 function renderMatrix() {
@@ -375,7 +600,7 @@ function renderMatrix() {
   if (!body) return;
 
   body.innerHTML = matrixRows.map(row => `
-    <tr class="searchable" data-search="${[row.scenario, row.detail, row.model, row.mode, row.use, row.avoid].join(" ").toLowerCase()}">
+    <tr>
       <td><strong>${row.scenario}</strong><div class="table-note">${row.detail}</div></td>
       <td><span class="tag brand">${row.model}</span></td>
       <td>${row.mode}</td>
@@ -390,7 +615,7 @@ function renderModels() {
   if (!grid) return;
 
   grid.innerHTML = modelProfiles.map(model => `
-    <article class="model-card searchable" data-search="${[model.name, model.status, model.role, model.best.join(" "), model.caution, model.tags.join(" ")].join(" ").toLowerCase()}">
+    <article class="model-card">
       <div class="tag-row">
         <span class="tag ${model.statusClass}">${model.status}</span>
         ${model.tags.map(t => `<span class="tag ${tagClass(t)}">${t}</span>`).join("")}
@@ -404,16 +629,40 @@ function renderModels() {
 }
 
 function renderBenchmarks() {
-  const list = document.getElementById("barList");
+  const list = document.getElementById("benchmarkList");
   if (!list) return;
 
-  const max = Math.max(...benchmarkRows.map(([, value]) => value));
-  list.innerHTML = benchmarkRows.map(([label, value]) => `
-    <div class="bar-row searchable" data-search="${label.toLowerCase()} ${value}">
-      <div class="bar-label" title="${label}">${label}</div>
-      <div class="bar-track"><div class="bar-fill" style="width:${(value / max) * 100}%"></div></div>
-      <div class="bar-value">${value.toFixed(1)}</div>
-    </div>
+  list.innerHTML = benchmarkRows.map(row => `
+    <article class="benchmark-card">
+      <div class="tag-row">
+        <span class="tag brand">${row.benchmark} ${row.version}</span>
+        <span class="tag ${sourceStatusClass(row.sourceStatus)}">${sourceStatusLabel(row.sourceStatus)}</span>
+      </div>
+      <h3>${row.tool}</h3>
+      <p>${row.model}</p>
+      <div class="benchmark-score">
+        <strong>${row.score}</strong>
+        ${row.uncertainty ? `<span>${row.uncertainty}</span>` : ""}
+      </div>
+      <dl class="benchmark-meta">
+        <div><dt>Scaffold</dt><dd>${row.scaffold}</dd></div>
+        <div><dt>Effort</dt><dd>${row.effort}</dd></div>
+        <div><dt>Verificação</dt><dd>${row.sourceDate}</dd></div>
+      </dl>
+      <p class="meta">${row.note}</p>
+      <a class="source-link" href="${row.sourceUrl}" target="_blank" rel="noopener noreferrer">Abrir fonte</a>
+    </article>
+  `).join("");
+
+  const notes = document.getElementById("benchmarkNotes");
+  if (!notes) return;
+
+  notes.innerHTML = benchmarkNotes.map(note => `
+    <a class="source-card" href="${note.url}" ${note.url.startsWith("http") ? 'target="_blank" rel="noopener noreferrer"' : ""}>
+      <span class="tag ${sourceStatusClass(note.status)}" style="justify-self:start">${sourceStatusLabel(note.status)}</span>
+      <strong>${note.title}</strong>
+      <span class="desc">${note.desc}</span>
+    </a>
   `).join("");
 }
 
@@ -422,10 +671,14 @@ function renderSources() {
   if (!grid) return;
 
   grid.innerHTML = sources.map(source => `
-    <a class="source-card searchable" href="${source.url}" target="_blank" rel="noopener noreferrer" data-search="${[source.type, source.title, source.desc, source.url].join(" ").toLowerCase()}">
-      <span class="tag ${sourceClass(source.type)}" style="justify-self:start">${source.type}</span>
+    <a class="source-card" href="${source.url}" target="_blank" rel="noopener noreferrer">
+      <span class="tag-row">
+        <span class="tag ${sourceClass(source.type)}">${source.type}</span>
+        <span class="tag ${sourceStatusClass(source.status)}">${sourceStatusLabel(source.status)}</span>
+      </span>
       <strong>${source.title}</strong>
       <span class="desc">${source.desc}</span>
+      ${source.verifiedAt ? `<span class="source-meta">Verificado em ${source.verifiedAt}</span>` : ""}
     </a>
   `).join("");
 }
@@ -444,6 +697,7 @@ function recommend() {
     rec = {
       model: "Cursor/Copilot + revisão Claude Code",
       mode: "Execução + revisão",
+      effort: "normal/alto",
       tags: ["implementação", "review", "risco médio"],
       why: "A tarefa ainda é implementação, mas a complexidade alta pede uma revisão de intenção e efeitos colaterais.",
       prompt: "Implemente com diffs pequenos e peça revisão focada em contratos, efeitos colaterais e testes faltantes.",
@@ -456,6 +710,7 @@ function recommend() {
       ...rec,
       model: rec.model.includes("Claude") ? rec.model : `${rec.model} + plano Claude Code`,
       mode: `${rec.mode} + checkpoint`,
+      effort: rec.effort ? `${rec.effort} + planejamento` : "planejamento",
       tags: [...new Set([...rec.tags, "checkpoints", "escopo"])],
       caution: `${rec.caution} Como o escopo é grande/desconhecido, peça lista de arquivos e checkpoints antes de aceitar edição em lote.`
     };
@@ -463,8 +718,9 @@ function recommend() {
 
   if (sensitivity === "confidential" || sensitivity === "regulated") {
     rec = {
-      model: sensitivity === "regulated" ? "Tabnine / Qwen / DeepSeek self-hosted" : "Ferramenta aprovada com contexto mínimo",
+      model: sensitivity === "regulated" ? "Tabnine / self-hosting aprovado" : "Ferramenta aprovada com contexto mínimo",
       mode: task === "terminal" ? "Sem logs crus, com redaction" : "Plano curto + diffs pequenos",
+      effort: "governança primeiro",
       tags: ["privacidade", "governança", "contexto mínimo"],
       why: "A sensibilidade dos dados tem prioridade sobre benchmark. A rota evita modelos em watchlist e reduz o contexto compartilhado.",
       prompt: "Use exemplos sintéticos ou trechos redigidos. Liste suposições, plano, arquivos afetados e validação. Não solicite nem exponha segredos.",
@@ -473,58 +729,122 @@ function recommend() {
   }
 
   document.getElementById("recModel").textContent = rec.model;
-  document.getElementById("recMode").textContent = rec.mode;
+  document.getElementById("recMode").textContent = `${rec.mode} · effort: ${rec.effort || "normal"}`;
   document.getElementById("recTags").innerHTML = rec.tags.map(t => `<span class="tag ${tagClass(t)}">${t}</span>`).join("");
   document.getElementById("recWhy").textContent = rec.why;
   document.getElementById("recPrompt").textContent = rec.prompt;
   document.getElementById("recCaution").textContent = rec.caution;
 }
 
-function filterPage() {
-  const input = document.getElementById("searchInput");
-  const count = document.getElementById("searchCount");
-  if (!input || !count) return;
+function setupSidebarCollapse() {
+  const collapseButton = document.getElementById("sidebarCollapse");
+  const revealButton = document.getElementById("sidebarReveal");
+  if (!collapseButton || !revealButton) return;
 
-  const query = input.value.trim().toLowerCase();
-  const items = Array.from(document.querySelectorAll(".searchable"));
-  let visible = 0;
+  const storageKey = "benchai-sidebar-collapsed";
+  const desktopQuery = window.matchMedia("(min-width: 1121px)");
 
-  items.forEach(item => {
-    const haystack = (item.getAttribute("data-search") || item.textContent || "").toLowerCase();
-    const show = !query || haystack.includes(query);
-    item.classList.toggle("is-hidden", !show);
-    if (show) visible += 1;
+  const readStored = () => {
+    try {
+      return localStorage.getItem(storageKey) === "true";
+    } catch {
+      return false;
+    }
+  };
+
+  const writeStored = value => {
+    try {
+      localStorage.setItem(storageKey, String(value));
+    } catch {
+      // Ignore storage failures; the control still works for the current page.
+    }
+  };
+
+  const render = () => {
+    const collapsed = desktopQuery.matches && readStored();
+    document.body.classList.toggle("sidebar-collapsed", collapsed);
+    collapseButton.setAttribute("aria-expanded", String(!collapsed));
+    revealButton.setAttribute("aria-expanded", String(!collapsed));
+  };
+
+  collapseButton.addEventListener("click", () => {
+    writeStored(true);
+    render();
   });
 
-  count.textContent = query ? `${visible}/${items.length}` : "todos";
+  revealButton.addEventListener("click", () => {
+    writeStored(false);
+    render();
+  });
+
+  if (desktopQuery.addEventListener) {
+    desktopQuery.addEventListener("change", render);
+  } else {
+    desktopQuery.addListener(render);
+  }
+
+  render();
 }
 
-function setupMobileNav() {
-  const sidebar = document.getElementById("sidebar");
-  const overlay = document.getElementById("overlay");
-  const menuBtn = document.getElementById("menuBtn");
-  if (!sidebar || !overlay || !menuBtn) return;
+function setupThemeSwitch() {
+  const storageKey = "benchai-theme";
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  const systemQuery = window.matchMedia("(prefers-color-scheme: dark)");
+  const switchButton = document.createElement("button");
 
-  const open = () => {
-    sidebar.classList.add("open");
-    overlay.classList.add("open");
-    document.body.classList.add("nav-open");
-    menuBtn.setAttribute("aria-expanded", "true");
+  switchButton.className = "theme-switch";
+  switchButton.type = "button";
+  switchButton.setAttribute("role", "switch");
+  switchButton.innerHTML = `
+    <span class="theme-switch-track" aria-hidden="true">
+      <span class="theme-switch-thumb"></span>
+    </span>
+  `;
+
+  const readStored = () => {
+    try {
+      const stored = localStorage.getItem(storageKey);
+      return stored === "dark" || stored === "light" ? stored : null;
+    } catch {
+      return null;
+    }
   };
 
-  const close = () => {
-    sidebar.classList.remove("open");
-    overlay.classList.remove("open");
-    document.body.classList.remove("nav-open");
-    menuBtn.setAttribute("aria-expanded", "false");
+  const writeStored = theme => {
+    try {
+      localStorage.setItem(storageKey, theme);
+    } catch {
+      // Ignore storage failures; the selected theme still applies to the current page.
+    }
   };
 
-  menuBtn.addEventListener("click", () => sidebar.classList.contains("open") ? close() : open());
-  overlay.addEventListener("click", close);
-  document.querySelectorAll(".nav-list a").forEach(link => link.addEventListener("click", close));
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape") close();
+  const applyTheme = (theme, persist = false) => {
+    document.body.dataset.theme = theme;
+    switchButton.setAttribute("aria-checked", String(theme === "dark"));
+    switchButton.setAttribute("aria-label", theme === "dark" ? "Mudar para tema claro" : "Mudar para tema escuro");
+    switchButton.title = theme === "dark" ? "Mudar para tema claro" : "Mudar para tema escuro";
+    if (themeMeta) themeMeta.setAttribute("content", theme === "dark" ? "#111113" : "#f5f5f7");
+    if (persist) writeStored(theme);
+  };
+
+  const initialTheme = readStored() || (systemQuery.matches ? "dark" : "light");
+  document.body.appendChild(switchButton);
+  applyTheme(initialTheme);
+
+  switchButton.addEventListener("click", () => {
+    const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
+    applyTheme(nextTheme, true);
   });
+
+  const syncSystemTheme = event => {
+    if (!readStored()) applyTheme(event.matches ? "dark" : "light");
+  };
+
+  if (systemQuery.addEventListener) {
+    systemQuery.addEventListener("change", syncSystemTheme);
+  } else {
+    systemQuery.addListener(syncSystemTheme);
+  }
 }
 
 function setupEvents() {
@@ -533,29 +853,18 @@ function setupEvents() {
     if (el) el.addEventListener("change", recommend);
   });
 
-  const searchInput = document.getElementById("searchInput");
-  if (searchInput) searchInput.addEventListener("input", filterPage);
-
-  const clearSearch = document.getElementById("clearSearch");
-  if (clearSearch) {
-    clearSearch.addEventListener("click", () => {
-      searchInput.value = "";
-      filterPage();
-      searchInput.focus();
-    });
-  }
-
   document.querySelectorAll("[data-print]").forEach(button => {
     button.addEventListener("click", () => window.print());
   });
 }
 
 renderNav();
+renderTopbar();
 renderMatrix();
 renderModels();
 renderBenchmarks();
 renderSources();
 recommend();
 setupEvents();
-setupMobileNav();
-filterPage();
+setupSidebarCollapse();
+setupThemeSwitch();

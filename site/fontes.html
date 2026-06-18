@@ -10,7 +10,7 @@
   </head>
   <body data-page="fontes">
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
-    <div class="overlay" id="overlay" aria-hidden="true"></div>
+    <button class="sidebar-reveal" id="sidebarReveal" type="button" aria-controls="sidebar" aria-expanded="true" aria-label="Mostrar sidebar" title="Mostrar sidebar"><span aria-hidden="true">☰</span></button>
 
     <div class="app-shell">
       <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
@@ -18,45 +18,35 @@
           <span class="brand-mark" aria-hidden="true">BAI</span>
           <span><span class="brand-title">BenchAI</span></span>
         </a>
-        <div class="side-meta">
-          <div><strong>Atualizado:</strong> 18 jun. 2026</div>
-          <div><strong>Critério:</strong> risco da tarefa antes do hype do modelo.</div>
-        </div>
+        <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-controls="sidebar" aria-label="Ocultar sidebar" title="Ocultar sidebar">‹</button>
         <div class="nav-label">Navegação</div>
         <nav class="nav-list" id="siteNav"></nav>
         <div class="side-actions">
+          <a class="side-cta" href="recomendador.html">
+            <span>Decidir agora</span>
+            <small>Abrir recomendador</small>
+          </a>
           <button class="side-button" type="button" data-print>Exportar PDF</button>
-          <a class="side-button" href="benchmarks.html">Ver benchmarks</a>
+        </div>
+        <div class="side-meta">
+          <div><strong>Atualizado:</strong> 18 jun. 2026</div>
         </div>
       </aside>
 
       <main class="main" id="conteudo">
-        <header class="topbar" role="region" aria-label="Barra de ações">
-          <button class="menu-button" id="menuBtn" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
-          <div class="search">
-            <span class="search-icon" aria-hidden="true">⌕</span>
-            <input id="searchInput" type="search" placeholder="Buscar..." autocomplete="off">
-            <span class="search-count" id="searchCount">todos</span>
-          </div>
-          <div class="top-actions">
-            <a class="button" href="benchmarks.html">Benchmarks</a>
-            <button class="button primary" type="button" data-print>PDF</button>
-          </div>
-        </header>
-
         <section class="page-hero">
           <p class="eyebrow">Fontes</p>
           <h1>Rastreabilidade visível para revisão.</h1>
-          <p>As fontes ficam separadas porque a página será usada por outras pessoas da empresa. Isso facilita revisão e evita verdades sem contexto.</p>
+          <p>Cada fonte indica se o dado foi verificado diretamente, publicado por fornecedor ou mantido como pendente.</p>
         </section>
 
         <section class="section">
           <div class="section-head">
             <div>
               <h2>Fontes públicas</h2>
-              <p>Links usados para modelos, benchmarks, governança, segurança e referências visuais.</p>
+              <p>Links usados para adoção, modelos, benchmarks, ferramentas, segurança e referências visuais.</p>
             </div>
-            <span class="section-chip">proveniência pública</span>
+            <span class="section-chip">status da evidência</span>
           </div>
           <div class="source-grid" id="sourceGrid"></div>
         </section>
