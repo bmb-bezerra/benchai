@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Recomendador - BenchAI Routing Lab</title>
-    <meta name="description" content="Recomendador interativo para escolher modelo no Cursor por tarefa, complexidade, sensibilidade e escopo.">
+    <title>Recomendador - BenchAI</title>
+    <meta name="description" content="Recomendador interativo para escolher rota de IA por tarefa, complexidade, sensibilidade e escopo.">
     <meta name="theme-color" content="#f5f5f7">
     <link rel="stylesheet" href="assets/css/styles.css">
   </head>
@@ -16,19 +16,17 @@
       <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
         <a class="brand" href="./">
           <span class="brand-mark" aria-hidden="true">BAI</span>
-          <span><span class="brand-title">BenchAI Routing Lab</span><span class="brand-subtitle">Cursor, engenharia e governança</span></span>
+          <span><span class="brand-title">BenchAI</span></span>
         </a>
         <div class="side-meta">
-          <div><strong>Atualizado:</strong> 17 jun. 2026</div>
+          <div><strong>Atualizado:</strong> 18 jun. 2026</div>
           <div><strong>Critério:</strong> risco da tarefa antes do hype do modelo.</div>
-          <div><strong>Formato:</strong> páginas estáticas, sem build.</div>
         </div>
         <div class="nav-label">Navegação</div>
         <nav class="nav-list" id="siteNav"></nav>
         <div class="side-actions">
           <button class="side-button" type="button" data-print>Exportar PDF</button>
           <a class="side-button" href="fontes.html">Ver fontes públicas</a>
-          <a class="side-button" href="publicacao.html">Publicação no GitHub Pages</a>
         </div>
       </aside>
 
@@ -37,12 +35,11 @@
           <button class="menu-button" id="menuBtn" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
           <div class="search">
             <span class="search-icon" aria-hidden="true">⌕</span>
-            <input id="searchInput" type="search" placeholder="Buscar tarefa, modelo, risco ou fonte..." autocomplete="off">
+            <input id="searchInput" type="search" placeholder="Buscar..." autocomplete="off">
             <span class="search-count" id="searchCount">todos</span>
           </div>
           <div class="top-actions">
             <a class="button" href="matriz.html">Ver matriz</a>
-            <button class="button" id="clearSearch" type="button">Limpar</button>
             <button class="button primary" type="button" data-print>PDF</button>
           </div>
         </header>
@@ -113,7 +110,7 @@
 
             <div class="result" aria-live="polite">
               <div class="result-label">Rota recomendada</div>
-              <div class="result-model" id="recModel">Composer 2.5</div>
+              <div class="result-model" id="recModel">Cursor / GitHub Copilot</div>
               <p class="result-mode" id="recMode">Standard / Normal</p>
               <div class="tag-row" id="recTags"></div>
               <div class="result-detail">
@@ -125,7 +122,7 @@
           </div>
         </section>
 
-        <div class="foot">BenchAI Routing Lab · recomendador operacional.</div>
+        <div class="foot">BenchAI · recomendador operacional.</div>
       </main>
     </div>
 

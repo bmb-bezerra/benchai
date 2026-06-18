@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BenchAI Routing Lab</title>
-    <meta name="description" content="Playbook para escolher modelos no Cursor por tarefa, risco, governança, sensibilidade dos dados e evidência de benchmark.">
+    <title>BenchAI</title>
+    <meta name="description" content="Playbook para escolher ferramentas e modelos de IA por tarefa, risco, governança, sensibilidade dos dados e evidência pública.">
     <meta name="theme-color" content="#f5f5f7">
     <link rel="stylesheet" href="assets/css/styles.css">
   </head>
@@ -17,21 +17,18 @@
         <a class="brand" href="./">
           <span class="brand-mark" aria-hidden="true">BAI</span>
           <span>
-            <span class="brand-title">BenchAI Routing Lab</span>
-            <span class="brand-subtitle">Cursor, engenharia e governança</span>
+            <span class="brand-title">BenchAI</span>
           </span>
         </a>
         <div class="side-meta">
-          <div><strong>Atualizado:</strong> 17 jun. 2026</div>
+          <div><strong>Atualizado:</strong> 18 jun. 2026</div>
           <div><strong>Critério:</strong> risco da tarefa antes do hype do modelo.</div>
-          <div><strong>Formato:</strong> páginas estáticas, sem build.</div>
         </div>
         <div class="nav-label">Navegação</div>
         <nav class="nav-list" id="siteNav"></nav>
         <div class="side-actions">
           <button class="side-button" type="button" data-print>Exportar PDF</button>
           <a class="side-button" href="fontes.html">Ver fontes públicas</a>
-          <a class="side-button" href="publicacao.html">Publicação no GitHub Pages</a>
         </div>
       </aside>
 
@@ -40,23 +37,22 @@
           <button class="menu-button" id="menuBtn" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
           <div class="search">
             <span class="search-icon" aria-hidden="true">⌕</span>
-            <input id="searchInput" type="search" placeholder="Buscar tarefa, modelo, risco ou fonte..." autocomplete="off">
+            <input id="searchInput" type="search" placeholder="Buscar..." autocomplete="off">
             <span class="search-count" id="searchCount">todos</span>
           </div>
           <div class="top-actions">
             <a class="button" href="recomendador.html">Abrir recomendador</a>
-            <button class="button" id="clearSearch" type="button">Limpar</button>
             <button class="button primary" type="button" data-print>PDF</button>
           </div>
         </header>
 
         <section class="hero">
           <div class="hero-copy">
-            <p class="eyebrow">BenchAI routing lab</p>
+            <p class="eyebrow">BenchAI</p>
             <h1>Roteie por risco.</h1>
             <p>
-              Um playbook de engenharia para escolher modelo no Cursor como quem escolhe ambiente de benchmark:
-              tarefa, sensibilidade, custo de errar, evidência pública e validação antes da preferência pessoal.
+              Um playbook de engenharia para escolher entre Copilot, Cursor, Claude Code, Codex, Gemini,
+              Amazon Q, Qwen, DeepSeek e Tabnine por tarefa, sensibilidade, custo de errar e evidência pública.
             </p>
             <div class="hero-actions">
               <a class="hero-action primary" href="recomendador.html">Decidir agora</a>
@@ -68,35 +64,35 @@
           <div class="hero-panel" aria-label="Resumo visual de evidências">
             <div class="panel-head">
               <div>
-                <strong>Snapshot operacional</strong>
-                <span>Ranking, política e modo de uso na primeira leitura.</span>
+                <strong>Panorama operacional</strong>
+                <span>Adoção, benchmark e governança na mesma leitura.</span>
               </div>
-              <span class="status-pill">LAB / 2026-06-17</span>
+              <span class="status-pill">SNAPSHOT / 2026-06-18</span>
             </div>
             <div class="leader-list">
-              <div class="leader-row searchable" data-search="gpt-5.5 terminal debug benchmark">
+              <div class="leader-row searchable" data-search="github copilot adoção github pr review enterprise agentes">
                 <span class="rank">01</span>
                 <div>
-                  <div class="leader-name">GPT-5.5</div>
-                  <div class="leader-meta">Terminal/debug, loop comando, log, correção</div>
+                  <div class="leader-name">GitHub Copilot</div>
+                  <div class="leader-meta">Adoção, GitHub-first, PR review e agentes</div>
                 </div>
-                <div class="leader-score">83.4</div>
+                <div class="leader-score">escala</div>
               </div>
-              <div class="leader-row searchable" data-search="claude opus 4.8 arquitetura julgamento contexto longo">
+              <div class="leader-row searchable" data-search="claude code claude 4 swe bench arquitetura tarefa longa">
                 <span class="rank">02</span>
                 <div>
-                  <div class="leader-name">Claude Opus 4.8</div>
-                  <div class="leader-meta">Arquitetura, julgamento e contexto longo</div>
+                  <div class="leader-name">Claude Code / Claude 4</div>
+                  <div class="leader-meta">Tarefas longas, refactor e revisão crítica</div>
                 </div>
-                <div class="leader-score">78.9</div>
+                <div class="leader-score">72.7</div>
               </div>
-              <div class="leader-row searchable" data-search="composer 2.5 cursor implementação comum default">
+              <div class="leader-row searchable" data-search="openai codex gpt-4.1 api automação diff">
                 <span class="rank">03</span>
                 <div>
-                  <div class="leader-name">Composer 2.5</div>
-                  <div class="leader-meta">Implementação comum dentro do Cursor</div>
+                  <div class="leader-name">OpenAI Codex / GPT-4.1</div>
+                  <div class="leader-meta">API, diffs, automação e pipelines</div>
                 </div>
-                <div class="leader-score">default</div>
+                <div class="leader-score">54.6</div>
               </div>
             </div>
             <div class="command-card">
@@ -107,51 +103,51 @@
         </section>
 
         <div class="snapshot-grid" aria-label="Métricas resumidas">
-          <div class="snapshot searchable" data-search="terminal bench 2.1 gpt-5.5 83.4 benchmark">
-            <div class="snapshot-label">Top sinal terminal</div>
-            <div class="snapshot-value">83.4</div>
-            <p>Amostra usada para debug, build, CI e tarefas em terminal.</p>
+          <div class="snapshot searchable" data-search="stack overflow 2025 uso ai tools adoção">
+            <div class="snapshot-label">Adoção AI</div>
+            <div class="snapshot-value">84%</div>
+            <p>Stack Overflow 2025: usam ou planejam usar AI tools no processo de desenvolvimento.</p>
+          </div>
+          <div class="snapshot searchable" data-search="stack overflow 2025 confiança precisão revisão humana">
+            <div class="snapshot-label">Desconfiança</div>
+            <div class="snapshot-value">46%</div>
+            <p>Mais devs desconfiam da precisão do que confiam. Revisão humana continua obrigatória.</p>
           </div>
           <div class="snapshot searchable" data-search="governança dados sensibilidade público interno confidencial regulado">
             <div class="snapshot-label">Gates de dados</div>
             <div class="snapshot-value">4</div>
             <p>Público, interno, confidencial e regulado antes de escolher modelo.</p>
           </div>
-          <div class="snapshot searchable" data-search="html páginas estáticas github pages sem build">
-            <div class="snapshot-label">Publicação</div>
-            <div class="snapshot-value">HTML</div>
-            <p>Páginas reais, sem framework, sem build e sem dependências externas.</p>
-          </div>
           <div class="snapshot searchable" data-search="fontes rastreabilidade benchmarks modelos segurança privacidade">
-            <div class="snapshot-label">Rastreabilidade</div>
-            <div class="snapshot-value">11</div>
-            <p>Fontes públicas visíveis para revisão e atualização do playbook.</p>
+            <div class="snapshot-label">Fontes</div>
+            <div class="snapshot-value">15</div>
+            <p>Fontes públicas e relatório local usados para atualização consciente do playbook.</p>
           </div>
         </div>
 
         <section class="section">
           <div class="section-head">
             <div>
-              <h2>Fluxo de decisão</h2>
-              <p>A home agora funciona como mapa. Cada área principal tem URL própria, mantendo leitura limpa e navegação real no GitHub Pages.</p>
+              <h2>Escolha a rota certa</h2>
+              <p>Comece pelo tipo de tarefa, sensibilidade dos dados e custo de errar. O playbook indica quando seguir, escalar ou revisar.</p>
             </div>
-            <span class="section-chip">páginas reais</span>
+            <span class="section-chip">decisão prática</span>
           </div>
           <div class="overview-grid">
             <a class="source-card searchable" href="recomendador.html" data-search="recomendador modelo tarefa complexidade sensibilidade escopo">
               <span class="tag brand" style="justify-self:start">01</span>
-              <strong>Decidir agora</strong>
-              <span class="desc">Selecione tipo de tarefa, complexidade, sensibilidade e escopo para receber a rota operacional.</span>
+              <strong>Recomendador</strong>
+              <span class="desc">Informe tarefa, complexidade, dados e escopo para receber uma rota inicial.</span>
             </a>
             <a class="source-card searchable" href="matriz.html" data-search="matriz rota modelo modo usar evitar">
               <span class="tag brand" style="justify-self:start">02</span>
-              <strong>Matriz de decisão</strong>
-              <span class="desc">Consulte rapidamente qual modelo usar, quando escalar e quando evitar cada rota.</span>
+              <strong>Matriz</strong>
+              <span class="desc">Compare modelos por cenário, modo de uso e pontos de atenção.</span>
             </a>
             <a class="source-card searchable" href="governanca.html" data-search="governança dados sensibilidade pii segredo cliente privacidade">
               <span class="tag brand" style="justify-self:start">03</span>
-              <strong>Governança primeiro</strong>
-              <span class="desc">A regra de dados vem antes do benchmark, especialmente para cliente, PII e segredos.</span>
+              <strong>Governança</strong>
+              <span class="desc">Avalie exposição de dados antes de enviar contexto ao modelo.</span>
             </a>
           </div>
         </section>
@@ -159,29 +155,29 @@
         <section class="section">
           <div class="section-head">
             <div>
-              <h2>Como ler este laboratório</h2>
-              <p>O design foi reduzido para uma leitura mais limpa: menos ornamento, cards menores, hierarquia clara e uma navegação de aplicativo.</p>
+              <h2>Critérios de leitura</h2>
+              <p>Use BenchAI como uma camada de decisão antes da ferramenta: risco, dados e evidência determinam a rota.</p>
             </div>
-            <span class="section-chip">Apple clean app</span>
+            <span class="section-chip">critérios</span>
           </div>
           <div class="evidence-grid">
-            <div class="card searchable" data-search="design apple clean minimalista responsivo páginas estáticas">
-              <span class="tag blue">Direção visual</span>
-              <h3>Interface de consulta, não relatório longo</h3>
-              <p>O layout privilegia varredura rápida, controles previsíveis e páginas focadas em uma tarefa por vez.</p>
+            <div class="card searchable" data-search="rota operacional decisão contexto risco dados evidência">
+              <span class="tag blue">Rota operacional</span>
+              <h3>Decida com contexto suficiente</h3>
+              <p>Cada recomendação combina impacto da tarefa, sensibilidade do repositório e evidência disponível.</p>
             </div>
             <div class="card searchable" data-search="decisão operacional modelo risco tarefa atenção validação">
               <div class="audit-list">
-                <div class="audit-item"><span class="audit-badge">01</span><div><strong>Risco da tarefa:</strong> impacto, ambiguidade e custo de retrabalho determinam o modelo.</div></div>
-                <div class="audit-item"><span class="audit-badge">02</span><div><strong>Sensibilidade dos dados:</strong> a política vem antes do benchmark.</div></div>
-                <div class="audit-item"><span class="audit-badge">03</span><div><strong>Evidência auditável:</strong> fontes e comandos devem sobreviver a revisão de PR.</div></div>
+                <div class="audit-item"><span class="audit-badge">01</span><div><strong>Impacto da tarefa:</strong> mudanças críticas pedem modelo mais forte e validação explícita.</div></div>
+                <div class="audit-item"><span class="audit-badge">02</span><div><strong>Dados no contexto:</strong> reduza exposição antes de copiar código, logs ou prompts.</div></div>
+                <div class="audit-item"><span class="audit-badge">03</span><div><strong>Evidência:</strong> registre benchmark, teste local ou revisão que sustentou a escolha.</div></div>
               </div>
             </div>
           </div>
         </section>
 
         <div class="foot">
-          BenchAI Routing Lab · versão GitHub Pages · revisar sempre que Cursor, OpenAI, Anthropic, Google ou benchmarks públicos alterarem disponibilidade, retenção, pricing ou resultados relevantes.
+          BenchAI · playbook para escolher modelos por tarefa, risco e evidência.
         </div>
       </main>
     </div>

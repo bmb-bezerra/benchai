@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Benchmarks - BenchAI Routing Lab</title>
-    <meta name="description" content="Leitura crítica de benchmarks para orientar rotas de modelos no Cursor.">
+    <title>Benchmarks - BenchAI</title>
+    <meta name="description" content="Leitura crítica de benchmarks para orientar rotas de ferramentas e modelos de IA.">
     <meta name="theme-color" content="#f5f5f7">
     <link rel="stylesheet" href="assets/css/styles.css">
   </head>
@@ -16,19 +16,17 @@
       <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
         <a class="brand" href="./">
           <span class="brand-mark" aria-hidden="true">BAI</span>
-          <span><span class="brand-title">BenchAI Routing Lab</span><span class="brand-subtitle">Cursor, engenharia e governança</span></span>
+          <span><span class="brand-title">BenchAI</span></span>
         </a>
         <div class="side-meta">
-          <div><strong>Atualizado:</strong> 17 jun. 2026</div>
+          <div><strong>Atualizado:</strong> 18 jun. 2026</div>
           <div><strong>Critério:</strong> risco da tarefa antes do hype do modelo.</div>
-          <div><strong>Formato:</strong> páginas estáticas, sem build.</div>
         </div>
         <div class="nav-label">Navegação</div>
         <nav class="nav-list" id="siteNav"></nav>
         <div class="side-actions">
           <button class="side-button" type="button" data-print>Exportar PDF</button>
           <a class="side-button" href="fontes.html">Ver fontes públicas</a>
-          <a class="side-button" href="publicacao.html">Publicação no GitHub Pages</a>
         </div>
       </aside>
 
@@ -37,29 +35,28 @@
           <button class="menu-button" id="menuBtn" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
           <div class="search">
             <span class="search-icon" aria-hidden="true">⌕</span>
-            <input id="searchInput" type="search" placeholder="Buscar benchmark, agente ou modelo..." autocomplete="off">
+            <input id="searchInput" type="search" placeholder="Buscar..." autocomplete="off">
             <span class="search-count" id="searchCount">todos</span>
           </div>
           <div class="top-actions">
             <a class="button" href="fontes.html">Ver fontes</a>
-            <button class="button" id="clearSearch" type="button">Limpar</button>
             <button class="button primary" type="button" data-print>PDF</button>
           </div>
         </header>
 
         <section class="page-hero">
           <p class="eyebrow">Benchmarks</p>
-          <h1>Benchmarks são sinais, não oráculos.</h1>
-          <p>Os números sustentam a rota, mas não substituem teste no repositório da empresa. Compare apenas benchmarks equivalentes.</p>
+          <h1>Benchmarks orientam, validação decide.</h1>
+          <p>Os números ajudam a escolher a rota, mas o teste no repositório confirma a decisão. Compare apenas cenários equivalentes.</p>
         </section>
 
         <section class="section">
           <div class="section-head">
             <div>
               <h2>Leitura prática</h2>
-              <p>Terminal/debug exige loop de ferramenta. Arquitetura exige julgamento. Implementação comum exige eficiência dentro do Cursor.</p>
+              <p>Terminal/debug exige loop de ferramenta. Arquitetura exige julgamento. Implementação comum exige eficiência no fluxo do time.</p>
             </div>
-            <span class="section-chip">não são oráculos</span>
+            <span class="section-chip">sinal técnico</span>
           </div>
           <div class="bench-grid">
             <div class="terminal-card searchable" data-search="terminal bench comando benchmark task suite laboratório">
@@ -68,15 +65,15 @@
               <p>O benchmark mede combinação agente + modelo. Use como sinal para tarefas em terminal, não como ranking universal de inteligência.</p>
               <code>task -> agente + modelo -> validação local -> evidência no PR</code>
             </div>
-            <div class="card searchable" data-search="terminal bench 2.1 codex cli gpt-5.5 claude code opus 4.8 gemini cli">
-              <h3>Terminal-Bench 2.1 - amostra relevante</h3>
+            <div class="card searchable" data-search="swe bench verified claude sonnet opus gpt-4.1 deepseek">
+              <h3>SWE-Bench Verified - amostra rastreável</h3>
               <div class="bar-list" id="barList"></div>
               <p class="meta" style="margin-top:12px">Maior é melhor. O benchmark mede combinação agente + modelo, não o modelo isolado.</p>
             </div>
           </div>
         </section>
 
-        <div class="foot">BenchAI Routing Lab · leitura crítica de benchmarks.</div>
+        <div class="foot">BenchAI · leitura crítica de benchmarks.</div>
       </main>
     </div>
 
