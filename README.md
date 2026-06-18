@@ -2,27 +2,26 @@
 
 Site estático para publicar um playbook de roteamento de ferramentas e modelos de IA para engenharia.
 
-O objetivo é manter uma consulta rápida para comparar modelos, orientar escolhas por tipo de tarefa, sensibilidade dos dados, risco operacional e evidências de benchmark. O site também registra critérios de governança e cuidados para uso de modelos em fluxos de engenharia.
+O objetivo é manter uma consulta rápida para comparar ferramentas, modelos, scaffolds e níveis de esforço por tipo de tarefa, sensibilidade dos dados, risco operacional e evidências de benchmark. O site também registra critérios de governança e cuidados para uso de IA em fluxos de engenharia.
 
 ## Conteúdo
 
 - Página inicial com mapa do playbook.
-- Recomendador interativo de modelo por tarefa.
-- Matriz de decisão por cenário, risco e modo de uso.
-- Perfis de modelos e cuidados por sensibilidade de dados.
+- Recomendador interativo de modelo por tarefa, incluindo matriz de decisão.
+- Perfis de modelos e modos de reasoning/effort.
 - Leitura crítica de benchmarks públicos.
-- Fontes públicas e rastreabilidade.
+- Rotas para IDEs e ambientes de desenvolvimento assistido.
+- Fontes públicas com status de evidência.
 
 ## Páginas
 
 O site usa navegação real por arquivos HTML estáticos:
 
 - `site/index.html`: início e mapa do playbook.
-- `site/recomendador.html`: recomendador interativo.
-- `site/matriz.html`: matriz de decisão.
+- `site/recomendador.html`: recomendador interativo e matriz de decisão.
 - `site/modelos.html`: perfis de modelos.
-- `site/governanca.html`: governança por sensibilidade de dados.
 - `site/benchmarks.html`: leitura crítica de benchmarks.
+- `site/ides.html`: IDEs e ambientes assistidos por IA.
 - `site/fontes.html`: fontes públicas.
 - `site/404.html`: página de erro para GitHub Pages.
 
@@ -37,7 +36,7 @@ O conteúdo será atualizado em dois ciclos:
 
 - `site/*.html`: páginas publicadas pelo GitHub Pages.
 - `site/assets/css/styles.css`: tema visual compartilhado.
-- `site/assets/js/app.js`: navegação, busca, recomendador e renderização de listas/tabelas.
+- `site/assets/js/app.js`: navegação, topbar responsiva, recomendador e renderização de listas/tabelas.
 - `.github/workflows/pages.yml`: publicação do conteúdo de `site/` no GitHub Pages.
 
 ## Visualização local
@@ -75,11 +74,14 @@ Também confira localmente as páginas principais:
 
 - `http://localhost:8000/`
 - `http://localhost:8000/recomendador.html`
-- `http://localhost:8000/matriz.html`
 - `http://localhost:8000/modelos.html`
-- `http://localhost:8000/governanca.html`
 - `http://localhost:8000/benchmarks.html`
+- `http://localhost:8000/ides.html`
 - `http://localhost:8000/fontes.html`
+
+## Política de fontes
+
+A atualização de 18 de junho de 2026 usa o relatório local `benchai_relatorio_atualizado_2026-06-18.md` como insumo curado. Dados publicados no site devem indicar se são `verificado`, `fornecedor` ou `pendente`, para evitar transformar benchmark ou claim secundário em ranking universal.
 
 ## Publicação
 
