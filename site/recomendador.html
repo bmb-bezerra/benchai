@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recomendador - BenchAI Routing Lab</title>
+    <meta name="description" content="Recomendador interativo para escolher modelo no Cursor por tarefa, complexidade, sensibilidade e escopo.">
+    <meta name="theme-color" content="#f5f5f7">
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body data-page="recomendador">
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+    <div class="overlay" id="overlay" aria-hidden="true"></div>
+
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+        <a class="brand" href="./">
+          <span class="brand-mark" aria-hidden="true">BAI</span>
+          <span><span class="brand-title">BenchAI Routing Lab</span><span class="brand-subtitle">Cursor, engenharia e governança</span></span>
+        </a>
+        <div class="side-meta">
+          <div><strong>Atualizado:</strong> 17 jun. 2026</div>
+          <div><strong>Critério:</strong> risco da tarefa antes do hype do modelo.</div>
+          <div><strong>Formato:</strong> páginas estáticas, sem build.</div>
+        </div>
+        <div class="nav-label">Navegação</div>
+        <nav class="nav-list" id="siteNav"></nav>
+        <div class="side-actions">
+          <button class="side-button" type="button" data-print>Exportar PDF</button>
+          <a class="side-button" href="fontes.html">Ver fontes públicas</a>
+          <a class="side-button" href="publicacao.html">Publicação no GitHub Pages</a>
+        </div>
+      </aside>
+
+      <main class="main" id="conteudo">
+        <header class="topbar" role="region" aria-label="Barra de ações">
+          <button class="menu-button" id="menuBtn" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button>
+          <div class="search">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input id="searchInput" type="search" placeholder="Buscar tarefa, modelo, risco ou fonte..." autocomplete="off">
+            <span class="search-count" id="searchCount">todos</span>
+          </div>
+          <div class="top-actions">
+            <a class="button" href="matriz.html">Ver matriz</a>
+            <button class="button" id="clearSearch" type="button">Limpar</button>
+            <button class="button primary" type="button" data-print>PDF</button>
+          </div>
+        </header>
+
+        <section class="page-hero">
+          <p class="eyebrow">Recomendador</p>
+          <h1>Escolha a rota antes de escolher o modelo.</h1>
+          <p>Use os controles para combinar tipo de tarefa, complexidade, sensibilidade do código e escopo esperado.</p>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <h2>Decidir agora</h2>
+              <p>O resultado muda conforme risco, contexto e regra de dados. Use como ponto de partida, não como autorização automática.</p>
+            </div>
+            <span class="section-chip">recomendador vivo</span>
+          </div>
+          <div class="decision-lab">
+            <div class="card strong searchable" data-search="tipo de tarefa complexidade sensibilidade escopo modelo">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="taskSelect">Tipo de tarefa</label>
+                  <select id="taskSelect">
+                    <option value="daily">Implementação comum</option>
+                    <option value="architecture">Arquitetura / decisão técnica</option>
+                    <option value="terminal">Terminal / build / CI / debug</option>
+                    <option value="review">Code review crítico</option>
+                    <option value="frontend">Front-end / UI / screenshot</option>
+                    <option value="largeContext">Repo grande / contexto massivo</option>
+                    <option value="migration">Migração / feature ponta a ponta</option>
+                    <option value="simple">Microtarefa mecânica</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="complexitySelect">Complexidade</label>
+                  <select id="complexitySelect">
+                    <option value="low">Baixa</option>
+                    <option value="medium" selected>Média</option>
+                    <option value="high">Alta</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="sensitivitySelect">Sensibilidade do código</label>
+                  <select id="sensitivitySelect">
+                    <option value="public">Público / open source</option>
+                    <option value="internal" selected>Interno comum</option>
+                    <option value="confidential">Confidencial / cliente / estratégico</option>
+                    <option value="regulated">Regulado / PII / segredo / credenciais</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="scopeSelect">Escopo esperado</label>
+                  <select id="scopeSelect">
+                    <option value="single">1 arquivo / patch curto</option>
+                    <option value="few" selected>Alguns arquivos</option>
+                    <option value="many">Muitos arquivos</option>
+                    <option value="unknown">Escopo desconhecido</option>
+                  </select>
+                </div>
+              </div>
+              <div class="checklist">
+                <div class="check-item"><div class="check-badge">A</div><div>Se a tarefa está ambígua, peça plano antes de aceitar edição.</div></div>
+                <div class="check-item"><div class="check-badge">B</div><div>Se o código é sensível, reduza contexto e valide retenção.</div></div>
+                <div class="check-item"><div class="check-badge">C</div><div>Se envolve terminal, registre comandos, logs úteis e resultado.</div></div>
+              </div>
+            </div>
+
+            <div class="result" aria-live="polite">
+              <div class="result-label">Rota recomendada</div>
+              <div class="result-model" id="recModel">Composer 2.5</div>
+              <p class="result-mode" id="recMode">Standard / Normal</p>
+              <div class="tag-row" id="recTags"></div>
+              <div class="result-detail">
+                <div class="result-box"><strong>Por que</strong><span id="recWhy"></span></div>
+                <div class="result-box"><strong>Prompt operacional</strong><span id="recPrompt"></span></div>
+                <div class="result-box"><strong>Cautela</strong><span id="recCaution"></span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="foot">BenchAI Routing Lab · recomendador operacional.</div>
+      </main>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
