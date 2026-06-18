@@ -12,6 +12,7 @@ O objetivo é manter uma consulta rápida para comparar ferramentas, modelos, sc
 - Leitura crítica de benchmarks públicos.
 - Rotas para IDEs e ambientes de desenvolvimento assistido.
 - Fontes públicas com status de evidência.
+- Interface com sidebar fixa, topbar responsiva e alternância de tema claro/escuro.
 
 ## Páginas
 
@@ -35,9 +36,15 @@ O conteúdo será atualizado em dois ciclos:
 ## Estrutura
 
 - `site/*.html`: páginas publicadas pelo GitHub Pages.
-- `site/assets/css/styles.css`: tema visual compartilhado.
-- `site/assets/js/app.js`: navegação, topbar responsiva, recomendador e renderização de listas/tabelas.
+- `site/assets/css/styles.css`: layout, tema visual claro/escuro e responsividade compartilhada.
+- `site/assets/js/app.js`: navegação, topbar responsiva, colapso da sidebar, alternância de tema, recomendador e renderização de listas/tabelas.
 - `.github/workflows/pages.yml`: publicação do conteúdo de `site/` no GitHub Pages.
+
+## Interface
+
+- A sidebar fica fixa no desktop e pode ser recolhida; essa preferência é salva localmente.
+- Em telas menores, a navegação compacta é renderizada como topbar.
+- O tema inicial segue `prefers-color-scheme`. Quando o usuário alterna claro/escuro pelo switch, a escolha é salva em `localStorage` com a chave `benchai-theme` e passa a valer nas demais páginas.
 
 ## Visualização local
 
@@ -68,6 +75,7 @@ Antes de publicar alterações no site, rode:
 ```bash
 node --check site/assets/js/app.js
 git diff --check
+python3 -m html.parser site/index.html site/recomendador.html site/modelos.html site/benchmarks.html site/ides.html site/fontes.html site/404.html
 ```
 
 Também confira localmente as páginas principais:
@@ -81,7 +89,7 @@ Também confira localmente as páginas principais:
 
 ## Política de fontes
 
-A atualização de 18 de junho de 2026 usa o relatório local `benchai_relatorio_atualizado_2026-06-18.md` como insumo curado. Dados publicados no site devem indicar se são `verificado`, `fornecedor` ou `pendente`, para evitar transformar benchmark ou claim secundário em ranking universal.
+A atualização de 18 de junho de 2026 diferencia dados `verificado`, `fornecedor` e `pendente`, para evitar transformar benchmark ou claim secundário em ranking universal. Qualquer nova fonte pública deve manter status, contexto e data de verificação quando aplicável.
 
 ## Publicação
 
