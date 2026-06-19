@@ -76,76 +76,1007 @@ const matrixRows = [
 
 const modelProfiles = [
   {
-    name: "GPT-5.5",
-    status: "Frontier coding",
-    statusClass: "good",
-    role: "Modelo forte para agentes em terminal, debugging e automação com ferramenta.",
-    best: ["Codex CLI", "Terminal-Bench", "SWE-Bench Pro", "reasoning effort"],
-    caution: "Números de SWE-Bench Pro vêm de tabela do fornecedor; valide no repositório antes de padronizar.",
-    tags: ["frontier", "terminal", "effort"]
+    "name": "GPT-5.5",
+    "status": "Frontier coding",
+    "statusClass": "good",
+    "role": "Modelo OpenAI mais forte para agentic coding; priorizar em tarefas difíceis com Codex, terminal, testes e refactors complexos.",
+    "best": [
+      "Codex CLI",
+      "debug em terminal",
+      "SWE-Bench Pro",
+      "refactor multi-arquivo"
+    ],
+    "caution": "Disponibilidade e preço podem variar por plano/API. Números de benchmark do fornecedor devem ser tratados como sinal, não ranking universal.",
+    "tags": [
+      "frontier",
+      "agentic",
+      "terminal",
+      "OpenAI"
+    ]
   },
   {
-    name: "GPT-5.4",
-    status: "Baseline recente",
-    statusClass: "blue",
-    role: "Ponto de comparação útil para medir ganho incremental de modelos GPT mais novos.",
-    best: ["comparação", "automação", "API", "tarefas com ferramenta"],
-    caution: "Não use como ranking isolado: scaffold, effort e agente mudam o resultado.",
-    tags: ["baseline", "fornecedor", "comparação"]
+    "name": "GPT-5.4",
+    "status": "Frontier geral",
+    "statusClass": "good",
+    "role": "Modelo GPT recente para raciocínio, coding geral e automações em agentes; boa base quando GPT-5.5 não estiver disponível ou quando latência/custo pesarem.",
+    "best": [
+      "API",
+      "Codex",
+      "Copilot",
+      "tarefas médias/altas"
+    ],
+    "caution": "Medir contra GPT-5.5 e GPT-5.3-Codex no repositório real; scaffold e effort mudam bastante o resultado.",
+    "tags": [
+      "frontier",
+      "API",
+      "Copilot",
+      "OpenAI"
+    ]
   },
   {
-    name: "Claude Opus 4.8",
-    status: "Refactor e review",
-    statusClass: "good",
-    role: "Rota forte para tarefas longas, revisão crítica e execução com Claude Code.",
-    best: ["arquitetura", "review", "Terminal-Bench", "Claude Code"],
-    caution: "Prefira quando profundidade compensa custo/latência; para microtarefas, é excesso.",
-    tags: ["julgamento", "review", "agentes"]
+    "name": "GPT-5.3-Codex",
+    "status": "Coding agent",
+    "statusClass": "good",
+    "role": "Especializado para fluxos de coding agent em Codex/Copilot; indicado para edição de código, PRs, correções e automações com ferramentas.",
+    "best": [
+      "Codex",
+      "Copilot",
+      "patches",
+      "testes"
+    ],
+    "caution": "Comparar com GPT-5.5 para tarefas novas; evitar usar modelo antigo só por hábito se houver substituto no plano.",
+    "tags": [
+      "coding",
+      "agentic",
+      "Copilot",
+      "OpenAI"
+    ]
   },
   {
-    name: "Claude 5 Fable",
-    status: "Sinal novo",
-    statusClass: "blue",
-    role: "Entrada recente no Terminal-Bench 2.1, com desempenho próximo do topo em Claude Code.",
-    best: ["Terminal-Bench 2.1", "Claude Code", "execução longa", "comparação"],
-    caution: "Adição verificada fora do relatório; confirme disponibilidade e política antes de recomendar como default.",
-    tags: ["novo", "verificado", "pendente"]
+    "name": "GPT-5.2-Codex",
+    "status": "Legado recente",
+    "statusClass": "warn",
+    "role": "Ainda relevante como referência histórica de agentic coding, mas deve ser substituído por GPT-5.3-Codex/GPT-5.5 quando disponível.",
+    "best": [
+      "comparação",
+      "legado",
+      "Codex",
+      "migração"
+    ],
+    "caution": "No Copilot consta como aposentado/substituído; não recomendar como default novo.",
+    "tags": [
+      "legado",
+      "Codex",
+      "OpenAI"
+    ]
   },
   {
-    name: "Claude Sonnet 4.6",
-    status: "Equilíbrio",
-    statusClass: "good",
-    role: "Boa rota para execução recorrente quando custo, latência e qualidade precisam equilibrar.",
-    best: ["implementação", "review", "Claude Code", "tarefas médias"],
-    caution: "Não substitui benchmark interno em fluxos críticos ou repositórios sensíveis.",
-    tags: ["equilíbrio", "coding", "review"]
+    "name": "GPT-5 mini",
+    "status": "Econômico",
+    "statusClass": "blue",
+    "role": "Modelo menor para tarefas rápidas, triagem, explicações simples e automações de alto volume no ecossistema GitHub/OpenAI.",
+    "best": [
+      "baixo custo",
+      "chat rápido",
+      "classificação",
+      "boilerplate"
+    ],
+    "caution": "Evitar em refactors críticos, debugging complexo e arquitetura sem escalonamento para modelo mais forte.",
+    "tags": [
+      "rápido",
+      "baixo custo",
+      "Copilot",
+      "OpenAI"
+    ]
   },
   {
-    name: "Gemini 3.1 Pro / Gemini 3",
-    status: "Google + contexto",
-    statusClass: "good",
-    role: "Família relevante quando contexto longo, Google Cloud e agentes no terminal importam.",
-    best: ["1M tokens", "Gemini CLI", "Code Assist", "Google Cloud"],
-    caution: "Contexto longo não corrige instrução ruim; teste latência, grounding e revisão humana.",
-    tags: ["contexto", "Google", "terminal"]
+    "name": "GPT-5.4 mini",
+    "status": "Econômico recente",
+    "statusClass": "blue",
+    "role": "Opção menor da família GPT-5.4 para volume alto, respostas rápidas e tarefas de baixa/ média complexidade.",
+    "best": [
+      "autocomplete assistido",
+      "triagem",
+      "resumo",
+      "boilerplate"
+    ],
+    "caution": "Usar roteamento para subir a GPT-5.4/GPT-5.5 quando houver risco alto ou testes falhando.",
+    "tags": [
+      "rápido",
+      "baixo custo",
+      "Copilot",
+      "OpenAI"
+    ]
   },
   {
-    name: "Qwen / Qwen3-Coder",
-    status: "Open-weight",
-    statusClass: "warn",
-    role: "Candidato para self-hosting, soberania e workloads onde controle local pesa.",
-    best: ["VPC/on-prem", "serving próprio", "custo", "agentic coding"],
-    caution: "Exige avaliação interna, serving, telemetria e política de atualização.",
-    tags: ["open-weight", "self-hosting", "soberania"]
+    "name": "GPT-5.4 nano",
+    "status": "Utilitário",
+    "statusClass": "blue",
+    "role": "Modelo muito pequeno para utilidades, transformação simples de texto/código e workloads com custo mínimo.",
+    "best": [
+      "classificação",
+      "lint textual",
+      "templates",
+      "tarefas mecânicas"
+    ],
+    "caution": "Não usar como agente de engenharia autônomo; aplicar apenas em etapas controladas.",
+    "tags": [
+      "utilitário",
+      "baixo custo",
+      "Copilot",
+      "OpenAI"
+    ]
   },
   {
-    name: "DeepSeek-V3",
-    status: "Open-weight / baixo custo",
-    statusClass: "warn",
-    role: "Opção para custo unitário baixo, API compatível e execução controlada.",
-    best: ["alto volume", "pesquisa interna", "prototipagem local", "serving aberto"],
-    caution: "Não substitui revisão de segurança, benchmark interno e política de dados.",
-    tags: ["baixo custo", "open-weight", "API"]
+    "name": "Claude Opus 4.8",
+    "status": "Refactor e julgamento",
+    "statusClass": "good",
+    "role": "Modelo Anthropic Opus-tier forte para raciocínio complexo, agentic coding e tarefas longas com Claude Code.",
+    "best": [
+      "arquitetura",
+      "review profundo",
+      "refactor grande",
+      "Claude Code"
+    ],
+    "caution": "Custo/latência podem ser excesso para microtarefas; definir effort explicitamente quando a superfície permitir.",
+    "tags": [
+      "frontier",
+      "review",
+      "agentic",
+      "Anthropic"
+    ]
+  },
+  {
+    "name": "Claude Opus 4.7",
+    "status": "Frontier anterior",
+    "statusClass": "blue",
+    "role": "Boa referência se o ambiente ainda não disponibilizou Opus 4.8; útil em revisão crítica e tarefas longas.",
+    "best": [
+      "comparação",
+      "Claude Code",
+      "arquitetura",
+      "review"
+    ],
+    "caution": "Migrar/testar Opus 4.8 quando disponível; não manter como padrão sem motivo operacional.",
+    "tags": [
+      "frontier",
+      "legado recente",
+      "Anthropic"
+    ]
+  },
+  {
+    "name": "Claude Sonnet 4.6",
+    "status": "Equilíbrio forte",
+    "statusClass": "good",
+    "role": "Um dos melhores daily drivers para engenharia: boa combinação de velocidade, inteligência, contexto e custo relativo.",
+    "best": [
+      "implementação",
+      "review",
+      "agentes",
+      "tarefas médias"
+    ],
+    "caution": "Para decisões caras ou refactor muito grande, comparar com Opus 4.8; para microtarefas, comparar com Haiku 4.5.",
+    "tags": [
+      "equilíbrio",
+      "coding",
+      "Claude Code",
+      "Anthropic"
+    ]
+  },
+  {
+    "name": "Claude Sonnet 4.5",
+    "status": "Daily driver legado",
+    "statusClass": "blue",
+    "role": "Ainda aparece em muitos ambientes e é uma boa linha de base para medir avanço de Sonnet 4.6.",
+    "best": [
+      "baseline",
+      "IDE",
+      "review",
+      "implementação"
+    ],
+    "caution": "Preferir Sonnet 4.6 se ambos estiverem disponíveis e o custo for aceitável.",
+    "tags": [
+      "baseline",
+      "coding",
+      "Anthropic"
+    ]
+  },
+  {
+    "name": "Claude Haiku 4.5",
+    "status": "Rápido/barato",
+    "statusClass": "blue",
+    "role": "Modelo rápido para subagentes, pair programming leve, explicações, testes simples e alto volume.",
+    "best": [
+      "latência baixa",
+      "subagentes",
+      "tarefas simples",
+      "custo"
+    ],
+    "caution": "Não usar sozinho em mudanças arriscadas; bom como primeiro passe com escalonamento para Sonnet/Opus.",
+    "tags": [
+      "rápido",
+      "baixo custo",
+      "Anthropic"
+    ]
+  },
+  {
+    "name": "Claude Fable 5",
+    "status": "Restrito / watchlist",
+    "statusClass": "warn",
+    "role": "Modelo relevante em listas de plataformas, mas deve ficar em observação por disponibilidade, política e retenção de dados.",
+    "best": [
+      "watchlist",
+      "comparação",
+      "Claude Code",
+      "benchmarks"
+    ],
+    "caution": "Não recomendar como default empresarial sem validar acesso, termos e política de dados no cliente/plano.",
+    "tags": [
+      "pendente",
+      "política",
+      "Anthropic"
+    ]
+  },
+  {
+    "name": "Gemini 3.5 Flash",
+    "status": "Produção + contexto",
+    "statusClass": "good",
+    "role": "Modelo Google forte para agentic workflows, coding, long context e execução paralela com bom equilíbrio de custo/latência.",
+    "best": [
+      "1M contexto",
+      "Google Cloud",
+      "Gemini CLI",
+      "agentes"
+    ],
+    "caution": "Mesmo com contexto longo, testar grounding, latência e qualidade de patch no repositório real.",
+    "tags": [
+      "contexto",
+      "agentic",
+      "Google",
+      "produção"
+    ]
+  },
+  {
+    "name": "Gemini 3.1 Pro",
+    "status": "Preview forte",
+    "statusClass": "warn",
+    "role": "Modelo Gemini Pro para raciocínio/coding complexo e workflows agentic quando a pilha Google é dominante.",
+    "best": [
+      "raciocínio",
+      "1M contexto",
+      "Gemini CLI",
+      "Google Cloud"
+    ],
+    "caution": "Preview não deve ser tratado como estável; manter plano de migração para GA quando necessário.",
+    "tags": [
+      "preview",
+      "contexto",
+      "Google"
+    ]
+  },
+  {
+    "name": "Gemini 3 Flash",
+    "status": "Preview",
+    "statusClass": "warn",
+    "role": "Opção Flash em preview para testes de multimodalidade, coding e agente antes de padronizar 3.5 Flash.",
+    "best": [
+      "experimentos",
+      "latência",
+      "Google Cloud",
+      "agentes"
+    ],
+    "caution": "Para produção, preferir modelo GA/estável quando houver alternativa equivalente.",
+    "tags": [
+      "preview",
+      "rápido",
+      "Google"
+    ]
+  },
+  {
+    "name": "Gemini 3.1 Flash-Lite",
+    "status": "Baixo custo",
+    "statusClass": "blue",
+    "role": "Modelo econômico para alto volume, classificação, resumos, roteamento e etapas auxiliares de dev workflow.",
+    "best": [
+      "alto volume",
+      "baixo custo",
+      "classificação",
+      "latência"
+    ],
+    "caution": "Evitar em mudanças de código críticas sem escalonamento.",
+    "tags": [
+      "baixo custo",
+      "Google",
+      "utilitário"
+    ]
+  },
+  {
+    "name": "Gemini 2.5 Pro",
+    "status": "Ainda relevante",
+    "statusClass": "blue",
+    "role": "Modelo Google anterior ainda usado em ambientes que não migraram para Gemini 3.x/3.5; bom baseline para tarefas complexas.",
+    "best": [
+      "baseline",
+      "raciocínio",
+      "coding",
+      "Google Cloud"
+    ],
+    "caution": "Comparar com 3.5 Flash e 3.1 Pro antes de novas padronizações.",
+    "tags": [
+      "baseline",
+      "Google",
+      "coding"
+    ]
+  },
+  {
+    "name": "Gemini 2.5 Flash",
+    "status": "Rápido legado",
+    "statusClass": "blue",
+    "role": "Opção rápida amplamente disponível; útil como baseline de custo/latência em pipelines existentes.",
+    "best": [
+      "latência",
+      "alto volume",
+      "baseline",
+      "Google Cloud"
+    ],
+    "caution": "Não confundir disponibilidade com melhor qualidade; medir contra 3.5 Flash.",
+    "tags": [
+      "rápido",
+      "Google",
+      "baseline"
+    ]
+  },
+  {
+    "name": "DeepSeek V4-Pro",
+    "status": "Open-weight forte",
+    "statusClass": "good",
+    "role": "Modelo DeepSeek V4 de maior capacidade, com foco em agentic coding, 1M de contexto e boa relação capacidade/custo para self-host/API.",
+    "best": [
+      "agentic coding",
+      "1M contexto",
+      "self-host",
+      "baixo custo relativo"
+    ],
+    "caution": "Exige avaliação de licença, segurança, serving e política de dados; claims de performance são principalmente do fornecedor.",
+    "tags": [
+      "open-weight",
+      "self-host",
+      "DeepSeek",
+      "contexto"
+    ]
+  },
+  {
+    "name": "DeepSeek V4-Flash",
+    "status": "Rápido/econômico",
+    "statusClass": "good",
+    "role": "Variante mais rápida e barata do V4 para agentes simples, alto volume e tarefas controladas.",
+    "best": [
+      "baixo custo",
+      "alto volume",
+      "1M contexto",
+      "agentes simples"
+    ],
+    "caution": "Escalonar para V4-Pro/frontier proprietário quando a tarefa envolver risco alto ou debugging complexo.",
+    "tags": [
+      "baixo custo",
+      "open-weight",
+      "DeepSeek"
+    ]
+  },
+  {
+    "name": "DeepSeek V3.2",
+    "status": "Reasoning + ferramentas",
+    "statusClass": "blue",
+    "role": "Modelo reasoning-first com suporte a tool-use em modos thinking e non-thinking; útil para agentes e experimentos self-host.",
+    "best": [
+      "tool-use",
+      "thinking",
+      "agentes",
+      "open-source"
+    ],
+    "caution": "Comparar com V4 antes de novas adoções; manter benchmark interno.",
+    "tags": [
+      "reasoning",
+      "open-source",
+      "DeepSeek"
+    ]
+  },
+  {
+    "name": "DeepSeek V3.2-Speciale",
+    "status": "Raciocínio máximo",
+    "statusClass": "warn",
+    "role": "Variante voltada a raciocínio mais pesado, útil como referência de pesquisa e tarefas não interativas.",
+    "best": [
+      "raciocínio",
+      "pesquisa",
+      "comparação",
+      "tarefas difíceis"
+    ],
+    "caution": "Pode não ter tool-use/API equivalente ao V3.2 normal; validar limitações antes de usar em agentes.",
+    "tags": [
+      "reasoning",
+      "pesquisa",
+      "DeepSeek"
+    ]
+  },
+  {
+    "name": "Qwen3-Coder-Next",
+    "status": "Coding agent",
+    "statusClass": "good",
+    "role": "Modelo Qwen dedicado a coding agents e desenvolvimento local/API, com foco em execução de tarefas e interação com ambientes.",
+    "best": [
+      "Qwen Code",
+      "local dev",
+      "agentes",
+      "baixo custo relativo"
+    ],
+    "caution": "Confirmar versão exata, contexto e licença no provedor usado; família Qwen muda rápido.",
+    "tags": [
+      "coding",
+      "open-weight",
+      "Qwen",
+      "agentic"
+    ]
+  },
+  {
+    "name": "Qwen3-Coder-480B-A35B",
+    "status": "Grande/open-weight",
+    "statusClass": "good",
+    "role": "Modelo grande da família Qwen3-Coder para tarefas de código mais exigentes, tool use e agentes em ambientes com serving adequado.",
+    "best": [
+      "agentic coding",
+      "tool calling",
+      "self-host",
+      "contexto longo"
+    ],
+    "caution": "Custo de serving e latência podem ser altos; validar infraestrutura antes de recomendar.",
+    "tags": [
+      "open-weight",
+      "Qwen",
+      "coding"
+    ]
+  },
+  {
+    "name": "Qwen3-Coder-30B-A3B",
+    "status": "Local/eficiente",
+    "statusClass": "blue",
+    "role": "Variante menor para desenvolvimento local, agentes internos e workloads onde custo/latência importam.",
+    "best": [
+      "local",
+      "VPC",
+      "custo",
+      "prototipagem"
+    ],
+    "caution": "Pode perder qualidade em tarefas longas e refactors amplos; escalonar quando necessário.",
+    "tags": [
+      "local",
+      "open-weight",
+      "Qwen"
+    ]
+  },
+  {
+    "name": "Qwen3.7-Max",
+    "status": "Generalista forte",
+    "statusClass": "blue",
+    "role": "Modelo Qwen generalista recente para tarefas de engenharia, chat técnico e automações onde o ecossistema Alibaba/Qwen é usado.",
+    "best": [
+      "API",
+      "chat técnico",
+      "raciocínio",
+      "APAC"
+    ],
+    "caution": "Não é tão específico quanto Qwen3-Coder para edição de código; medir em tarefas reais.",
+    "tags": [
+      "generalista",
+      "Qwen",
+      "API"
+    ]
+  },
+  {
+    "name": "Kimi K2.7 Code",
+    "status": "Agentic coding",
+    "statusClass": "good",
+    "role": "Modelo Moonshot/Kimi focado em coding agent, long-horizon tasks e fluxos complexos de software com 256k de contexto.",
+    "best": [
+      "long-horizon",
+      "coding agent",
+      "256k contexto",
+      "debug"
+    ],
+    "caution": "Benchmark e disponibilidade variam por endpoint; validar termos e latência no provedor.",
+    "tags": [
+      "coding",
+      "agentic",
+      "Kimi",
+      "contexto"
+    ]
+  },
+  {
+    "name": "Kimi K2.7 Code HighSpeed",
+    "status": "Alta velocidade",
+    "statusClass": "blue",
+    "role": "Variante de alta velocidade para throughput, automações e tarefas onde latência pesa mais que máxima precisão.",
+    "best": [
+      "throughput",
+      "latência",
+      "agentes simples",
+      "alto volume"
+    ],
+    "caution": "Não assumir mesma qualidade do modo de maior capacidade em tarefas longas.",
+    "tags": [
+      "rápido",
+      "Kimi",
+      "coding"
+    ]
+  },
+  {
+    "name": "Kimi K2.6",
+    "status": "Agentic/multimodal",
+    "statusClass": "blue",
+    "role": "Modelo base versátil da família Kimi para agentes, multimodalidade e coding geral quando K2.7 Code não for necessário.",
+    "best": [
+      "multimodal",
+      "agentes",
+      "chat técnico",
+      "contexto"
+    ],
+    "caution": "Para coding puro, priorizar K2.7 Code se disponível.",
+    "tags": [
+      "multimodal",
+      "Kimi",
+      "agentic"
+    ]
+  },
+  {
+    "name": "Devstral 2",
+    "status": "Open agentic",
+    "statusClass": "good",
+    "role": "Modelo Mistral de 123B para agentes de software, exploração de codebase e mudanças multi-arquivo; opção forte para self-host/on-prem.",
+    "best": [
+      "multi-arquivo",
+      "self-host",
+      "SWE-bench",
+      "Mistral Vibe"
+    ],
+    "caution": "Requer infraestrutura adequada e avaliação de licença; medir contra modelos proprietários no mesmo scaffold.",
+    "tags": [
+      "open-weight",
+      "agentic",
+      "Mistral"
+    ]
+  },
+  {
+    "name": "Devstral Small 2",
+    "status": "Local/consumer",
+    "statusClass": "good",
+    "role": "Variante menor de 24B para agentes de código em hardware mais acessível; útil para privacidade, prototipagem e custo controlado.",
+    "best": [
+      "local",
+      "baixo custo",
+      "multi-arquivo",
+      "self-host"
+    ],
+    "caution": "Não esperar o mesmo desempenho de Devstral 2 em tarefas longas/críticas.",
+    "tags": [
+      "local",
+      "open-weight",
+      "Mistral"
+    ]
+  },
+  {
+    "name": "Codestral 25.08",
+    "status": "Autocomplete/FIM",
+    "statusClass": "good",
+    "role": "Modelo Mistral especializado em code completion e Fill-in-the-Middle; relevante para IDEs, baixa latência e implantação controlada.",
+    "best": [
+      "autocomplete",
+      "FIM",
+      "IDE",
+      "self-deploy"
+    ],
+    "caution": "Não é substituto direto de agente de refactor; usar junto com modelos de raciocínio quando necessário.",
+    "tags": [
+      "autocomplete",
+      "FIM",
+      "Mistral"
+    ]
+  },
+  {
+    "name": "Codestral Embed",
+    "status": "Embedding de código",
+    "statusClass": "blue",
+    "role": "Embedding para busca semântica de código, RAG em monorepos e recuperação de trechos relevantes por consulta natural ou código.",
+    "best": [
+      "code search",
+      "RAG",
+      "monorepo",
+      "retrieval"
+    ],
+    "caution": "Avaliar com corpus real; embedding ruim degrada todos os agentes downstream.",
+    "tags": [
+      "embedding",
+      "RAG",
+      "Mistral"
+    ]
+  },
+  {
+    "name": "Leanstral",
+    "status": "Formal methods",
+    "statusClass": "blue",
+    "role": "Modelo/agente aberto para Lean 4 e prova formal; nicho importante para verificação, matemática computacional e especificações formais.",
+    "best": [
+      "Lean 4",
+      "provas",
+      "verificação formal",
+      "Rust specs"
+    ],
+    "caution": "Nicho especializado; não usar como modelo geral de desenvolvimento.",
+    "tags": [
+      "formal",
+      "Lean",
+      "Mistral"
+    ]
+  },
+  {
+    "name": "Mistral Small 4",
+    "status": "Aberto/leve",
+    "statusClass": "blue",
+    "role": "Modelo aberto multimodal e agentic para tarefas gerais, coding auxiliar e aplicações internas de menor custo.",
+    "best": [
+      "open-weight",
+      "multimodal",
+      "tarefas leves",
+      "agentes"
+    ],
+    "caution": "Para coding pesado, comparar com Devstral/Codestral.",
+    "tags": [
+      "open-weight",
+      "multimodal",
+      "Mistral"
+    ]
+  },
+  {
+    "name": "Mistral Medium 3.5",
+    "status": "Generalista",
+    "statusClass": "blue",
+    "role": "Modelo Mistral generalista para raciocínio, chat técnico e automações quando se quer alternativa europeia/API.",
+    "best": [
+      "API",
+      "raciocínio",
+      "chat técnico",
+      "integrações"
+    ],
+    "caution": "Não confundir com Devstral/Codestral em tarefas de código especializadas.",
+    "tags": [
+      "generalista",
+      "Mistral",
+      "API"
+    ]
+  },
+  {
+    "name": "Llama 4 Maverick",
+    "status": "Open frontier",
+    "statusClass": "good",
+    "role": "Modelo Meta open-weight multimodal com janela de contexto muito longa; relevante para self-host, análise de codebase e fine-tuning.",
+    "best": [
+      "self-host",
+      "contexto longo",
+      "multimodal",
+      "fine-tuning"
+    ],
+    "caution": "Qualidade em coding agent depende muito de harness, serving e prompts; medir em LiveCodeBench/bench interno.",
+    "tags": [
+      "open-weight",
+      "Meta",
+      "contexto"
+    ]
+  },
+  {
+    "name": "Llama 4 Scout",
+    "status": "Open eficiente",
+    "statusClass": "blue",
+    "role": "Variante eficiente da família Llama 4, útil para análise longa, ambientes locais e workflows onde custo de inferência pesa.",
+    "best": [
+      "contexto longo",
+      "eficiência",
+      "self-host",
+      "análise"
+    ],
+    "caution": "Menos indicado para tarefas de coding mais difíceis do que Maverick/modelos especializados.",
+    "tags": [
+      "open-weight",
+      "Meta",
+      "eficiente"
+    ]
+  },
+  {
+    "name": "Llama 3.1 405B / 70B / 8B",
+    "status": "Fundação aberta",
+    "statusClass": "blue",
+    "role": "Família ainda relevante para fine-tuning, soberania, protótipos locais e comparação de modelos open-weight.",
+    "best": [
+      "fine-tuning",
+      "local",
+      "ensino",
+      "baseline"
+    ],
+    "caution": "Para agentic coding novo, comparar com Llama 4, Qwen3-Coder, Devstral e DeepSeek V4.",
+    "tags": [
+      "open-weight",
+      "baseline",
+      "Meta"
+    ]
+  },
+  {
+    "name": "Grok Build 0.1",
+    "status": "Coding agent beta",
+    "statusClass": "good",
+    "role": "Modelo xAI treinado para agentic coding, web development, debugging e MCP; usado no Grok Build CLI.",
+    "best": [
+      "web dev",
+      "debug",
+      "MCP",
+      "CLI"
+    ],
+    "caution": "Beta pública; validar estabilidade, privacidade e disponibilidade antes de padronizar em times.",
+    "tags": [
+      "agentic",
+      "xAI",
+      "CLI",
+      "beta"
+    ]
+  },
+  {
+    "name": "Grok 4.3",
+    "status": "Generalista agentic",
+    "statusClass": "blue",
+    "role": "Modelo geral xAI com tool calling e contexto amplo; útil em agentes não exclusivamente focados em código.",
+    "best": [
+      "tool calling",
+      "agentes",
+      "chat técnico",
+      "contexto"
+    ],
+    "caution": "Para coding puro, comparar com Grok Build 0.1.",
+    "tags": [
+      "generalista",
+      "xAI",
+      "agentic"
+    ]
+  },
+  {
+    "name": "MAI-Code-1-Flash",
+    "status": "Copilot leve",
+    "statusClass": "good",
+    "role": "Modelo Microsoft pequeno/tunado para coding no GitHub Copilot; útil em workflows leves com bom custo/latência.",
+    "best": [
+      "Copilot",
+      "VS Code",
+      "tarefas leves",
+      "latência"
+    ],
+    "caution": "Não usar como substituto de modelos frontier em refactor complexo; bom para roteamento automático.",
+    "tags": [
+      "Microsoft",
+      "Copilot",
+      "rápido"
+    ]
+  },
+  {
+    "name": "MAI-Thinking-1",
+    "status": "Reasoning Microsoft",
+    "statusClass": "blue",
+    "role": "Modelo Microsoft de raciocínio com foco em instruções complexas, contexto longo e geração de código.",
+    "best": [
+      "raciocínio",
+      "256k contexto",
+      "code generation",
+      "multi-step"
+    ],
+    "caution": "Confirmar disponibilidade no produto/API usado; dados públicos ainda podem ser majoritariamente do fornecedor.",
+    "tags": [
+      "reasoning",
+      "Microsoft",
+      "contexto"
+    ]
+  },
+  {
+    "name": "Raptor mini",
+    "status": "Copilot utility",
+    "statusClass": "blue",
+    "role": "Modelo fine-tuned GPT-5 mini listado no Copilot para tarefas utilitárias e alto volume.",
+    "best": [
+      "Copilot",
+      "baixo custo",
+      "tarefas simples",
+      "roteamento"
+    ],
+    "caution": "Preview/utility; não apresentar como modelo principal de engenharia.",
+    "tags": [
+      "utility",
+      "Copilot",
+      "preview"
+    ]
+  },
+  {
+    "name": "GLM-5",
+    "status": "Open agentic",
+    "statusClass": "good",
+    "role": "Flagship da Z.ai/Zhipu para agentic engineering, com foco declarado em coding e benchmarks agentic.",
+    "best": [
+      "agentic coding",
+      "open-source",
+      "SWE-bench",
+      "Terminal-Bench"
+    ],
+    "caution": "Validar versões exatas e resultados independentes; documentação pública mistura claims de fornecedor e benchmarks.",
+    "tags": [
+      "open-source",
+      "Z.ai",
+      "agentic"
+    ]
+  },
+  {
+    "name": "GLM-5-Turbo",
+    "status": "Tool calling",
+    "statusClass": "blue",
+    "role": "Variante otimizada para capacidades de agente como tool calling, instruction following e execução longa.",
+    "best": [
+      "tool calling",
+      "agentes",
+      "long-chain",
+      "API"
+    ],
+    "caution": "Comparar com GLM-5 base e modelos especializados em coding antes de recomendar.",
+    "tags": [
+      "tool-use",
+      "Z.ai",
+      "agentic"
+    ]
+  },
+  {
+    "name": "MiniMax M3",
+    "status": "Frontier coding/agentic",
+    "statusClass": "good",
+    "role": "Modelo MiniMax para coding e agentes, com contexto longo, multimodalidade e foco em engenharia de produção.",
+    "best": [
+      "1M contexto",
+      "agentic coding",
+      "MiniMax Code",
+      "multimodal"
+    ],
+    "caution": "Tratar claims como fornecedor até validar com benchmark público ou teste interno.",
+    "tags": [
+      "agentic",
+      "MiniMax",
+      "contexto"
+    ]
+  },
+  {
+    "name": "MiniMax M2.5 / M2.7",
+    "status": "Custo/latência",
+    "statusClass": "blue",
+    "role": "Família MiniMax anterior/alternativa para coding e agentes com foco em custo, throughput e baixa latência.",
+    "best": [
+      "baixo custo",
+      "throughput",
+      "agentes",
+      "API"
+    ],
+    "caution": "Usar quando M3 for caro/indisponível; validar versão exata no provedor.",
+    "tags": [
+      "MiniMax",
+      "baixo custo",
+      "API"
+    ]
+  },
+  {
+    "name": "Amazon Nova 2",
+    "status": "AWS/Bedrock",
+    "statusClass": "blue",
+    "role": "Família de modelos AWS relevante para agentes, tool use e geração de código dentro do ecossistema Bedrock/AWS.",
+    "best": [
+      "AWS",
+      "Bedrock Agents",
+      "tool-use",
+      "code generation"
+    ],
+    "caution": "Separar modelo Nova de ferramenta Amazon Q Developer; escolher por integração AWS, não só por benchmark público.",
+    "tags": [
+      "AWS",
+      "Bedrock",
+      "agentic"
+    ]
+  },
+  {
+    "name": "IBM Granite 4.1",
+    "status": "Enterprise/open",
+    "statusClass": "blue",
+    "role": "Modelo IBM open/enterprise para geração de snippets, explicação de codebases e aplicações corporativas com governança.",
+    "best": [
+      "enterprise",
+      "explicação",
+      "governança",
+      "open"
+    ],
+    "caution": "Para coding pesado, comparar com Granite Code e modelos especializados.",
+    "tags": [
+      "enterprise",
+      "IBM",
+      "open"
+    ]
+  },
+  {
+    "name": "IBM Granite Code 8B 128K",
+    "status": "Local/enterprise",
+    "statusClass": "blue",
+    "role": "Modelo IBM focado em instruções de código com contexto 128k; útil para assistentes internos, documentação, testes e code fixing.",
+    "best": [
+      "local",
+      "128k",
+      "assistente interno",
+      "documentação"
+    ],
+    "caution": "Tamanho 8B favorece custo/localidade, não máxima qualidade; usar com escopo controlado.",
+    "tags": [
+      "local",
+      "IBM",
+      "coding"
+    ]
+  },
+  {
+    "name": "StarCoder2",
+    "status": "Open code model",
+    "statusClass": "blue",
+    "role": "Família aberta de modelos de código útil para completion, fine-tuning, pesquisa e ambientes locais.",
+    "best": [
+      "fine-tuning",
+      "completion",
+      "pesquisa",
+      "local"
+    ],
+    "caution": "Mais antigo que famílias agentic modernas; bom como baseline/open tooling, não como top frontier.",
+    "tags": [
+      "open-source",
+      "BigCode",
+      "baseline"
+    ]
+  },
+  {
+    "name": "CodeGemma",
+    "status": "Open leve",
+    "statusClass": "blue",
+    "role": "Modelos Google/Gemma especializados em código, FIM e geração/completion em ambientes leves ou locais.",
+    "best": [
+      "FIM",
+      "completion",
+      "local",
+      "ensino"
+    ],
+    "caution": "Comparar com Codestral, StarCoder2 e Qwen3-Coder para IDE/autocomplete atual.",
+    "tags": [
+      "open",
+      "Google",
+      "FIM"
+    ]
+  },
+  {
+    "name": "Phi-4",
+    "status": "Small local",
+    "statusClass": "blue",
+    "role": "Small language model Microsoft para raciocínio/coding em cenários edge/local, automações pequenas e protótipos de baixo custo.",
+    "best": [
+      "edge",
+      "local",
+      "baixo custo",
+      "raciocínio leve"
+    ],
+    "caution": "Não usar como agente principal em codebase grande; excelente para etapas auxiliares e constrained environments.",
+    "tags": [
+      "SLM",
+      "Microsoft",
+      "local"
+    ]
   }
 ];
 
@@ -323,12 +1254,20 @@ const sources = [
     verifiedAt: "2026-06-18"
   },
   {
+    type: "Adoção",
+    title: "Sonar State of Code Developer Survey 2026",
+    desc: "Relatório oficial da Sonar: 72% usam AI tools diariamente, 42% do código commitado é gerado ou assistido por IA, e 96% não confiam totalmente na correção funcional.",
+    url: "https://www.sonarsource.com/state-of-code-developer-survey-report.pdf",
+    status: "verificado",
+    verifiedAt: "2026-06-19"
+  },
+  {
     type: "Benchmark",
     title: "Terminal-Bench 2.1",
-    desc: "Leaderboard público para agentes em terminal; separa ferramenta, modelo, versão e intervalo de confiança.",
+    desc: "Benchmark de agentes em terminal; comparar scaffold + modelo.",
     url: "https://www.tbench.ai/leaderboard/terminal-bench/2.1",
     status: "verificado",
-    verifiedAt: "2026-06-18"
+    verifiedAt: "2026-06-19"
   },
   {
     type: "Benchmark",
@@ -356,27 +1295,27 @@ const sources = [
   },
   {
     type: "Benchmark",
-    title: "Aider LLM Leaderboards",
-    desc: "Benchmark polyglot de edição por diff; útil para comparar impacto de reasoning effort.",
+    title: "Aider leaderboards",
+    desc: "Benchmark de edição de código e efeito de reasoning effort.",
     url: "https://aider.chat/docs/leaderboards/",
     status: "verificado",
-    verifiedAt: "2026-06-18"
+    verifiedAt: "2026-06-19"
   },
   {
-    type: "Benchmark",
-    title: "OpenAI - Introducing GPT-5.5",
-    desc: "Publicação com números de Terminal-Bench 2.0, SWE-Bench Pro e comparativos de fornecedor.",
+    type: "Modelo",
+    title: "OpenAI GPT-5.5",
+    desc: "Base para cards GPT-5.5/GPT-5.4/Codex e claims de coding.",
     url: "https://openai.com/index/introducing-gpt-5-5/",
     status: "fornecedor",
-    verifiedAt: "2026-06-18"
+    verifiedAt: "2026-06-19"
   },
   {
     type: "Benchmark",
-    title: "OpenAI - SWE-Bench Verified no longer measures frontier coding",
-    desc: "Justificativa para tratar SWE-Bench Verified como histórico e priorizar SWE-Bench Pro.",
+    title: "OpenAI — por que não usar só SWE-bench Verified",
+    desc: "Contexto sobre contaminação/limitações do SWE-bench Verified.",
     url: "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/",
-    status: "verificado",
-    verifiedAt: "2026-06-18"
+    status: "crítico",
+    verifiedAt: "2026-06-19"
   },
   {
     type: "Plataforma",
@@ -421,10 +1360,10 @@ const sources = [
   {
     type: "Plataforma",
     title: "Amazon Q Developer",
-    desc: "Assistente da AWS para IDE, CLI, revisão, segurança e modernização de código.",
+    desc: "Ferramenta/harness AWS; não confundir com modelo.",
     url: "https://aws.amazon.com/q/developer/",
-    status: "verificado",
-    verifiedAt: "2026-06-18"
+    status: "fornecedor",
+    verifiedAt: "2026-06-19"
   },
   {
     type: "Open-weight",
@@ -457,6 +1396,166 @@ const sources = [
     url: "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
     status: "verificado",
     verifiedAt: "2026-06-18"
+  },
+  {
+    type: "Plataforma",
+    title: "GitHub Copilot — modelos suportados",
+    desc: "Disponibilidade de GPT, Claude, Gemini, MAI e Raptor no Copilot; depende de plano/cliente.",
+    url: "https://docs.github.com/copilot/reference/ai-models/supported-models",
+    status: "verificado",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Modelo",
+    title: "Anthropic Claude models overview",
+    desc: "Descrições oficiais de Opus 4.8, Sonnet 4.6 e Haiku 4.5.",
+    url: "https://platform.claude.com/docs/en/about-claude/models/overview",
+    status: "fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Modelo",
+    title: "Google Gemini model docs",
+    desc: "Dados sobre Gemini 3.5 Flash, 3.1 Pro, Flash-Lite e 2.5.",
+    url: "https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/",
+    status: "fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Open-weight",
+    title: "DeepSeek V4 release",
+    desc: "DeepSeek V4-Pro/V4-Flash, 1M context, API e substituição de aliases antigos.",
+    url: "https://api-docs.deepseek.com/news/news260424",
+    status: "fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Open-weight",
+    title: "DeepSeek V3.2 release",
+    desc: "Reasoning, tool-use e modelos open-source V3.2.",
+    url: "https://api-docs.deepseek.com/news/news251201",
+    status: "fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Open-weight",
+    title: "Qwen3-Coder GitHub",
+    desc: "Família Qwen3-Coder, Qwen Code, contexto e uso em agentes.",
+    url: "https://github.com/QwenLM/Qwen3-Coder",
+    status: "fornecedor/open",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Modelo",
+    title: "Kimi K2.7 Code docs",
+    desc: "Kimi K2.7 Code, HighSpeed, contexto e capacidades.",
+    url: "https://platform.kimi.ai/docs/models",
+    status: "fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Modelo",
+    title: "Mistral Devstral 2",
+    desc: "Devstral 2, Devstral Small 2 e Mistral Vibe CLI.",
+    url: "https://mistral.ai/news/devstral-2-vibe-cli/",
+    status: "fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Modelo",
+    title: "Mistral Codestral 25.08",
+    desc: "Codestral e Codestral Embed.",
+    url: "https://mistral.ai/news/codestral-25-08/",
+    status: "fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Open-weight",
+    title: "Meta Llama",
+    desc: "Llama 4 Maverick/Scout e Llama 3.1.",
+    url: "https://www.llama.com/",
+    status: "fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Modelo",
+    title: "xAI Grok Build 0.1",
+    desc: "Modelo de coding da xAI e Grok Build CLI.",
+    url: "https://x.ai/news/grok-build-0-1",
+    status: "fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Modelo",
+    title: "Microsoft/GitHub MAI-Code-1-Flash",
+    desc: "Modelo Microsoft no Copilot/VS Code.",
+    url: "https://github.blog/changelog/2026-06-04-mai-code-1-flash-is-in-public-preview-in-github-copilot/",
+    status: "fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Open-weight",
+    title: "Z.ai GLM",
+    desc: "GLM-5 e GLM-5-Turbo para agentic engineering.",
+    url: "https://www.zhipuai.cn/en",
+    status: "fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Modelo",
+    title: "MiniMax",
+    desc: "MiniMax M3/M2.x e MiniMax Code.",
+    url: "https://www.minimax.io/",
+    status: "fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Modelo",
+    title: "Amazon Nova / Bedrock",
+    desc: "Família Nova e uso em agentes AWS.",
+    url: "https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html",
+    status: "fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Open-weight",
+    title: "IBM Granite Code",
+    desc: "Granite Code 8B 128K.",
+    url: "https://huggingface.co/ibm-granite/granite-8b-code-instruct-128k",
+    status: "open/fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Open-weight",
+    title: "StarCoder2",
+    desc: "Família aberta de modelos de código.",
+    url: "https://huggingface.co/docs/transformers/en/model_doc/starcoder2",
+    status: "open",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Open-weight",
+    title: "CodeGemma",
+    desc: "Modelos Gemma especializados em código.",
+    url: "https://ai.google.dev/gemma/docs/codegemma",
+    status: "open/fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Open-weight",
+    title: "Phi",
+    desc: "Família Phi/SLM para cenários locais e edge.",
+    url: "https://azure.microsoft.com/products/phi",
+    status: "open/fornecedor",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Benchmark",
+    title: "SWE-bench",
+    desc: "SWE-bench/Verified/Pro; usar com cautela.",
+    url: "https://www.swebench.com/",
+    status: "verificado",
+    verifiedAt: "2026-06-19"
   }
 ];
 
@@ -555,6 +1654,8 @@ function sourceClass(type) {
 }
 
 function sourceStatusClass(status = "verificado") {
+  if (status.includes("fornecedor")) return "blue";
+  if (status.includes("open")) return "good";
   if (status === "fornecedor") return "blue";
   if (status === "pendente") return "warn";
   if (status === "histórico") return "purple";
@@ -569,7 +1670,10 @@ function sourceStatusLabel(status = "verificado") {
     pendente: "pendente",
     histórico: "histórico",
     crítico: "crítico",
-    prático: "prático"
+    prático: "prático",
+    open: "open",
+    "fornecedor/open": "fornecedor/open",
+    "open/fornecedor": "open/fornecedor"
   };
   return labels[status] || status;
 }
@@ -633,11 +1737,90 @@ function renderMatrix() {
   `).join("");
 }
 
+const modelOwnerMatchers = [
+  ["Microsoft", /\b(Microsoft|MAI|Phi|Raptor)\b/i],
+  ["OpenAI", /\b(OpenAI|GPT)\b/i],
+  ["Anthropic", /\b(Anthropic|Claude)\b/i],
+  ["Google", /\b(Google|Gemini|Gemma|CodeGemma)\b/i],
+  ["DeepSeek", /\bDeepSeek\b/i],
+  ["Qwen", /\bQwen\b/i],
+  ["Kimi", /\b(Kimi|Moonshot)\b/i],
+  ["Mistral", /\b(Mistral|Devstral|Codestral|Leanstral)\b/i],
+  ["Meta", /\b(Meta|Llama)\b/i],
+  ["xAI", /\b(xAI|Grok)\b/i],
+  ["Z.ai", /\b(Z\.ai|Zhipu|GLM)\b/i],
+  ["MiniMax", /\bMiniMax\b/i],
+  ["AWS", /\b(AWS|Amazon|Nova|Bedrock)\b/i],
+  ["IBM", /\b(IBM|Granite)\b/i],
+  ["BigCode", /\b(BigCode|StarCoder)\b/i]
+];
+
+function normalizeSearchText(value = "") {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function modelOwner(model) {
+  const content = [model.name, model.role, ...model.best, ...model.tags].join(" ");
+  const match = modelOwnerMatchers.find(([, pattern]) => pattern.test(content));
+  return match ? match[0] : "Outra";
+}
+
+function modelOwnerOptions() {
+  const owners = [...new Set(modelProfiles.map(modelOwner))];
+  const knownOrder = modelOwnerMatchers.map(([owner]) => owner);
+  return owners.sort((a, b) => {
+    const ai = knownOrder.indexOf(a);
+    const bi = knownOrder.indexOf(b);
+    if (ai === -1 && bi === -1) return a.localeCompare(b, "pt-BR");
+    if (ai === -1) return 1;
+    if (bi === -1) return -1;
+    return ai - bi;
+  });
+}
+
+function setupModelFilters() {
+  const grid = document.getElementById("modelGrid");
+  if (!grid) return;
+
+  const ownerFilter = document.getElementById("modelOwnerFilter");
+  const searchInput = document.getElementById("modelSearch");
+
+  if (ownerFilter && !ownerFilter.dataset.ready) {
+    ownerFilter.innerHTML = `
+      <option value="">Todas as empresas</option>
+      ${modelOwnerOptions().map(owner => `<option value="${owner}">${owner}</option>`).join("")}
+    `;
+    ownerFilter.dataset.ready = "true";
+  }
+
+  searchInput?.addEventListener("input", renderModels);
+  ownerFilter?.addEventListener("change", renderModels);
+  renderModels();
+}
+
 function renderModels() {
   const grid = document.getElementById("modelGrid");
   if (!grid) return;
 
-  grid.innerHTML = modelProfiles.map(model => `
+  const searchInput = document.getElementById("modelSearch");
+  const ownerFilter = document.getElementById("modelOwnerFilter");
+  const resultCount = document.getElementById("modelResultCount");
+  const empty = document.getElementById("modelEmpty");
+  const query = normalizeSearchText(searchInput?.value || "");
+  const selectedOwner = ownerFilter?.value || "";
+  const filteredModels = modelProfiles.filter(model => {
+    const matchesName = !query || normalizeSearchText(model.name).includes(query);
+    const matchesOwner = !selectedOwner || modelOwner(model) === selectedOwner;
+    return matchesName && matchesOwner;
+  });
+
+  if (resultCount) resultCount.textContent = `${filteredModels.length} de ${modelProfiles.length} modelos`;
+  if (empty) empty.hidden = filteredModels.length > 0;
+
+  grid.innerHTML = filteredModels.map(model => `
     <article class="model-card">
       <div class="tag-row">
         <span class="tag ${model.statusClass}">${model.status}</span>
@@ -898,7 +2081,7 @@ function setupEvents() {
 renderNav();
 renderTopbar();
 renderMatrix();
-renderModels();
+setupModelFilters();
 renderBenchmarks();
 renderSources();
 recommend();
