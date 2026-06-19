@@ -1294,10 +1294,42 @@ const sources = [
     verifiedAt: "2026-06-18"
   },
   {
+    type: "Governança",
+    title: "Google DeepMind - segurança de agentes",
+    desc: "Roadmap de defesa em profundidade para agentes com permissões reais: sandbox, supervisão, prompt injection e monitoramento.",
+    url: "https://deepmind.google/blog/securing-the-future-of-ai-agents/",
+    status: "verificado",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Observabilidade",
+    title: "OpenTelemetry GenAI semantic conventions",
+    desc: "Convenções para rastrear chamadas de IA generativa, modelo, tokens, latência, erros e tool calls em traces.",
+    url: "https://opentelemetry.io/docs/specs/semconv/gen-ai/",
+    status: "open",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Paper",
+    title: "FastContext",
+    desc: "Paper sobre exploração de repositórios para agentes de coding e redução de contexto antes da resolução da issue.",
+    url: "https://arxiv.org/abs/2606.14066",
+    status: "open",
+    verifiedAt: "2026-06-19"
+  },
+  {
     type: "Benchmark",
     title: "Aider leaderboards",
     desc: "Benchmark de edição de código e efeito de reasoning effort.",
     url: "https://aider.chat/docs/leaderboards/",
+    status: "verificado",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Contexto",
+    title: "Aider repo map",
+    desc: "Documentação sobre mapa de repositório para fornecer contexto relevante sem despejar todo o código no prompt.",
+    url: "https://aider.chat/docs/repomap.html",
     status: "verificado",
     verifiedAt: "2026-06-19"
   },
@@ -1315,6 +1347,14 @@ const sources = [
     desc: "Contexto sobre contaminação/limitações do SWE-bench Verified.",
     url: "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/",
     status: "crítico",
+    verifiedAt: "2026-06-19"
+  },
+  {
+    type: "Benchmark",
+    title: "OpenAI - SWE-bench Verified",
+    desc: "Fonte histórica usada para contextualizar validação executável e os limites de benchmarks de software.",
+    url: "https://openai.com/index/introducing-swe-bench-verified/",
+    status: "histórico",
     verifiedAt: "2026-06-19"
   },
   {
