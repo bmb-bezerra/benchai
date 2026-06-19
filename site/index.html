@@ -6,7 +6,7 @@
     <title>BenchAI</title>
     <meta name="description" content="Playbook para escolher ferramentas e modelos de IA por tarefa, risco, governança, sensibilidade dos dados e evidência pública.">
     <meta name="theme-color" content="#f5f5f7">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260619-weekly-three">
   </head>
   <body data-page="home">
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -23,113 +23,141 @@
         <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-controls="sidebar" aria-label="Ocultar sidebar" title="Ocultar sidebar">‹</button>
         <div class="nav-label">Navegação</div>
         <nav class="nav-list" id="siteNav"></nav>
-        <div class="side-actions">
-          <a class="side-cta" href="recomendador.html">
-            <span>Decidir agora</span>
-            <small>Abrir recomendador</small>
-          </a>
-          <button class="side-button" type="button" data-print>Exportar PDF</button>
-        </div>
-        <div class="side-meta">
-          <div><strong>Atualizado:</strong> 18 jun. 2026</div>
-        </div>
       </aside>
 
       <main class="main" id="conteudo">
-        <section class="page-hero">
-          <p class="eyebrow">BenchAI</p>
-          <h1>Roteie por risco.</h1>
-          <p>
-            Um playbook de engenharia para escolher ferramenta, modelo, scaffold e effort por tarefa,
-            sensibilidade dos dados, custo de errar e evidência pública.
-          </p>
-        </section>
-
-        <div class="snapshot-grid" aria-label="Sinais operacionais">
-          <div class="snapshot">
-            <div class="snapshot-label">IA já é rotina</div>
-            <div class="snapshot-value">84%</div>
-            <p>Stack Overflow 2025: usam ou planejam usar AI tools no processo de desenvolvimento.</p>
+        <section class="page-hero home-hero">
+          <div class="home-intro">
+            <h1>Roteie por risco.</h1>
+            <p>
+              Um playbook de engenharia para escolher ferramenta, modelo, scaffold e effort por tarefa,
+              sensibilidade dos dados, custo de errar e evidência pública.
+            </p>
           </div>
-          <div class="snapshot">
-            <div class="snapshot-label">Uso diário profissional</div>
-            <div class="snapshot-value">50,6%</div>
-            <p>Profissionais que usam AI tools diariamente no fluxo de desenvolvimento.</p>
-          </div>
-          <div class="snapshot">
-            <div class="snapshot-label">Desconfiança</div>
-            <div class="snapshot-value">46%</div>
-            <p>33% confiam na precisão. Mais devs desconfiam do que confiam, então revisão humana continua obrigatória.</p>
-          </div>
-          <div class="snapshot">
-            <div class="snapshot-label">Ferramentas especializadas</div>
-            <div class="snapshot-value">74%</div>
-            <p>JetBrains AI Pulse: adoção de ferramentas especializadas de desenvolvimento no trabalho.</p>
-          </div>
-          <div class="snapshot signal-card">
-            <div class="snapshot-label">Terminal mede agente + modelo</div>
-            <div class="snapshot-value">83,4</div>
-            <p>Codex CLI + GPT-5.5 lidera o recorte Terminal-Bench 2.1 verificado.</p>
-          </div>
-          <div class="snapshot signal-card">
-            <div class="snapshot-label">Verified virou histórico</div>
-            <div class="snapshot-value">Pro</div>
-            <p>SWE-Bench Verified não é mais ranking principal para frontier coding.</p>
-          </div>
-          <div class="snapshot signal-card prompt-snapshot">
-            <div class="snapshot-label">Prompt operacional</div>
-            <code>tarefa -> risco -> ferramenta + modelo + effort -> validação local</code>
-          </div>
-        </div>
-
-        <section class="section">
-          <div class="section-head">
-            <div>
-              <h2>Escolha a rota certa</h2>
-              <p>Comece pelo tipo de tarefa, sensibilidade dos dados e custo de errar. O playbook indica quando seguir, escalar ou revisar.</p>
-            </div>
-            <span class="section-chip">decisão prática</span>
-          </div>
-          <div class="overview-grid">
-            <a class="source-card" href="recomendador.html">
-              <span class="tag brand" style="justify-self:start">01</span>
-              <strong>Recomendador</strong>
-              <span class="desc">Informe tarefa, complexidade, dados e escopo para receber uma rota inicial.</span>
-            </a>
-            <a class="source-card" href="recomendador.html#matriz">
-              <span class="tag brand" style="justify-self:start">02</span>
-              <strong>Matriz no recomendador</strong>
-              <span class="desc">Compare rotas por cenário dentro da mesma página de decisão.</span>
-            </a>
-            <a class="source-card" href="ides.html">
-              <span class="tag brand" style="justify-self:start">03</span>
-              <strong>IDEs</strong>
-              <span class="desc">Escolha o ambiente de trabalho antes de automatizar com agentes.</span>
-            </a>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-head">
-            <div>
-              <h2>Critérios de leitura</h2>
-              <p>Use BenchAI como uma camada de decisão antes da ferramenta: risco, dados, scaffold e evidência determinam a rota.</p>
-            </div>
-            <span class="section-chip">critérios</span>
-          </div>
-          <div class="evidence-grid">
-            <div class="card">
-              <span class="tag blue">Rota operacional</span>
-              <h3>Decida com contexto suficiente</h3>
-              <p>Cada recomendação combina impacto da tarefa, sensibilidade do repositório e evidência disponível.</p>
-            </div>
-            <div class="card">
-              <div class="audit-list">
-                <div class="audit-item"><span class="audit-badge">01</span><div><strong>Impacto da tarefa:</strong> mudanças críticas pedem modelo mais forte e validação explícita.</div></div>
-                <div class="audit-item"><span class="audit-badge">02</span><div><strong>Dados no contexto:</strong> reduza exposição antes de copiar código, logs ou prompts.</div></div>
-                <div class="audit-item"><span class="audit-badge">03</span><div><strong>Scaffold e effort:</strong> compare ferramenta + modelo + modo, não apenas o nome do modelo.</div></div>
+          <aside class="changelog-card" aria-labelledby="changelog-title">
+            <div class="changelog-head">
+              <div>
+                <p class="eyebrow">Atualizações</p>
+                <h2 id="changelog-title">Changelog</h2>
               </div>
             </div>
+            <ol class="changelog-list" aria-label="Changelog do BenchAI">
+              <li>
+                <time datetime="2026-06-18">18 jun</time>
+                <strong>Home com changelog</strong>
+                <p>Hero sem moldura e atualização visual com a linha do tempo do site.</p>
+              </li>
+              <li>
+                <time datetime="2026-06-18">18 jun</time>
+                <strong>Acessibilidade ajustada</strong>
+                <p>Link de pular conteúdo fica oculto até receber foco pelo teclado.</p>
+              </li>
+              <li>
+                <time datetime="2026-06-18">18 jun</time>
+                <strong>Preview como regra</strong>
+                <p>O projeto agora pede servidor local ativo antes de mudanças ou auditorias.</p>
+              </li>
+              <li>
+                <time datetime="2026-06-17">17 jun</time>
+                <strong>Site estático multi-page</strong>
+                <p>Navegação separada para início, modelos, benchmarks, IDEs e fontes.</p>
+              </li>
+            </ol>
+          </aside>
+
+          <div class="snapshot-grid" aria-label="Sinais operacionais">
+            <a class="snapshot" href="https://survey.stackoverflow.co/2025/ai/" target="_blank" rel="noopener noreferrer" aria-label="Abrir fonte da métrica IA já é rotina">
+              <div class="snapshot-label">IA já é rotina</div>
+              <div class="snapshot-value">84%</div>
+              <p>Stack Overflow 2025: usam ou planejam usar AI tools no processo de desenvolvimento.</p>
+            </a>
+            <a class="snapshot" href="https://survey.stackoverflow.co/2025/ai/" target="_blank" rel="noopener noreferrer" aria-label="Abrir fonte da métrica uso diário profissional">
+              <div class="snapshot-label">Uso diário profissional</div>
+              <div class="snapshot-value">50,6%</div>
+              <p>Profissionais que usam AI tools diariamente no fluxo de desenvolvimento.</p>
+            </a>
+            <a class="snapshot" href="https://survey.stackoverflow.co/2025/ai/" target="_blank" rel="noopener noreferrer" aria-label="Abrir fonte da métrica desconfiança">
+              <div class="snapshot-label">Desconfiança</div>
+              <div class="snapshot-value">46%</div>
+              <p>33% confiam na precisão. Mais devs desconfiam do que confiam, então revisão humana continua obrigatória.</p>
+            </a>
+            <a class="snapshot" href="https://blog.jetbrains.com/research/2026/04/which-ai-coding-tools-do-developers-actually-use-at-work/" target="_blank" rel="noopener noreferrer" aria-label="Abrir fonte da métrica ferramentas especializadas">
+              <div class="snapshot-label">Ferramentas especializadas</div>
+              <div class="snapshot-value">74%</div>
+              <p>JetBrains AI Pulse: adoção de ferramentas especializadas de desenvolvimento no trabalho.</p>
+            </a>
+          </div>
+        </section>
+
+        <section class="section home-signals" aria-label="Sinais de decisão">
+          <div class="signal-grid">
+            <a class="source-card decision-signal" href="https://www.tbench.ai/leaderboard/terminal-bench/2.1" target="_blank" rel="noopener noreferrer" aria-label="Abrir fonte sobre comparação de scaffold no Terminal-Bench">
+              <span class="tag blue">Scaffold</span>
+              <strong>Compare ferramenta + modelo.</strong>
+              <span class="desc">Terminal-Bench e Aider reforçam que agente, IDE, CLI e effort mudam o resultado. Leia rankings dentro do mesmo harness.</span>
+            </a>
+            <a class="source-card decision-signal" href="https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-1" target="_blank" rel="noopener noreferrer" aria-label="Abrir Artificial Analysis Intelligence Index v4.1">
+              <span class="tag warn">Custo por tarefa</span>
+              <strong>Custo, tempo e tokens entram na rota.</strong>
+              <span class="desc">A Artificial Analysis v4.1 adiciona métricas por tarefa para custo, tempo e tokens, úteis para decidir operação e não só ranking.</span>
+            </a>
+            <a class="source-card decision-signal" href="https://artificialanalysis.ai/agents/coding-agents" target="_blank" rel="noopener noreferrer" aria-label="Abrir Artificial Analysis Coding Agent Index">
+              <span class="tag brand">Harness</span>
+              <strong>O mesmo modelo muda com o agente.</strong>
+              <span class="desc">O Coding Agent Index cruza DeepSWE, Terminal-Bench v2 e SWE-Atlas-QnA para comparar agentes em tarefas de engenharia.</span>
+            </a>
+            <a class="source-card decision-signal" href="https://artificialanalysis.ai/articles/glm-5-2-is-the-new-leading-open-weights-model-on-the-artificial-analysis-intelligence-index" target="_blank" rel="noopener noreferrer" aria-label="Abrir artigo da Artificial Analysis sobre GLM-5.2">
+              <span class="tag purple">Open-weight</span>
+              <strong>Controle local pede eficiência.</strong>
+              <span class="desc">GLM-5.2 é sinal forte para rotas open-weight, mas o custo por tarefa e o uso de tokens continuam parte da decisão.</span>
+            </a>
+          </div>
+        </section>
+
+        <section class="section weekly-picks" aria-label="Curadoria da semana">
+          <div class="weekly-grid">
+            <a class="source-card weekly-card" href="https://deepmind.google/blog/securing-the-future-of-ai-agents/" target="_blank" rel="noopener noreferrer" aria-label="Abrir notícia da semana da Google DeepMind">
+              <span class="tag-row">
+                <span class="tag blue">Notícia da semana</span>
+                <time datetime="2026-06-18">18 jun 2026</time>
+              </span>
+              <strong>Google DeepMind publica roadmap de controle para agentes.</strong>
+              <span class="weekly-summary">
+                <span>A DeepMind publicou um roadmap para operar agentes internos cada vez mais capazes com uma lógica de defesa em profundidade: o agente pode ser útil, mas ainda precisa ser tratado como risco operacional quando recebe permissões reais.</span>
+                <span>O plano combina sandboxing, segurança de endpoint, resistência a prompt injection, supervisores de IA e monitoramento de trajetórias para detectar, prevenir e responder a ações perigosas antes que virem incidente.</span>
+                <span>Para BenchAI, a leitura é direta: autonomia só deve subir quando o ambiente tiver logs, limites, revisão e resposta em tempo real compatíveis com o impacto da tarefa.</span>
+              </span>
+              <span class="source-meta">Fonte principal: Google DeepMind</span>
+              <span class="weekly-cta">Para ler a notícia completa, clique neste card e siga para o site de origem.</span>
+            </a>
+            <a class="source-card weekly-card" href="https://arxiv.org/abs/2606.14061" target="_blank" rel="noopener noreferrer" aria-label="Abrir paper da semana no arXiv">
+              <span class="tag-row">
+                <span class="tag purple">Paper da semana</span>
+                <time datetime="2026-06-12">12 jun 2026</time>
+              </span>
+              <strong>LLM Agents Can See Code Repositories.</strong>
+              <span class="weekly-summary">
+                <span>O paper testa se agentes de coding se orientam melhor quando enxergam grafos visuais do repositório além do texto tradicional de arquivos, comandos e patches.</span>
+                <span>Visão sozinha piora precisão e aumenta custo; o ganho aparece no modo híbrido, em que texto preserva detalhe simbólico e grafos ajudam na localização de falhas e dependências.</span>
+                <span>O estudo reporta redução de até 26% em tokens/custo mantendo ou melhorando resolução de issues, reforçando que scaffold e interface mudam o resultado do agente.</span>
+              </span>
+              <span class="source-meta">Fonte principal: arXiv 2606.14061</span>
+              <span class="weekly-cta">Para ler o paper completo, clique neste card e siga para o site de origem.</span>
+            </a>
+            <a class="source-card weekly-card" href="https://artificialanalysis.ai/articles/glm-5-2-is-the-new-leading-open-weights-model-on-the-artificial-analysis-intelligence-index" target="_blank" rel="noopener noreferrer" aria-label="Abrir modelo da semana na Artificial Analysis">
+              <span class="tag-row">
+                <span class="tag good">Modelo da semana</span>
+                <time datetime="2026-06-17">17 jun 2026</time>
+              </span>
+              <strong>GLM-5.2 lidera entre modelos open-weight.</strong>
+              <span class="weekly-summary">
+                <span>A Artificial Analysis colocou o GLM-5.2 como líder open-weight no Intelligence Index v4.1, com score 51 e avanço forte sobre o GLM-5.1 sem mudar o tamanho base do modelo.</span>
+                <span>O destaque para BenchAI é a rota de soberania: licença MIT, 1M de contexto, boa leitura em tarefas agentic e sinal forte em GDPval-AA v2 e Terminal-Bench v2.1.</span>
+                <span>A ressalva é eficiência: o modelo usa muitos tokens de saída por tarefa. É opção promissora quando controle pesa, mas precisa ser validado contra custo local e latência.</span>
+              </span>
+              <span class="source-meta">Fonte principal: Artificial Analysis</span>
+              <span class="weekly-cta">Para ver a análise completa do modelo, clique neste card e siga para o site de origem.</span>
+            </a>
           </div>
         </section>
 
@@ -139,6 +167,6 @@
       </main>
     </div>
 
-    <script src="assets/js/app.js"></script>
+    <script src="assets/js/app.js?v=20260618-artificial-analysis"></script>
   </body>
 </html>

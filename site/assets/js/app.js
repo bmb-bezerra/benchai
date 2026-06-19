@@ -1,9 +1,10 @@
 const navItems = [
   { id: "home", label: "Início", href: "./", index: "1" },
   { id: "modelos", label: "Modelos", href: "modelos.html", index: "2" },
-  { id: "benchmarks", label: "Benchmarks", href: "benchmarks.html", index: "3" },
-  { id: "ides", label: "IDEs", href: "ides.html", index: "4" },
-  { id: "fontes", label: "Fontes", href: "fontes.html", index: "5" }
+  { id: "ides", label: "Harness", href: "ides.html", index: "3" },
+  { id: "benchmarks", label: "Benchmarks", href: "benchmarks.html", index: "4" },
+  { id: "recomendador", label: "Recomendador", href: "recomendador.html", index: "5" },
+  { id: "fontes", label: "Fontes", href: "fontes.html", index: "6" }
 ];
 
 const matrixRows = [
@@ -331,6 +332,30 @@ const sources = [
   },
   {
     type: "Benchmark",
+    title: "Artificial Analysis Intelligence Index v4.1",
+    desc: "Índice independente com foco maior em workloads agentic e novas métricas de custo, tempo e tokens por tarefa.",
+    url: "https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-1",
+    status: "verificado",
+    verifiedAt: "2026-06-18"
+  },
+  {
+    type: "Benchmark",
+    title: "Artificial Analysis Coding Agent Index",
+    desc: "Compara agentes de coding por DeepSWE, Terminal-Bench v2 e SWE-Atlas-QnA, incluindo custo e tempo por tarefa.",
+    url: "https://artificialanalysis.ai/agents/coding-agents",
+    status: "verificado",
+    verifiedAt: "2026-06-18"
+  },
+  {
+    type: "Open-weight",
+    title: "Artificial Analysis - GLM-5.2",
+    desc: "Sinal recente para rotas open-weight: GLM-5.2 lidera o índice aberto, mas exige leitura de custo e uso de tokens.",
+    url: "https://artificialanalysis.ai/articles/glm-5-2-is-the-new-leading-open-weights-model-on-the-artificial-analysis-intelligence-index",
+    status: "verificado",
+    verifiedAt: "2026-06-18"
+  },
+  {
+    type: "Benchmark",
     title: "Aider LLM Leaderboards",
     desc: "Benchmark polyglot de edição por diff; útil para comparar impacto de reasoning effort.",
     url: "https://aider.chat/docs/leaderboards/",
@@ -554,12 +579,11 @@ function renderNav() {
   if (!nav) return;
 
   const current = document.body.dataset.page || "home";
-  nav.innerHTML = navItems.map(({ id, label, href, index }) => {
+  nav.innerHTML = navItems.map(({ id, label, href }) => {
     const active = current === id ? ' aria-current="page"' : "";
     return `
       <a href="${href}"${active}>
-        <span class="nav-index">${index}</span>
-        <span>${label}</span>
+        <span class="nav-text">${label}</span>
       </a>
     `;
   }).join("");
@@ -578,17 +602,16 @@ function renderTopbar() {
       <span>BenchAI</span>
     </a>
     <nav class="topbar-nav" aria-label="Navegação principal compacta">
-      ${navItems.map(({ id, label, href, index }) => {
+      ${navItems.map(({ id, label, href }) => {
         const active = current === id ? ' aria-current="page"' : "";
         return `
           <a href="${href}"${active}>
-            <span class="topbar-index">${index}</span>
             <span>${label}</span>
           </a>
         `;
       }).join("")}
     </nav>
-    <button class="topbar-print" type="button" data-print>PDF</button>
+    <div class="topbar-theme" data-theme-switch-host="topbar"></div>
   `;
 
   const shell = document.querySelector(".app-shell");
@@ -739,7 +762,8 @@ function recommend() {
 function setupSidebarCollapse() {
   const collapseButton = document.getElementById("sidebarCollapse");
   const revealButton = document.getElementById("sidebarReveal");
-  if (!collapseButton || !revealButton) return;
+  const sidebar = document.getElementById("sidebar");
+  if (!collapseButton || !revealButton || !sidebar) return;
 
   const storageKey = "benchai-sidebar-collapsed";
   const desktopQuery = window.matchMedia("(min-width: 1121px)");
@@ -763,8 +787,14 @@ function setupSidebarCollapse() {
   const render = () => {
     const collapsed = desktopQuery.matches && readStored();
     document.body.classList.toggle("sidebar-collapsed", collapsed);
+    sidebar.setAttribute("aria-hidden", String(collapsed));
+    if ("inert" in sidebar) sidebar.inert = collapsed;
     collapseButton.setAttribute("aria-expanded", String(!collapsed));
+    collapseButton.setAttribute("aria-hidden", String(collapsed));
+    collapseButton.tabIndex = collapsed ? -1 : 0;
     revealButton.setAttribute("aria-expanded", String(!collapsed));
+    revealButton.setAttribute("aria-hidden", String(!collapsed));
+    revealButton.tabIndex = collapsed ? 0 : -1;
   };
 
   collapseButton.addEventListener("click", () => {
@@ -790,16 +820,7 @@ function setupThemeSwitch() {
   const storageKey = "benchai-theme";
   const themeMeta = document.querySelector('meta[name="theme-color"]');
   const systemQuery = window.matchMedia("(prefers-color-scheme: dark)");
-  const switchButton = document.createElement("button");
-
-  switchButton.className = "theme-switch";
-  switchButton.type = "button";
-  switchButton.setAttribute("role", "switch");
-  switchButton.innerHTML = `
-    <span class="theme-switch-track" aria-hidden="true">
-      <span class="theme-switch-thumb"></span>
-    </span>
-  `;
+  const switchButtons = [];
 
   const readStored = () => {
     try {
@@ -820,21 +841,41 @@ function setupThemeSwitch() {
 
   const applyTheme = (theme, persist = false) => {
     document.body.dataset.theme = theme;
-    switchButton.setAttribute("aria-checked", String(theme === "dark"));
-    switchButton.setAttribute("aria-label", theme === "dark" ? "Mudar para tema claro" : "Mudar para tema escuro");
-    switchButton.title = theme === "dark" ? "Mudar para tema claro" : "Mudar para tema escuro";
+    switchButtons.forEach(switchButton => {
+      switchButton.setAttribute("aria-checked", String(theme === "dark"));
+      switchButton.setAttribute("aria-label", theme === "dark" ? "Mudar para tema claro" : "Mudar para tema escuro");
+      switchButton.title = theme === "dark" ? "Mudar para tema claro" : "Mudar para tema escuro";
+    });
     if (themeMeta) themeMeta.setAttribute("content", theme === "dark" ? "#111113" : "#f5f5f7");
     if (persist) writeStored(theme);
   };
 
-  const initialTheme = readStored() || (systemQuery.matches ? "dark" : "light");
-  document.body.appendChild(switchButton);
-  applyTheme(initialTheme);
+  const createSwitchButton = () => {
+    const switchButton = document.createElement("button");
+    switchButton.className = "theme-switch";
+    switchButton.type = "button";
+    switchButton.setAttribute("role", "switch");
+    switchButton.innerHTML = `
+      <span class="theme-switch-track" aria-hidden="true">
+        <span class="theme-switch-thumb"></span>
+      </span>
+    `;
+    switchButton.addEventListener("click", () => {
+      const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
+      applyTheme(nextTheme, true);
+    });
+    switchButtons.push(switchButton);
+    return switchButton;
+  };
 
-  switchButton.addEventListener("click", () => {
-    const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
-    applyTheme(nextTheme, true);
-  });
+  const initialTheme = readStored() || (systemQuery.matches ? "dark" : "light");
+  const sidebarHost = document.getElementById("sidebar") || document.querySelector(".sidebar");
+  const topbarHost = document.querySelector('[data-theme-switch-host="topbar"]');
+
+  if (sidebarHost) sidebarHost.appendChild(createSwitchButton());
+  if (topbarHost) topbarHost.appendChild(createSwitchButton());
+  if (!switchButtons.length) document.body.appendChild(createSwitchButton());
+  applyTheme(initialTheme);
 
   const syncSystemTheme = event => {
     if (!readStored()) applyTheme(event.matches ? "dark" : "light");
@@ -851,10 +892,6 @@ function setupEvents() {
   ["taskSelect", "complexitySelect", "sensitivitySelect", "scopeSelect"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener("change", recommend);
-  });
-
-  document.querySelectorAll("[data-print]").forEach(button => {
-    button.addEventListener("click", () => window.print());
   });
 }
 
