@@ -2,7 +2,7 @@
 
 Site estático para publicar um playbook de roteamento de ferramentas e modelos de IA para engenharia.
 
-O objetivo é manter uma consulta rápida para comparar ferramentas, modelos, scaffolds e níveis de esforço por tipo de tarefa, sensibilidade dos dados, risco operacional e evidências de benchmark. O site também registra critérios de governança e cuidados para uso de IA em fluxos de engenharia.
+O objetivo é manter uma consulta rápida para comparar ferramentas, modelos, harnesses, scaffolds e níveis de esforço por tipo de tarefa, sensibilidade dos dados, risco operacional e evidências de benchmark. O site também registra critérios de governança e cuidados para uso de IA em fluxos de engenharia.
 
 ## Conteúdo
 
@@ -10,7 +10,7 @@ O objetivo é manter uma consulta rápida para comparar ferramentas, modelos, sc
 - Recomendador interativo de modelo por tarefa, incluindo matriz de decisão.
 - Perfis de modelos e modos de reasoning/effort.
 - Leitura crítica de benchmarks públicos.
-- Rotas para IDEs e ambientes de desenvolvimento assistido.
+- Mapa de harnesses, IDEs, CLIs, agentes cloud e app builders para desenvolvimento assistido.
 - Fontes públicas com status de evidência.
 - Interface com sidebar fixa, topbar responsiva e alternância de tema claro/escuro.
 
@@ -22,9 +22,14 @@ O site usa navegação real por arquivos HTML estáticos:
 - `site/recomendador.html`: recomendador interativo e matriz de decisão.
 - `site/modelos.html`: perfis de modelos.
 - `site/benchmarks.html`: leitura crítica de benchmarks.
-- `site/ides.html`: IDEs e ambientes assistidos por IA.
+- `site/ides.html`: mapa de harnesses, IDEs, CLIs, agentes cloud, app builders e automações de delivery.
 - `site/fontes.html`: fontes públicas.
 - `site/404.html`: página de erro para GitHub Pages.
+
+## Atualizações recentes
+
+- 2026-06-19: `site/ides.html` deixou de ser uma lista curta de IDEs e virou um mapa de harnesses de desenvolvimento com IA, organizado por liberdade de modelo, produtividade diária, enterprise/governança, app builders e ressalvas.
+- 2026-06-19: a página Harness passou a tratar OpenAI Codex como superfície ampla, separar Windsurf de Devin, apontar Google Antigravity como rota principal do Google e marcar claims numéricos como dados de fornecedor.
 
 ## Cadência de atualização
 
