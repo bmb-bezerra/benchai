@@ -40,15 +40,9 @@ O conteúdo será atualizado em dois ciclos:
 - `site/assets/js/app.js`: navegação, topbar responsiva, colapso da sidebar, alternância de tema, recomendador e renderização de listas/tabelas.
 - `.github/workflows/pages.yml`: publicação do conteúdo de `site/` no GitHub Pages.
 
-## Interface
-
-- A sidebar fica fixa no desktop e pode ser recolhida; essa preferência é salva localmente.
-- Em telas menores, a navegação compacta é renderizada como topbar.
-- O tema inicial segue `prefers-color-scheme`. Quando o usuário alterna claro/escuro pelo switch, a escolha é salva em `localStorage` com a chave `benchai-theme` e passa a valer nas demais páginas.
-
 ## Visualização local
 
-O projeto não depende de bibliotecas Python externas. Para visualizar o site localmente, basta usar o servidor HTTP da biblioteca padrão:
+Para visualizar o site localmente, basta usar o servidor HTTP da biblioteca padrão do Python:
 
 ```bash
 python3 -m http.server 8000 --directory site
