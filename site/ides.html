@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IDEs - BenchAI</title>
-    <meta name="description" content="Rotas para escolher IDEs e ambientes de desenvolvimento assistido por IA.">
+    <title>Harness - BenchAI</title>
+    <meta name="description" content="Mapa de IDEs, CLIs, agentes cloud, app builders e harnesses de desenvolvimento assistido por IA.">
     <meta name="theme-color" content="#f5f5f7">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260619-weekly-three">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260619-model-filters">
   </head>
   <body data-page="ides">
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -25,11 +25,150 @@
 
       <main class="main" id="conteudo">
         <section class="page-hero">
-          <h1>Escolha o ambiente antes de automatizar.</h1>
-          <p>Compare ferramentas e interfaces por encaixe operacional: editor diário, GitHub-first, terminal, cloud stack, privacidade ou agente autônomo.</p>
+          <h1>Escolha o harness antes de automatizar.</h1>
+          <p>Compare IDEs, CLIs, agentes cloud, app builders e automações de delivery por superfície de execução, liberdade de modelos, privacidade, autonomia e encaixe operacional.</p>
         </section>
 
-        <div class="section">
+        <div class="section" aria-labelledby="resumo-harness">
+          <div class="section-head">
+            <div>
+              <h2 id="resumo-harness">Mapa rápido</h2>
+              <p>Use esta página para escolher a superfície operacional. Benchmarks de modelo ficam separados em Benchmarks.</p>
+            </div>
+            <span class="section-chip">agente = modelo + harness</span>
+          </div>
+          <div class="model-grid">
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag good">mais modelos</span>
+                <span class="tag brand">aberto</span>
+              </div>
+              <h3>Liberdade de modelo</h3>
+              <p>Kilo Code, OpenCode, Cline, Aider, OpenHands e Goose são rotas fortes quando o critério principal é alternar modelos, provedores e execução local.</p>
+              <p class="meta"><strong>Use quando:</strong> custo, privacidade, BYOK, modelos locais ou experimentação forem prioridade.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag blue">produtividade</span>
+                <span class="tag brand">diário</span>
+              </div>
+              <h3>Ambiente principal</h3>
+              <p>Claude Code, OpenAI Codex, GitHub Copilot, Cursor e Windsurf cobrem implementação, revisão e tarefas recorrentes em bases reais.</p>
+              <p class="meta"><strong>Use quando:</strong> o time quer menos configuração e mais fluidez no dia a dia.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag purple">empresa</span>
+                <span class="tag warn">governança</span>
+              </div>
+              <h3>SDLC governado</h3>
+              <p>GitHub Copilot, Amazon Q, Tabnine, Sourcegraph, Qodo, Harness.io e OpenHands self-hosted fazem mais sentido quando compliance e delivery importam.</p>
+              <p class="meta"><strong>Use quando:</strong> há exigência de auditoria, privacidade, PR review, CI/CD ou políticas corporativas.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="section" aria-labelledby="abertos-multi-modelo">
+          <div class="section-head">
+            <div>
+              <h2 id="abertos-multi-modelo">Abertos e multi-modelo</h2>
+              <p>Priorize aqui quando a decisão principal for liberdade de provedor, BYOK, execução local, self-hosting ou troca rápida de modelos.</p>
+            </div>
+            <span class="section-chip">liberdade operacional</span>
+          </div>
+          <div class="model-grid">
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag good">multi-modelo</span>
+                <span class="tag brand">open source</span>
+              </div>
+              <h3>Kilo Code</h3>
+              <p>Priorize quando a métrica principal for liberdade de modelo, BYOK, modelos locais e execução em VS Code, JetBrains, CLI ou cloud.</p>
+              <p class="meta"><strong>Atenção:</strong> claim de 500+ modelos vem do fornecedor; valide custo, latência, permissões e qualidade por tarefa.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag good">open source</span>
+                <span class="tag brand">terminal/IDE</span>
+              </div>
+              <h3>OpenCode</h3>
+              <p>Boa opção quando o time quer agente aberto, sem ficar preso a um provedor, com possibilidade de usar Claude, GPT, Gemini e outros modelos.</p>
+              <p class="meta"><strong>Use para:</strong> tarefas de terminal, edição multi-arquivo, fluxos locais e experimentação com provedores diferentes.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag blue">VS Code</span>
+                <span class="tag brand">BYOK/local</span>
+              </div>
+              <h3>Cline</h3>
+              <p>Escolha quando quiser controle fino no editor, aprovação por etapa, Plan/Act, MCP, modelos locais e endpoints OpenAI-compatible.</p>
+              <p class="meta"><strong>Atenção:</strong> autonomia alta exige revisão de diffs, limites de comando e testes locais antes do merge.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag good">terminal</span>
+                <span class="tag brand">git-native</span>
+              </div>
+              <h3>Aider</h3>
+              <p>Excelente para quem vive no terminal e quer edição multi-arquivo com commits, diffs e integração natural com Git.</p>
+              <p class="meta"><strong>Use para:</strong> refactors controlados, correções pontuais, geração com testes e workflows em repositórios existentes.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag purple">orquestração</span>
+                <span class="tag brand">self-host</span>
+              </div>
+              <h3>OpenHands</h3>
+              <p>Use quando a necessidade for rodar agentes em backends locais, remotos ou cloud, com controle maior sobre execução e automações.</p>
+              <p class="meta"><strong>Melhor encaixe:</strong> times avançados que querem plataforma de agentes, não apenas chat no editor.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag blue">desktop/CLI</span>
+                <span class="tag brand">MCP/ACP</span>
+              </div>
+              <h3>Goose</h3>
+              <p>Boa rota para automações locais que combinam desktop, CLI, API, provedores diferentes e extensões MCP.</p>
+              <p class="meta"><strong>Use para:</strong> tarefas além de código, automações de engenharia, pesquisa, análise e workflows reaproveitáveis.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag blue">editor rápido</span>
+                <span class="tag brand">ACP</span>
+              </div>
+              <h3>Zed + ACP</h3>
+              <p>Inclua como editor/harness quando o objetivo for usar vários agentes externos, como Claude, Codex, OpenCode e Copilot, dentro de uma superfície rápida de revisão.</p>
+              <p class="meta"><strong>Atenção:</strong> agentes externos mantêm autenticação, billing e configuração próprios; Zed é a superfície de edição e revisão.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag good">terminal</span>
+                <span class="tag brand">Qwen/open source</span>
+              </div>
+              <h3>Qwen Code</h3>
+              <p>Considere quando o time quer um agente open source de terminal otimizado para a família Qwen e para entendimento de codebases grandes.</p>
+              <p class="meta"><strong>Atenção:</strong> apesar de aberto, o melhor encaixe tende a ser com modelos Qwen; compare contra Cline, OpenCode e Aider se a prioridade for provedor livre.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag good">terminal</span>
+                <span class="tag brand">multi-modelo</span>
+              </div>
+              <h3>Crush</h3>
+              <p>Alternativa de TUI/CLI para quem quer uma experiência de terminal polida com ferramentas, código e workflows conectados ao LLM escolhido.</p>
+              <p class="meta"><strong>Use para:</strong> devs que preferem terminal e querem trocar modelos sem trocar a superfície de trabalho.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="section" aria-labelledby="produtividade-diaria">
+          <div class="section-head">
+            <div>
+              <h2 id="produtividade-diaria">Produtividade diária</h2>
+              <p>Ferramentas para implementação, revisão, debug e manutenção frequente em codebases reais.</p>
+            </div>
+            <span class="section-chip">fluxo principal</span>
+          </div>
           <div class="model-grid">
             <article class="model-card">
               <div class="tag-row">
@@ -37,26 +176,8 @@
                 <span class="tag brand">IDE + PR</span>
               </div>
               <h3>GitHub Copilot</h3>
-              <p>Melhor quando o time já vive em GitHub e precisa de adoção ampla com baixa fricção.</p>
-              <p class="meta"><strong>Use para:</strong> autocomplete, chat no editor, PR review, issues e agent mode.</p>
-            </article>
-            <article class="model-card">
-              <div class="tag-row">
-                <span class="tag blue">AI IDE</span>
-                <span class="tag brand">execução diária</span>
-              </div>
-              <h3>Cursor</h3>
-              <p>Bom default para implementação multi-arquivo, navegação de codebase e edição com contexto do repositório.</p>
-              <p class="meta"><strong>Atenção:</strong> use checkpoints, diffs pequenos e validação local.</p>
-            </article>
-            <article class="model-card">
-              <div class="tag-row">
-                <span class="tag good">terminal</span>
-                <span class="tag brand">debug/CI</span>
-              </div>
-              <h3>Codex CLI</h3>
-              <p>Rota forte para tarefas de terminal, build, CI e debug quando o agente precisa rodar comandos e validar diffs.</p>
-              <p class="meta"><strong>Atenção:</strong> faça redaction de logs e limite comandos em repositórios sensíveis.</p>
+              <p>Melhor default quando o time já vive em GitHub e precisa de adoção ampla, agent mode, PRs, issues e governança centralizada.</p>
+              <p class="meta"><strong>Use para:</strong> autocomplete, chat, agent mode local, cloud agent, PR review e integração direta com GitHub.</p>
             </article>
             <article class="model-card">
               <div class="tag-row">
@@ -64,26 +185,62 @@
                 <span class="tag brand">review/refactor</span>
               </div>
               <h3>Claude Code</h3>
-              <p>Bom encaixe para refatoração, revisão crítica, planejamento e execução quando julgamento pesa mais que latência.</p>
-              <p class="meta"><strong>Atenção:</strong> não use autonomia longa sem checkpoints e testes locais.</p>
+              <p>Forte para refatorações, debugging, leitura de codebase, revisão crítica e execução multi-arquivo quando julgamento pesa mais que latência.</p>
+              <p class="meta"><strong>Atenção:</strong> use checkpoints, testes e revisão humana antes de aceitar mudanças grandes.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag good">OpenAI</span>
+                <span class="tag brand">cloud/CLI/IDE</span>
+              </div>
+              <h3>OpenAI Codex</h3>
+              <p>Use quando quiser um agente OpenAI para planejar, escrever, revisar e entregar código em fluxos locais ou cloud.</p>
+              <p class="meta"><strong>Atenção:</strong> substitui a leitura estreita de "Codex CLI"; o produto cobre CLI, editor, app e cloud tasks.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag blue">AI IDE</span>
+                <span class="tag brand">execução diária</span>
+              </div>
+              <h3>Cursor</h3>
+              <p>Bom default para implementação multi-arquivo, navegação de codebase, agente no editor, regras, MCP e fluxo diário de desenvolvimento.</p>
+              <p class="meta"><strong>Atenção:</strong> use checkpoints, diffs pequenos, regras de repositório e validação local para conter regressões.</p>
             </article>
             <article class="model-card">
               <div class="tag-row">
                 <span class="tag blue">agentic IDE</span>
-                <span class="tag warn">autonomia</span>
+                <span class="tag brand">Cascade</span>
               </div>
-              <h3>Windsurf / Devin Desktop</h3>
-              <p>Encaixa quando o fluxo pede agente no editor, automações, revisão e handoff mais autônomo.</p>
-              <p class="meta"><strong>Atenção:</strong> autonomia longa exige limites claros, custo monitorado e revisão humana.</p>
+              <h3>Windsurf</h3>
+              <p>Alternativa ao Cursor com foco em Cascade, troca de modelos, modelos SWE próprios, Claude, GPT e opções BYOK.</p>
+              <p class="meta"><strong>Atenção:</strong> separar de Devin; Windsurf é IDE/agentic editor, Devin é cloud/software engineer autônomo.</p>
             </article>
             <article class="model-card">
               <div class="tag-row">
-                <span class="tag blue">Google Cloud</span>
-                <span class="tag brand">contexto longo</span>
+                <span class="tag blue">Google</span>
+                <span class="tag brand">multi-agente</span>
               </div>
-              <h3>Gemini Code Assist</h3>
-              <p>Rota natural quando o trabalho depende de Google Cloud, Gemini CLI, agentes e contexto de 1M tokens.</p>
-              <p class="meta"><strong>Atenção:</strong> meça latência, grounding e qualidade no repositório antes de tornar default.</p>
+              <h3>Google Antigravity / Antigravity CLI</h3>
+              <p>Preferir este card ao antigo Gemini Code Assist quando o foco for plataforma agentic do Google, com editor, terminal, browser, artifacts e orquestração.</p>
+              <p class="meta"><strong>Atenção:</strong> Gemini CLI/Gemini Code Assist devem ser tratados como rota em transição; verificar disponibilidade por plano antes de recomendar.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag blue">JetBrains</span>
+                <span class="tag good">adoção</span>
+              </div>
+              <h3>JetBrains Junie</h3>
+              <p>Relevante quando o time usa IntelliJ, PyCharm, WebStorm ou outras IDEs JetBrains e quer agente integrado sem trocar ambiente.</p>
+              <p class="meta"><strong>Use para:</strong> execução em IDE, terminal ou CI/CD; validar suporte BYOK, MCP e ACP conforme plano/versão.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag purple">spec-driven</span>
+                <span class="tag brand">agentic IDE</span>
+              </div>
+              <h3>Kiro</h3>
+              <p>Boa opção quando o problema é transformar prompts em requisitos, design técnico, tarefas sequenciadas e execução por agentes paralelos.</p>
+              <p class="meta"><strong>Use quando:</strong> governança de requisitos e rastreabilidade forem tão importantes quanto gerar código rápido.</p>
             </article>
             <article class="model-card">
               <div class="tag-row">
@@ -91,17 +248,29 @@
                 <span class="tag brand">modernização</span>
               </div>
               <h3>Amazon Q Developer</h3>
-              <p>Faz sentido quando a restrição principal é modernizar, revisar ou operar sistemas dentro da AWS.</p>
-              <p class="meta"><strong>Use para:</strong> Java modernization, CLI, revisão de segurança e integração AWS.</p>
+              <p>Faz sentido quando a restrição principal é operar, modernizar, revisar ou proteger software dentro do ecossistema AWS.</p>
+              <p class="meta"><strong>Use para:</strong> CLI, IDE, testes unitários, revisão de segurança, modernização Java e integração com serviços AWS.</p>
             </article>
+          </div>
+        </div>
+
+        <div class="section" aria-labelledby="enterprise-governanca">
+          <div class="section-head">
+            <div>
+              <h2 id="enterprise-governanca">Enterprise, review e governança</h2>
+              <p>Rotas para codebase grande, privacidade, PR review, automação de delivery e controle corporativo.</p>
+            </div>
+            <span class="section-chip">SDLC governado</span>
+          </div>
+          <div class="model-grid">
             <article class="model-card">
               <div class="tag-row">
-                <span class="tag blue">JetBrains</span>
-                <span class="tag good">adoção</span>
+                <span class="tag purple">codebase grande</span>
+                <span class="tag warn">enterprise</span>
               </div>
-              <h3>JetBrains AI / Junie</h3>
-              <p>Relevante quando o time está em JetBrains e quer assistente integrado sem trocar o ambiente principal.</p>
-              <p class="meta"><strong>Atenção:</strong> trate como rota de ambiente; valide qualidade contra o fluxo real do time.</p>
+              <h3>Sourcegraph Amp / Cody</h3>
+              <p>Indicado para organizações que precisam de contexto de codebase em escala, busca, entendimento de repositórios e agentes com modelos fortes.</p>
+              <p class="meta"><strong>Use quando:</strong> o gargalo for contexto em monorepo, multi-repo ou código legado, não apenas autocomplete.</p>
             </article>
             <article class="model-card">
               <div class="tag-row">
@@ -109,16 +278,178 @@
                 <span class="tag warn">enterprise</span>
               </div>
               <h3>Tabnine</h3>
-              <p>Escolha por restrição de dados quando VPC, on-prem, air gap ou controles corporativos forem obrigatórios.</p>
-              <p class="meta"><strong>Atenção:</strong> compliance vem antes de ranking de benchmark.</p>
+              <p>Escolha por restrição de dados quando VPC, on-prem, air gap, compliance ou seleção controlada de modelos forem obrigatórios.</p>
+              <p class="meta"><strong>Atenção:</strong> compliance e isolamento de dados vêm antes de benchmark genérico.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag purple">PR review</span>
+                <span class="tag brand">qualidade</span>
+              </div>
+              <h3>Qodo</h3>
+              <p>Use como camada de qualidade para revisar PRs, encontrar bugs, checar cobertura de testes, documentação, padrões e riscos de segurança.</p>
+              <p class="meta"><strong>Atenção:</strong> complementa IDEs/agentes de geração; não substitui revisão de arquitetura e ownership do time.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag purple">cloud agent</span>
+                <span class="tag warn">autonomia</span>
+              </div>
+              <h3>Devin</h3>
+              <p>Indicado para tarefas delegáveis em cloud, tickets, bugs, features, ferramentas internas e manutenção, sempre com revisão humana de resultado.</p>
+              <p class="meta"><strong>Atenção:</strong> autonomia longa exige escopo claro, custo monitorado, limites de permissão e critérios de aceite.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag blue">DevOps</span>
+                <span class="tag brand">pipeline-native</span>
+              </div>
+              <h3>Harness.io Worker Agents</h3>
+              <p>Use quando o objetivo for colocar agentes dentro de pipelines CI/CD, segurança, IaCM, SCS, STO ou estágios customizados.</p>
+              <p class="meta"><strong>Encaixe:</strong> é o Harness mais literal: menos IDE, mais automação governada dentro do ciclo de delivery.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag purple">enterprise</span>
+                <span class="tag brand">organização</span>
+              </div>
+              <h3>Augment Code / Cosmos</h3>
+              <p>Inclua como opção enterprise quando a dor principal for coordenar agentes em escala organizacional e reduzir perda de contexto em codebases grandes.</p>
+              <p class="meta"><strong>Atenção:</strong> tratar como plataforma enterprise; validar integrações, privacidade e custo diretamente com o fornecedor.</p>
             </article>
           </div>
         </div>
 
-        <div class="foot">BenchAI · IDEs e ambientes assistidos.</div>
+        <div class="section" aria-labelledby="app-builders">
+          <div class="section-head">
+            <div>
+              <h2 id="app-builders">App builders e prototipagem</h2>
+              <p>Use estes quando a entrega principal é transformar uma ideia em app, demo ou protótipo funcional com pouco setup.</p>
+            </div>
+            <span class="section-chip">prototipagem</span>
+          </div>
+          <div class="model-grid">
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag good">app builder</span>
+                <span class="tag brand">prototipagem</span>
+              </div>
+              <h3>Replit Agent</h3>
+              <p>Escolha para transformar ideia em app ou site funcional com ambiente, código, preview e deploy no mesmo lugar.</p>
+              <p class="meta"><strong>Use para:</strong> MVPs, protótipos e apps pequenos/médios; hardening e arquitetura ainda precisam de revisão técnica.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag blue">browser</span>
+                <span class="tag brand">web apps</span>
+              </div>
+              <h3>Bolt.new</h3>
+              <p>Bom para protótipos web rápidos no navegador, com prompt, execução, edição e deploy sem setup local.</p>
+              <p class="meta"><strong>Use para:</strong> demos, landing pages e apps full-stack simples; valide dependências, segurança e deploy final.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag blue">Vercel</span>
+                <span class="tag brand">full-stack web</span>
+              </div>
+              <h3>v0</h3>
+              <p>Forte para UI, protótipos de produto, apps web full-stack e handoff para times que usam ecossistema Vercel/React.</p>
+              <p class="meta"><strong>Use para:</strong> explorar produto e front-end; revisar código, acessibilidade, estado, auth e backend antes de produção.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag purple">vibe coding</span>
+                <span class="tag brand">app builder</span>
+              </div>
+              <h3>Lovable</h3>
+              <p>Boa opção para founders, PMs e times que querem partir de descrição em linguagem natural para protótipos e apps web funcionais.</p>
+              <p class="meta"><strong>Atenção:</strong> revisar segurança, privacidade, permissões, dados e qualidade do código antes de escalar.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag purple">no-code</span>
+                <span class="tag brand">business app</span>
+              </div>
+              <h3>Base44</h3>
+              <p>Indicado para apps internos e protótipos de negócio quando a pessoa quer criar aplicação funcional com palavras, sem setup técnico.</p>
+              <p class="meta"><strong>Atenção:</strong> bom para velocidade inicial; avaliar portabilidade, exportação, auth, dados e lock-in.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="section" aria-labelledby="ressalvas-legado">
+          <div class="section-head">
+            <div>
+              <h2 id="ressalvas-legado">Ressalvas e legado</h2>
+              <p>Entradas úteis para contexto, mas que exigem cuidado antes de virar recomendação principal.</p>
+            </div>
+            <span class="section-chip">não ranquear por hype</span>
+          </div>
+          <div class="model-grid">
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag blue">Google CLI</span>
+                <span class="tag warn">transição</span>
+              </div>
+              <h3>Gemini CLI / Gemini Code Assist</h3>
+              <p>Manter apenas como nota de transição se necessário; para novos fluxos, avaliar Antigravity CLI e Google Antigravity.</p>
+              <p class="meta"><strong>Atenção:</strong> em 2026 o Google anunciou unificação em Antigravity; não deixar como recomendação principal sem revalidar disponibilidade.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag warn">legado</span>
+                <span class="tag brand">multi-provedor</span>
+              </div>
+              <h3>Continue</h3>
+              <p>Citar apenas como referência histórica/open source se necessário, não como recomendação principal para novo setup.</p>
+              <p class="meta"><strong>Atenção:</strong> o repositório continuedev/continue está read-only e não é mais ativamente mantido.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag warn">arquivado</span>
+                <span class="tag brand">não priorizar</span>
+              </div>
+              <h3>Roo Code</h3>
+              <p>Não recomendar para novos setups; pode ser citado apenas como projeto encerrado/arquivado se houver nota histórica.</p>
+              <p class="meta"><strong>Atenção:</strong> repositório arquivado em 15 de maio de 2026.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="section" aria-labelledby="notas-fonte">
+          <div class="section-head">
+            <div>
+              <h2 id="notas-fonte">Notas de fonte</h2>
+              <p>Claims numéricos e promessas de produto nesta página são tratados como dados de fornecedor, não como benchmark independente.</p>
+            </div>
+            <span class="section-chip">revisado em 2026-06-19</span>
+          </div>
+          <div class="model-grid">
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag brand">fonte: fornecedor</span>
+                <span class="tag warn">não benchmark</span>
+              </div>
+              <h3>Como ler os cards</h3>
+              <p>"500+ modelos", "15+ provedores", "70+ extensões" e claims similares indicam posicionamento público do fornecedor. Valide custo, latência, permissões e qualidade no repositório real.</p>
+              <p class="meta"><strong>Benchmarks:</strong> mantenha comparações numéricas em benchmarks.html para não misturar superfície operacional com ranking de modelo.</p>
+            </article>
+            <article class="model-card">
+              <div class="tag-row">
+                <span class="tag good">fontes oficiais</span>
+                <span class="tag brand">rastreável</span>
+              </div>
+              <h3>Referências revalidadas</h3>
+              <p>Revalidei pontos voláteis em páginas oficiais de Kilo Code, OpenAI Codex, Google Antigravity e Harness Worker Agents antes de publicar esta revisão.</p>
+              <p class="meta"><strong>Escopo:</strong> esta página compara harnesses de execução; modelos, notas de benchmark e rankings ficam fora daqui.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="foot">BenchAI · harnesses de desenvolvimento com IA.</div>
       </main>
     </div>
 
-    <script src="assets/js/app.js?v=20260618-artificial-analysis"></script>
+    <script src="assets/js/app.js?v=20260619-model-filters"></script>
   </body>
 </html>
