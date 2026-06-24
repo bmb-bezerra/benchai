@@ -1297,6 +1297,89 @@ body.sidebar-collapsed .sidebar-reveal:focus-visible {
   white-space: nowrap;
 }
 
+.bench-data-switch {
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-sm);
+  padding: 14px;
+}
+
+.bench-data-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.bench-data-tab {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  min-width: 0;
+  min-height: 132px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  padding: 14px;
+  text-align: left;
+  transition: border-color 0.16s ease, background 0.16s ease, transform 0.16s ease;
+}
+
+.bench-data-tab:hover,
+.bench-data-tab:focus-visible {
+  border-color: rgba(0, 113, 227, 0.36);
+  background: var(--hover-surface-strong);
+  outline: none;
+}
+
+.bench-data-tab:focus-visible {
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.12);
+}
+
+.bench-data-tab[aria-selected="true"] {
+  border-color: rgba(0, 113, 227, 0.38);
+  background: color-mix(in srgb, var(--blue-soft) 56%, var(--surface));
+}
+
+.bench-data-tab strong {
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 740;
+  line-height: 1.16;
+}
+
+.bench-data-tab > span:last-child,
+.bench-data-status {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.42;
+}
+
+.bench-data-status {
+  margin: 0;
+}
+
+.bench-data-panel {
+  display: grid;
+  gap: 10px;
+}
+
+.bench-data-panel[hidden] {
+  display: none;
+}
+
+.bench-data-grid {
+  margin-top: 0;
+}
+
+.bench-data-subhead {
+  margin-top: 8px;
+}
+
 .card,
 .snapshot,
 .model-card,
@@ -1925,6 +2008,7 @@ td strong {
   }
 
   .form-grid,
+  .bench-data-tabs,
   .model-filter-panel,
   .signal-grid,
   .weekly-grid,

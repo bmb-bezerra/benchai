@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bench Recomenda - BenchAI</title>
+    <meta name="description" content="Recomendação rápida de rota de IA por tarefa, complexidade, sensibilidade e escopo.">
+    <meta name="theme-color" content="#f5f5f7">
+    <link rel="canonical" href="https://bmb-bezerra.github.io/benchai/bench-recomenda.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="BenchAI">
+    <meta property="og:title" content="Bench Recomenda - BenchAI">
+    <meta property="og:description" content="Recomendação rápida de rota de IA por tarefa, complexidade, sensibilidade e escopo.">
+    <meta property="og:url" content="https://bmb-bezerra.github.io/benchai/bench-recomenda.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Bench Recomenda - BenchAI">
+    <meta name="twitter:description" content="Recomendação rápida de rota de IA por tarefa, complexidade, sensibilidade e escopo.">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260622-bench-data">
+  </head>
+  <body data-page="bench-recomenda">
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+    <button class="sidebar-reveal" id="sidebarReveal" type="button" aria-controls="sidebar" aria-expanded="true" aria-label="Mostrar sidebar" title="Mostrar sidebar"><span aria-hidden="true">☰</span></button>
+
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+        <a class="brand" href="./">
+          <span class="brand-mark" aria-hidden="true">BAI</span>
+          <span><span class="brand-title">BenchAI</span></span>
+        </a>
+        <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-controls="sidebar" aria-label="Ocultar sidebar" title="Ocultar sidebar">‹</button>
+        <div class="nav-label">Navegação</div>
+        <nav class="nav-list" id="siteNav"></nav>
+      </aside>
+
+      <main class="main" id="conteudo">
+        <section class="page-hero">
+          <h1>Bench Recomenda.</h1>
+          <p>Combine tarefa, complexidade, sensibilidade e escopo para escolher uma rota operacional antes de escolher modelo ou ferramenta.</p>
+        </section>
+
+        <section class="section" aria-label="Bench Recomenda">
+          <div class="decision-lab">
+            <div class="card strong">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="taskSelect">Tipo de tarefa</label>
+                  <select id="taskSelect">
+                    <option value="daily">Implementação comum</option>
+                    <option value="architecture">Arquitetura / decisão técnica</option>
+                    <option value="terminal">Terminal / build / CI / debug</option>
+                    <option value="review">Code review crítico</option>
+                    <option value="frontend">Front-end / UI / screenshot</option>
+                    <option value="largeContext">Repo grande / contexto massivo</option>
+                    <option value="migration">Migração / feature ponta a ponta</option>
+                    <option value="simple">Microtarefa mecânica</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="complexitySelect">Complexidade</label>
+                  <select id="complexitySelect">
+                    <option value="low">Baixa</option>
+                    <option value="medium" selected>Média</option>
+                    <option value="high">Alta</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="sensitivitySelect">Sensibilidade do código</label>
+                  <select id="sensitivitySelect">
+                    <option value="public">Público / open source</option>
+                    <option value="internal" selected>Interno comum</option>
+                    <option value="confidential">Confidencial / cliente / estratégico</option>
+                    <option value="regulated">Regulado / PII / segredo / credenciais</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="scopeSelect">Escopo esperado</label>
+                  <select id="scopeSelect">
+                    <option value="single">1 arquivo / patch curto</option>
+                    <option value="few" selected>Alguns arquivos</option>
+                    <option value="many">Muitos arquivos</option>
+                    <option value="unknown">Escopo desconhecido</option>
+                  </select>
+                </div>
+              </div>
+              <div class="checklist">
+                <div class="check-item"><div class="check-badge">A</div><div>Se a tarefa está ambígua, peça plano antes de aceitar edição.</div></div>
+                <div class="check-item"><div class="check-badge">B</div><div>Se o código é sensível, reduza contexto e valide retenção.</div></div>
+                <div class="check-item"><div class="check-badge">C</div><div>Se envolve terminal, registre comandos, logs úteis, scaffold e resultado.</div></div>
+              </div>
+            </div>
+
+            <div class="result" aria-live="polite">
+              <div class="result-label">Rota recomendada</div>
+              <div class="result-model" id="recModel">Cursor / GitHub Copilot</div>
+              <p class="result-mode" id="recMode">IDE + validação local · effort: normal</p>
+              <div class="tag-row" id="recTags"></div>
+              <div class="result-detail">
+                <div class="result-box"><strong>Por que</strong><span id="recWhy"></span></div>
+                <div class="result-box"><strong>Prompt operacional</strong><span id="recPrompt"></span></div>
+                <div class="result-box"><strong>Cautela</strong><span id="recCaution"></span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="foot">BenchAI · recomendação rápida.</div>
+      </main>
+    </div>
+
+    <script src="assets/js/data.js?v=20260622-bench-data"></script>
+    <script src="assets/js/app.js?v=20260622-bench-data"></script>
+  </body>
+</html>

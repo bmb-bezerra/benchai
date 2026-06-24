@@ -6,7 +6,16 @@
     <title>BenchAI</title>
     <meta name="description" content="Playbook para escolher ferramentas e modelos de IA por tarefa, risco, governança, sensibilidade dos dados e evidência pública.">
     <meta name="theme-color" content="#f5f5f7">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260619-model-filters">
+    <link rel="canonical" href="https://bmb-bezerra.github.io/benchai/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="BenchAI">
+    <meta property="og:title" content="BenchAI">
+    <meta property="og:description" content="Playbook para escolher ferramentas e modelos de IA por tarefa, risco, governança, sensibilidade dos dados e evidência pública.">
+    <meta property="og:url" content="https://bmb-bezerra.github.io/benchai/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="BenchAI">
+    <meta name="twitter:description" content="Playbook para escolher ferramentas e modelos de IA por tarefa, risco, governança, sensibilidade dos dados e evidência pública.">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260622-bench-data">
   </head>
   <body data-page="home">
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -43,24 +52,24 @@
             </div>
             <ol class="changelog-list" aria-label="Changelog do BenchAI">
               <li>
+                <time datetime="2026-06-22">22 jun</time>
+                <strong>Bench Data consolidado</strong>
+                <p>Modelos, harnesses e benchmarks agora vivem em uma única página com visualização dinâmica por tipo de dado.</p>
+              </li>
+              <li>
+                <time datetime="2026-06-21">21 jun</time>
+                <strong>Bench Recomenda repensado</strong>
+                <p>Reorganizamos o Bench Recomenda como página própria para deixar a escolha de rota mais direta, eficaz e fácil de acessar pela navegação.</p>
+              </li>
+              <li>
+                <time datetime="2026-06-20">20 jun</time>
+                <strong>Bench News adicionado</strong>
+                <p>Adicionamos o Bench News como página dedicada para reunir curadoria semanal de notícia, paper e modelo relevantes para engenharia com IA.</p>
+              </li>
+              <li>
                 <time datetime="2026-06-19">19 jun</time>
                 <strong>Mapa de harnesses publicado</strong>
                 <p>Página Harness compara IDEs, CLIs, agentes cloud, app builders e automações de delivery por superfície de execução.</p>
-              </li>
-              <li>
-                <time datetime="2026-06-19">19 jun</time>
-                <strong>Curadoria semanal publicada</strong>
-                <p>Home destaca notícia, paper e modelo da semana com links diretos para as fontes primárias.</p>
-              </li>
-              <li>
-                <time datetime="2026-06-18">18 jun</time>
-                <strong>Política de fontes refinada</strong>
-                <p>Dados agora separam status verificado, fornecedor e pendente para manter contexto e data de checagem.</p>
-              </li>
-              <li>
-                <time datetime="2026-06-17">17 jun</time>
-                <strong>Site estático multi-page</strong>
-                <p>Navegação separada para início, modelos, harness, benchmarks, recomendador e fontes.</p>
               </li>
             </ol>
           </aside>
@@ -97,7 +106,7 @@
               <span class="desc">Terminal-Bench roda tarefas reais em terminal/Docker com testes; Aider mostra que modo de edição, Architect/Editor e effort mudam score e custo. Compare resultados dentro do mesmo fluxo, não só pelo nome do modelo.</span>
             </a>
             <a class="source-card decision-signal" href="https://artificialanalysis.ai/agents/coding-agents" target="_blank" rel="noopener noreferrer" aria-label="Abrir Artificial Analysis Coding Agent Index">
-              <span class="tag good">Harness</span>
+              <span class="tag good">Bench Data</span>
               <strong>O mesmo modelo muda com o agente.</strong>
               <span class="desc">Compare Claude Code, Cursor CLI, Codex, Opencode e afins como sistemas completos. Dois agentes com score parecido podem ter forças diferentes em patch de repo, terminal workflow e avaliação por rubric/Q&amp;A.</span>
             </a>
@@ -134,59 +143,13 @@
           </div>
         </section>
 
-        <section class="section weekly-picks" aria-label="Curadoria da semana">
-          <div class="weekly-grid">
-            <a class="source-card weekly-card" href="https://artificialanalysis.ai/articles/glm-5-2-is-the-new-leading-open-weights-model-on-the-artificial-analysis-intelligence-index" target="_blank" rel="noopener noreferrer" aria-label="Abrir modelo da semana na Artificial Analysis">
-              <span class="tag-row">
-                <span class="tag good">Modelo da semana</span>
-                <time datetime="2026-06-17">17 jun 2026</time>
-              </span>
-              <strong>GLM-5.2 lidera entre modelos open-weight.</strong>
-              <span class="weekly-summary">
-                <span>A Artificial Analysis colocou o GLM-5.2 como líder open-weight no Intelligence Index v4.1, com score 51 e avanço forte sobre o GLM-5.1 sem mudar o tamanho base do modelo.</span>
-                <span>O destaque para BenchAI é a rota de soberania: licença MIT, 1M de contexto, boa leitura em tarefas agentic e sinal forte em GDPval-AA v2 e Terminal-Bench v2.1.</span>
-                <span>A ressalva é eficiência: o modelo usa muitos tokens de saída por tarefa. É opção promissora quando controle pesa, mas precisa ser validado contra custo local e latência.</span>
-              </span>
-              <span class="source-meta">Fonte principal: Artificial Analysis</span>
-              <span class="weekly-cta">Para ver a análise completa do modelo, clique neste card e siga para o site de origem.</span>
-            </a>
-            <a class="source-card weekly-card" href="https://deepmind.google/blog/securing-the-future-of-ai-agents/" target="_blank" rel="noopener noreferrer" aria-label="Abrir notícia da semana da Google DeepMind">
-              <span class="tag-row">
-                <span class="tag blue">Notícia da semana</span>
-                <time datetime="2026-06-18">18 jun 2026</time>
-              </span>
-              <strong>Google DeepMind publica roadmap de controle para agentes.</strong>
-              <span class="weekly-summary">
-                <span>A DeepMind publicou um roadmap para operar agentes internos cada vez mais capazes com uma lógica de defesa em profundidade: o agente pode ser útil, mas ainda precisa ser tratado como risco operacional quando recebe permissões reais.</span>
-                <span>O plano combina sandboxing, segurança de endpoint, resistência a prompt injection, supervisores de IA e monitoramento de trajetórias para detectar, prevenir e responder a ações perigosas antes que virem incidente.</span>
-                <span>Para BenchAI, a leitura é direta: autonomia só deve subir quando o ambiente tiver logs, limites, revisão e resposta em tempo real compatíveis com o impacto da tarefa.</span>
-              </span>
-              <span class="source-meta">Fonte principal: Google DeepMind</span>
-              <span class="weekly-cta">Para ler a notícia completa, clique neste card e siga para o site de origem.</span>
-            </a>
-            <a class="source-card weekly-card" href="https://arxiv.org/abs/2606.14066" target="_blank" rel="noopener noreferrer" aria-label="Abrir paper da semana FastContext no arXiv">
-              <span class="tag-row">
-                <span class="tag purple">Paper da semana</span>
-                <time datetime="2026-06-18">18 jun 2026</time>
-              </span>
-              <strong>FastContext: explorador de repositórios para agentes de coding.</strong>
-              <span class="weekly-summary">
-                <span>Agentes de coding ainda gastam muito contexto tentando descobrir quais arquivos importam. O paper separa a exploração do repositório da resolução da issue: um subagente busca arquivos e ranges de linhas relevantes e devolve contexto enxuto ao agente principal.</span>
-                <span>Nos testes com SWE-bench Multilingual, SWE-bench Pro e SWE-QA, integrado ao Mini-SWE-Agent, o FastContext melhora a taxa de resolução em até 5,5% e reduz o consumo de tokens do agente principal em até 60%, com overhead marginal.</span>
-                <span>Para BenchAI, a leitura é prática: bons agentes de software precisam de uma camada eficiente de exploração/retrieval de código para reduzir custo, latência e poluição de contexto.</span>
-              </span>
-              <span class="source-meta">Fonte principal: arXiv 2606.14066</span>
-              <span class="weekly-cta">Para ler o paper completo, clique neste card e siga para o site de origem.</span>
-            </a>
-          </div>
-        </section>
-
         <div class="foot">
           BenchAI · playbook para escolher modelos por tarefa, risco e evidência.
         </div>
       </main>
     </div>
 
-    <script src="assets/js/app.js?v=20260619-model-filters"></script>
+    <script src="assets/js/data.js?v=20260622-bench-data"></script>
+    <script src="assets/js/app.js?v=20260622-bench-data"></script>
   </body>
 </html>

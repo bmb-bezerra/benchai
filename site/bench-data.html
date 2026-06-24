@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bench Data - BenchAI</title>
+    <meta name="description" content="Painel único para visualizar modelos, harnesses e benchmarks de IA para engenharia.">
+    <meta name="theme-color" content="#f5f5f7">
+    <link rel="canonical" href="https://bmb-bezerra.github.io/benchai/bench-data.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="BenchAI">
+    <meta property="og:title" content="Bench Data - BenchAI">
+    <meta property="og:description" content="Painel único para visualizar modelos, harnesses e benchmarks de IA para engenharia.">
+    <meta property="og:url" content="https://bmb-bezerra.github.io/benchai/bench-data.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Bench Data - BenchAI">
+    <meta name="twitter:description" content="Painel único para visualizar modelos, harnesses e benchmarks de IA para engenharia.">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260622-bench-data">
+  </head>
+  <body data-page="bench-data">
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+    <button class="sidebar-reveal" id="sidebarReveal" type="button" aria-controls="sidebar" aria-expanded="true" aria-label="Mostrar sidebar" title="Mostrar sidebar"><span aria-hidden="true">☰</span></button>
+
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar" aria-label="Navegação principal">
+        <a class="brand" href="./">
+          <span class="brand-mark" aria-hidden="true">BAI</span>
+          <span><span class="brand-title">BenchAI</span></span>
+        </a>
+        <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-controls="sidebar" aria-label="Ocultar sidebar" title="Ocultar sidebar">‹</button>
+        <div class="nav-label">Navegação</div>
+        <nav class="nav-list" id="siteNav"></nav>
+      </aside>
+
+      <main class="main" id="conteudo">
+        <section class="page-hero">
+          <h1>Bench Data.</h1>
+          <p>Modelos, harnesses e benchmarks em uma única superfície para comparar capacidade, execução e evidência sem trocar de página.</p>
+        </section>
+
+        <section class="section bench-data-switch" data-bench-data data-initial-view="modelos" aria-labelledby="bench-data-title">
+          <div class="section-head">
+            <div>
+              <h2 id="bench-data-title">Lente de decisão</h2>
+              <p id="benchDataModeDesc">Famílias, status, melhor encaixe e cautelas por tipo de tarefa.</p>
+            </div>
+            <span class="section-chip" id="benchDataModeTitle">Modelos</span>
+          </div>
+          <div class="bench-data-tabs" role="tablist" aria-label="Visualizações do Bench Data">
+            <button class="bench-data-tab" id="bench-tab-modelos" type="button" role="tab" aria-controls="bench-panel-modelos" aria-selected="true" data-bench-view="modelos">
+              <span class="tag blue">Modelo</span>
+              <strong>Capacidade e risco</strong>
+              <span>Família, status, melhor encaixe e cautela operacional.</span>
+            </button>
+            <button class="bench-data-tab" id="bench-tab-harness" type="button" role="tab" aria-controls="bench-panel-harness" aria-selected="false" tabindex="-1" data-bench-view="harness">
+              <span class="tag good">Harness</span>
+              <strong>Superfície de execução</strong>
+              <span>IDE, CLI, agente cloud, SDLC, app builder e governança.</span>
+            </button>
+            <button class="bench-data-tab" id="bench-tab-benchmarks" type="button" role="tab" aria-controls="bench-panel-benchmarks" aria-selected="false" tabindex="-1" data-bench-view="benchmarks">
+              <span class="tag purple">Benchmark</span>
+              <strong>Evidência pública</strong>
+              <span>Score, scaffold, effort, fonte e data de verificação.</span>
+            </button>
+          </div>
+          <p class="bench-data-status" id="benchDataModeStatus" aria-live="polite">Visualizando perfis de modelos e famílias.</p>
+        </section>
+
+        <section class="section bench-data-panel" id="bench-panel-modelos" role="tabpanel" aria-labelledby="bench-tab-modelos" data-bench-panel="modelos">
+          <div class="section-head">
+            <div>
+              <h2>Modelos</h2>
+              <p>Escolha por cenário: agentic coding, refactor, debugging, autocomplete, code search, contexto longo, custo, privacidade ou self-hosting.</p>
+            </div>
+            <span class="section-chip" id="modelResultCount"></span>
+          </div>
+          <div class="model-filter-panel" role="search" aria-label="Filtros de modelos">
+            <div class="model-filter-control">
+              <label for="modelSearch">Pesquisar por nome</label>
+              <input id="modelSearch" type="search" autocomplete="off" placeholder="Ex.: Claude, GPT, Qwen">
+            </div>
+            <div class="model-filter-control">
+              <label for="modelOwnerFilter">Empresa proprietária</label>
+              <select id="modelOwnerFilter">
+                <option value="">Todas as empresas</option>
+              </select>
+            </div>
+          </div>
+          <div class="model-grid bench-data-grid" id="modelGrid" aria-live="polite"></div>
+          <p class="model-empty" id="modelEmpty" hidden>Nenhum modelo encontrado com esses filtros.</p>
+        </section>
+
+        <section class="section bench-data-panel" id="bench-panel-harness" role="tabpanel" aria-labelledby="bench-tab-harness" data-bench-panel="harness" hidden>
+          <div class="section-head">
+            <div>
+              <h2>Harness</h2>
+              <p>Compare superfícies de execução por liberdade de modelo, produtividade diária, enterprise, app builders e rotas legadas.</p>
+            </div>
+            <span class="section-chip" id="harnessResultCount"></span>
+          </div>
+          <div class="model-filter-panel" role="search" aria-label="Filtros de harness">
+            <div class="model-filter-control">
+              <label for="harnessSearch">Pesquisar por ferramenta</label>
+              <input id="harnessSearch" type="search" autocomplete="off" placeholder="Ex.: Codex, Cursor, Cline">
+            </div>
+            <div class="model-filter-control">
+              <label for="harnessCategoryFilter">Grupo operacional</label>
+              <select id="harnessCategoryFilter">
+                <option value="">Todos os grupos</option>
+              </select>
+            </div>
+          </div>
+          <div class="model-grid bench-data-grid" id="harnessGrid" aria-live="polite"></div>
+          <p class="model-empty" id="harnessEmpty" hidden>Nenhum harness encontrado com esses filtros.</p>
+        </section>
+
+        <section class="section bench-data-panel" id="bench-panel-benchmarks" role="tabpanel" aria-labelledby="bench-tab-benchmarks" data-bench-panel="benchmarks" hidden>
+          <div class="section-head">
+            <div>
+              <h2>Benchmarks</h2>
+              <p>Compare benchmark, versão, ferramenta, modelo, scaffold e effort. O teste no repositório continua sendo a decisão final.</p>
+            </div>
+            <span class="section-chip">evidência ≠ ranking universal</span>
+          </div>
+          <div class="benchmark-list" id="benchmarkList"></div>
+
+          <div class="section-head bench-data-subhead">
+            <div>
+              <h2>Notas de leitura</h2>
+              <p>Use as notas para separar sinal público, claim de fornecedor, histórico e validação local.</p>
+            </div>
+          </div>
+          <div class="source-grid" id="benchmarkNotes"></div>
+        </section>
+
+        <div class="foot">BenchAI · dados para escolher rota, ferramenta e evidência.</div>
+      </main>
+    </div>
+
+    <script src="assets/js/data.js?v=20260622-bench-data"></script>
+    <script src="assets/js/app.js?v=20260622-bench-data"></script>
+  </body>
+</html>
