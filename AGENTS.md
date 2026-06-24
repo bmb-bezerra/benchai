@@ -14,6 +14,7 @@
 - At the start of any task that changes or audits this project, start or verify a local preview server for `site/` so the current site can be inspected while working. Prefer `python3 -m http.server 8000 --directory site`, then open `http://localhost:8000/`. If port `8000` is busy, reuse a healthy server or choose another port and report the URL.
 - Keep public-facing copy in Brazilian Portuguese unless the task asks otherwise.
 - Keep changes scoped to the static site or Pages workflow affected by the request.
+- Before creating a commit with site-facing changes, update `audit/` with a dated entry that summarizes the objective, files changed, validation run, and any follow-up notes for that commit.
 - Avoid adding frameworks, package managers, generated assets, or build tooling unless explicitly requested and justified.
 - Preserve accessibility basics: semantic headings, keyboard focus states, descriptive links, labels, and useful `alt` text if images are added.
 - Do not commit local server logs, temporary files, dependency folders, caches, or editor metadata.
