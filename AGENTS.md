@@ -6,7 +6,8 @@
 - The GitHub Actions workflow in `.github/workflows/pages.yml` uploads `./site` directly. There is no install, build, or bundling step.
 - Published pages are plain HTML files in `site/`.
 - Shared styling lives in `site/assets/css/styles.css`, including layout, responsive rules, and light/dark theme tokens.
-- Shared browser behavior lives in `site/assets/js/app.js`, including navigation, compact topbar rendering, sidebar collapse, theme switching, recommender logic, and rendered lists/tables.
+- Shared browser data lives in `site/assets/js/data.js`, including navigation, model, benchmark, source, and recommendation data.
+- Shared browser behavior lives in `site/assets/js/app.js`, including compact topbar rendering, sidebar collapse, theme switching, recommender logic, and rendered lists/tables.
 
 ## Working Guidelines
 
@@ -22,9 +23,10 @@
 - No install step is required for the current site.
 - Preview locally with `python3 -m http.server 8000 --directory site`, then open `http://localhost:8000/`.
 - If port `8000` is busy, use another port or inspect it with `lsof -nP -iTCP:8000 -sTCP:LISTEN`.
-- Validate JavaScript with `node --check site/assets/js/app.js`.
+- Validate JavaScript with `node --check site/assets/js/data.js` and `node --check site/assets/js/app.js`.
 - Run `git diff --check` before handing off changes.
 - Validate edited HTML with `python3 -m html.parser` against the affected files.
+- Run `node scripts/validate-site.mjs` for local route, link, sitemap, and script-order checks.
 - For HTML or CSS changes, inspect the rendered page on desktop and mobile widths when a browser is available.
 - For navigation changes, verify that all local links point to existing files under `site/`.
 

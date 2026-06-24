@@ -7,10 +7,9 @@ O objetivo é manter uma consulta rápida para comparar ferramentas, modelos, ha
 ## Conteúdo
 
 - Página inicial com mapa do playbook.
-- Recomendador interativo de modelo por tarefa, incluindo matriz de decisão.
-- Perfis de modelos e modos de reasoning/effort.
-- Leitura crítica de benchmarks públicos.
-- Mapa de harnesses, IDEs, CLIs, agentes cloud e app builders para desenvolvimento assistido.
+- Bench News com curadoria semanal de notícia, paper e modelo.
+- Bench Recomenda com recomendação rápida de rota por tarefa, risco e escopo.
+- Bench Data com visualização dinâmica de modelos, harnesses e benchmarks.
 - Fontes públicas com status de evidência.
 - Interface com sidebar fixa, topbar responsiva e alternância de tema claro/escuro.
 
@@ -19,15 +18,16 @@ O objetivo é manter uma consulta rápida para comparar ferramentas, modelos, ha
 O site usa navegação real por arquivos HTML estáticos:
 
 - `site/index.html`: início e mapa do playbook.
-- `site/recomendador.html`: recomendador interativo e matriz de decisão.
-- `site/modelos.html`: perfis de modelos.
-- `site/benchmarks.html`: leitura crítica de benchmarks.
-- `site/ides.html`: mapa de harnesses, IDEs, CLIs, agentes cloud, app builders e automações de delivery.
+- `site/bench-news.html`: curadoria semanal Bench News.
+- `site/bench-recomenda.html`: recomendação rápida Bench Recomenda.
+- `site/bench-data.html`: visualização dinâmica de modelos, harnesses e benchmarks.
 - `site/fontes.html`: fontes públicas.
+- `site/modelos.html`, `site/ides.html`, `site/benchmarks.html` e `site/recomendador.html`: rotas legadas com redirecionamento para as páginas consolidadas.
 - `site/404.html`: página de erro para GitHub Pages.
 
 ## Atualizações recentes
 
+- 2026-06-22: `site/bench-data.html` consolidou Modelos, Harness e Benchmarks em uma única página com alternância dinâmica por tipo de dado.
 - 2026-06-19: `site/ides.html` deixou de ser uma lista curta de IDEs e virou um mapa de harnesses de desenvolvimento com IA, organizado por liberdade de modelo, produtividade diária, enterprise/governança, app builders e ressalvas.
 - 2026-06-19: a página Harness passou a tratar OpenAI Codex como superfície ampla, separar Windsurf de Devin, apontar Google Antigravity como rota principal do Google e marcar claims numéricos como dados de fornecedor.
 
@@ -42,7 +42,10 @@ O conteúdo será atualizado em dois ciclos:
 
 - `site/*.html`: páginas publicadas pelo GitHub Pages.
 - `site/assets/css/styles.css`: layout, tema visual claro/escuro e responsividade compartilhada.
-- `site/assets/js/app.js`: navegação, topbar responsiva, colapso da sidebar, alternância de tema, recomendador e renderização de listas/tabelas.
+- `site/assets/js/data.js`: dados estruturados de navegação, modelos, benchmarks, fontes e recomendações.
+- `site/assets/js/app.js`: topbar responsiva, colapso da sidebar, alternância de tema, recomendador e renderização de listas/tabelas.
+- `site/robots.txt` e `site/sitemap.xml`: descoberta pública das páginas principais.
+- `scripts/validate-site.mjs`: validação local de rotas, links internos, sitemap e contrato `data.js` antes de `app.js`.
 - `.github/workflows/pages.yml`: publicação do conteúdo de `site/` no GitHub Pages.
 
 ## Visualização local
@@ -72,18 +75,19 @@ lsof -nP -iTCP:8000 -sTCP:LISTEN
 Antes de publicar alterações no site, rode:
 
 ```bash
+node --check site/assets/js/data.js
 node --check site/assets/js/app.js
 git diff --check
-python3 -m html.parser site/index.html site/recomendador.html site/modelos.html site/benchmarks.html site/ides.html site/fontes.html site/404.html
+python3 -m html.parser site/index.html site/bench-news.html site/bench-recomenda.html site/bench-data.html site/fontes.html site/modelos.html site/ides.html site/benchmarks.html site/recomendador.html site/404.html
+node scripts/validate-site.mjs
 ```
 
 Também confira localmente as páginas principais:
 
 - `http://localhost:8000/`
-- `http://localhost:8000/recomendador.html`
-- `http://localhost:8000/modelos.html`
-- `http://localhost:8000/benchmarks.html`
-- `http://localhost:8000/ides.html`
+- `http://localhost:8000/bench-news.html`
+- `http://localhost:8000/bench-recomenda.html`
+- `http://localhost:8000/bench-data.html`
 - `http://localhost:8000/fontes.html`
 
 ## Política de fontes
