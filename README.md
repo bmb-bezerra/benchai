@@ -1,17 +1,17 @@
-# benchai
+# BenchAI
 
 Site estático para publicar um playbook de roteamento de ferramentas e modelos de IA para engenharia.
 
-O objetivo é manter uma consulta rápida para comparar ferramentas, modelos, harnesses, scaffolds e níveis de esforço por tipo de tarefa, sensibilidade dos dados, risco operacional e evidências de benchmark. O site também registra critérios de governança e cuidados para uso de IA em fluxos de engenharia.
+O objetivo é manter uma consulta rápida para comparar ferramentas, modelos, agentes, harnesses, scaffolds e níveis de esforço por tipo de tarefa, sensibilidade dos dados, risco operacional, custo e evidências de benchmark. O site também registra critérios de governança, observabilidade e validação para uso de IA em fluxos de engenharia.
 
 ## Conteúdo
 
-- Página inicial com mapa do playbook.
+- Página inicial com mapa do playbook, métricas de adoção, sinais de decisão e changelog curto.
 - Bench News com curadoria semanal de notícia, paper e modelo.
 - Bench Recomenda com recomendação rápida de rota por tarefa, risco e escopo.
 - Bench Data com visualização dinâmica de modelos, harnesses e benchmarks.
 - Fontes públicas com status de evidência.
-- Interface com sidebar fixa, topbar responsiva e alternância de tema claro/escuro.
+- Interface com sidebar v1, navegação visível, colapso manual, topbar responsiva e alternância de tema claro/escuro.
 
 ## Páginas
 
@@ -27,9 +27,10 @@ O site usa navegação real por arquivos HTML estáticos:
 
 ## Atualizações recentes
 
+- 2026-06-24: a sidebar v1 foi consolidada com navegação visível, alternância de tema e controle de abrir/fechar como base estável da interface.
+- 2026-06-24: a home ganhou descrições mais explícitas para os cards percentuais, changelog limitado às quatro últimas atualizações e oito sinais de decisão com fontes públicas.
 - 2026-06-22: `site/bench-data.html` consolidou Modelos, Harness e Benchmarks em uma única página com alternância dinâmica por tipo de dado.
 - 2026-06-19: `site/ides.html` deixou de ser uma lista curta de IDEs e virou um mapa de harnesses de desenvolvimento com IA, organizado por liberdade de modelo, produtividade diária, enterprise/governança, app builders e ressalvas.
-- 2026-06-19: a página Harness passou a tratar OpenAI Codex como superfície ampla, separar Windsurf de Devin, apontar Google Antigravity como rota principal do Google e marcar claims numéricos como dados de fornecedor.
 
 ## Cadência de atualização
 
@@ -43,10 +44,16 @@ O conteúdo será atualizado em dois ciclos:
 - `site/*.html`: páginas publicadas pelo GitHub Pages.
 - `site/assets/css/styles.css`: layout, tema visual claro/escuro e responsividade compartilhada.
 - `site/assets/js/data.js`: dados estruturados de navegação, modelos, benchmarks, fontes e recomendações.
-- `site/assets/js/app.js`: topbar responsiva, colapso da sidebar, alternância de tema, recomendador e renderização de listas/tabelas.
+- `site/assets/js/shell.js`: controles críticos da casca visual, incluindo tema e colapso da sidebar, carregados antes do comportamento principal.
+- `site/assets/js/app.js`: topbar responsiva, integração com a casca, recomendador e renderização de listas/tabelas.
 - `site/robots.txt` e `site/sitemap.xml`: descoberta pública das páginas principais.
-- `scripts/validate-site.mjs`: validação local de rotas, links internos, sitemap e contrato `data.js` antes de `app.js`.
+- `scripts/validate-site.mjs`: validação local de rotas, links internos, sitemap, arquivos publicados sem stage e ordem de scripts `shell.js`, `data.js` e `app.js`.
+- `audit/`: trilha de auditoria das mudanças consolidadas.
 - `.github/workflows/pages.yml`: publicação do conteúdo de `site/` no GitHub Pages.
+
+## Auditoria
+
+A pasta `audit/` registra decisões e mudanças consolidadas do site. Ela deve ser atualizada quando uma leva de alterações estiver pronta para commit, não a cada comando ou ajuste pequeno durante a edição.
 
 ## Visualização local
 
@@ -75,8 +82,10 @@ lsof -nP -iTCP:8000 -sTCP:LISTEN
 Antes de publicar alterações no site, rode:
 
 ```bash
+node --check site/assets/js/shell.js
 node --check site/assets/js/data.js
 node --check site/assets/js/app.js
+node --check scripts/validate-site.mjs
 git diff --check
 python3 -m html.parser site/index.html site/bench-news.html site/bench-recomenda.html site/bench-data.html site/fontes.html site/modelos.html site/ides.html site/benchmarks.html site/recomendador.html site/404.html
 node scripts/validate-site.mjs
@@ -92,7 +101,7 @@ Também confira localmente as páginas principais:
 
 ## Política de fontes
 
-A atualização de 18 de junho de 2026 diferencia dados `verificado`, `fornecedor` e `pendente`, para evitar transformar benchmark ou claim secundário em ranking universal. Qualquer nova fonte pública deve manter status, contexto e data de verificação quando aplicável.
+A atualização de 18 de junho de 2026 diferencia dados `verificado`, `fornecedor` e `pendente`, para evitar transformar benchmark ou claim secundário em ranking universal. A home também usa sinais de decisão com links para fontes públicas, como Terminal-Bench, Artificial Analysis, Aider, OpenTelemetry, OWASP, GitHub e vLLM. Qualquer nova fonte pública deve manter status, contexto e data de verificação quando aplicável.
 
 ## Publicação
 

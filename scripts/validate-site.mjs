@@ -7,6 +7,7 @@ import { join, posix, resolve } from "node:path";
 const repoRoot = resolve(new URL("..", import.meta.url).pathname);
 const siteRoot = join(repoRoot, "site");
 const baseUrl = "https://bmb-bezerra.github.io/benchai/";
+const assetVersion = "20260624-sidebar-v1";
 const requiredPages = [
   "index.html",
   "bench-news.html",
@@ -64,15 +65,22 @@ for (const file of htmlFiles) {
   if (!html.startsWith("<!doctype html>")) fail(`Missing doctype: site/${file}`);
   if (!/<html lang="pt-BR">/.test(html)) fail(`Missing lang pt-BR: site/${file}`);
   if (!/<meta name="viewport"/.test(html)) fail(`Missing viewport: site/${file}`);
-  if (!/assets\/css\/styles\.css\?v=20260622-bench-data/.test(html)) {
+  if (!new RegExp(`assets/css/styles\\.css\\?v=${assetVersion}`).test(html)) {
     fail(`Stylesheet cache token is stale or missing: site/${file}`);
   }
 
   const appIndex = html.indexOf("assets/js/app.js");
   if (appIndex !== -1) {
+    const shellIndex = html.indexOf("assets/js/shell.js");
     const dataIndex = html.indexOf("assets/js/data.js");
+    if (shellIndex === -1 || shellIndex > appIndex) {
+      fail(`shell.js must be loaded before app.js: site/${file}`);
+    }
     if (dataIndex === -1 || dataIndex > appIndex) {
       fail(`data.js must be loaded before app.js: site/${file}`);
+    }
+    if (shellIndex > dataIndex) {
+      fail(`shell.js must be loaded before data.js: site/${file}`);
     }
   }
 

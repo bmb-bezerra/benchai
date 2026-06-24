@@ -10,6 +10,19 @@ const {
   recommendations
 } = window.BenchAIData || {};
 
+const fallbackNavItems = [
+  { id: "home", label: "Início", href: "./" },
+  { id: "bench-news", label: "Bench News", href: "bench-news.html" },
+  { id: "bench-recomenda", label: "Bench Recomenda", href: "bench-recomenda.html" },
+  { id: "bench-data", label: "Bench Data", href: "bench-data.html" },
+  { id: "fontes", label: "Fontes", href: "fontes.html" }
+];
+
+const safeNavItems = Array.isArray(navItems) && navItems.length ? navItems : fallbackNavItems;
+const safeLegacyBenchDataPages = legacyBenchDataPages instanceof Set
+  ? legacyBenchDataPages
+  : new Set(["modelos", "ides", "benchmarks"]);
+
 function tagClass(tag) {
   const t = tag.toLowerCase();
   if (t.includes("suspenso") || t.includes("retenção") || t.includes("confidencial")) return "bad";
@@ -59,7 +72,7 @@ function renderNav() {
   if (!nav) return;
 
   const activeId = currentNavId();
-  nav.innerHTML = navItems.map(({ id, label, href }) => {
+  nav.innerHTML = safeNavItems.map(({ id, label, href }) => {
     const active = activeId === id ? ' aria-current="page"' : "";
     return `
       <a href="${href}" data-nav-id="${id}"${active}>
@@ -71,10 +84,10 @@ function renderNav() {
 
 function currentNavId() {
   const current = document.body.dataset.page || "home";
-  if (legacyBenchDataPages.has(current)) return "bench-data";
+  if (safeLegacyBenchDataPages.has(current)) return "bench-data";
   if (current === "home" && window.location.hash) {
     const hashId = window.location.hash.slice(1);
-    if (navItems.some(({ id }) => id === hashId)) return hashId;
+    if (safeNavItems.some(({ id }) => id === hashId)) return hashId;
   }
   return current;
 }
@@ -103,7 +116,7 @@ function renderTopbar() {
       <span>BenchAI</span>
     </a>
     <nav class="topbar-nav" aria-label="Navegação principal compacta">
-      ${navItems.map(({ id, label, href }) => {
+      ${safeNavItems.map(({ id, label, href }) => {
         const active = activeId === id ? ' aria-current="page"' : "";
         return `
           <a href="${href}" data-nav-id="${id}"${active}>
@@ -481,8 +494,8 @@ function setupSidebarCollapse() {
   const sidebar = document.getElementById("sidebar");
   if (!collapseButton || !revealButton || !sidebar) return;
 
-  const storageKey = "benchai-sidebar-collapsed";
-  const desktopQuery = window.matchMedia("(min-width: 1121px)");
+  const storageKey = "benchai-sidebar-v1-collapsed";
+  const desktopQuery = window.matchMedia("(min-width: 721px)");
 
   const readStored = () => {
     try {
@@ -508,8 +521,12 @@ function setupSidebarCollapse() {
     collapseButton.setAttribute("aria-expanded", String(!collapsed));
     collapseButton.setAttribute("aria-hidden", String(collapsed));
     collapseButton.tabIndex = collapsed ? -1 : 0;
+    collapseButton.title = collapsed ? "Mostrar sidebar" : "Ocultar sidebar";
+    collapseButton.setAttribute("aria-label", collapsed ? "Mostrar sidebar" : "Ocultar sidebar");
     revealButton.setAttribute("aria-expanded", String(!collapsed));
     revealButton.setAttribute("aria-hidden", String(!collapsed));
+    revealButton.title = collapsed ? "Mostrar sidebar" : "Ocultar sidebar";
+    revealButton.setAttribute("aria-label", collapsed ? "Mostrar sidebar" : "Ocultar sidebar");
     revealButton.tabIndex = collapsed ? 0 : -1;
   };
 
@@ -566,16 +583,18 @@ function setupThemeSwitch() {
     if (persist) writeStored(theme);
   };
 
-  const createSwitchButton = () => {
-    const switchButton = document.createElement("button");
+  const prepareSwitchButton = switchButton => {
     switchButton.className = "theme-switch";
     switchButton.type = "button";
     switchButton.setAttribute("role", "switch");
-    switchButton.innerHTML = `
-      <span class="theme-switch-track" aria-hidden="true">
-        <span class="theme-switch-thumb"></span>
-      </span>
-    `;
+    switchButton.setAttribute("data-theme-switch", "");
+    if (!switchButton.querySelector(".theme-switch-track")) {
+      switchButton.innerHTML = `
+        <span class="theme-switch-track" aria-hidden="true">
+          <span class="theme-switch-thumb"></span>
+        </span>
+      `;
+    }
     switchButton.addEventListener("click", () => {
       const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
       applyTheme(nextTheme, true);
@@ -584,11 +603,16 @@ function setupThemeSwitch() {
     return switchButton;
   };
 
+  const createSwitchButton = () => prepareSwitchButton(document.createElement("button"));
+  document.querySelectorAll("[data-theme-switch]").forEach(prepareSwitchButton);
+
   const initialTheme = readStored() || (systemQuery.matches ? "dark" : "light");
-  const sidebarHost = document.getElementById("sidebar") || document.querySelector(".sidebar");
+  const sidebarHost = document.querySelector('[data-theme-switch-host="sidebar"]')
+    || document.getElementById("sidebar")
+    || document.querySelector(".sidebar");
   const topbarHost = document.querySelector('[data-theme-switch-host="topbar"]');
 
-  if (sidebarHost) sidebarHost.appendChild(createSwitchButton());
+  if (sidebarHost && !sidebarHost.querySelector("[data-theme-switch]")) sidebarHost.appendChild(createSwitchButton());
   if (topbarHost) topbarHost.appendChild(createSwitchButton());
   if (!switchButtons.length) document.body.appendChild(createSwitchButton());
   applyTheme(initialTheme);
@@ -615,6 +639,13 @@ renderNav();
 renderTopbar();
 syncNavCurrent();
 window.addEventListener("hashchange", syncNavCurrent);
+if (window.BenchAIShell) {
+  window.BenchAIShell.initSidebarCollapse();
+  window.BenchAIShell.initThemeSwitches();
+} else {
+  setupSidebarCollapse();
+  setupThemeSwitch();
+}
 setupBenchDataSwitcher();
 renderMatrix();
 setupModelFilters();
@@ -623,5 +654,3 @@ renderBenchmarks();
 renderSources();
 recommend();
 setupEvents();
-setupSidebarCollapse();
-setupThemeSwitch();

@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="BenchAI">
     <meta name="twitter:description" content="Playbook para escolher ferramentas e modelos de IA por tarefa, risco, governança, sensibilidade dos dados e evidência pública.">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260622-bench-data">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260624-sidebar-v1">
   </head>
   <body data-page="home">
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -29,9 +29,26 @@
             <span class="brand-title">BenchAI</span>
           </span>
         </a>
-        <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-controls="sidebar" aria-label="Ocultar sidebar" title="Ocultar sidebar">‹</button>
-        <div class="nav-label">Navegação</div>
-        <nav class="nav-list" id="siteNav"></nav>
+        <div class="sidebar-scroll">
+          <div class="nav-label">Navegação</div>
+          <nav class="nav-list" id="siteNav">
+            <a href="./" data-nav-id="home"><span class="nav-text">Início</span></a>
+            <a href="bench-news.html" data-nav-id="bench-news"><span class="nav-text">Bench News</span></a>
+            <a href="bench-recomenda.html" data-nav-id="bench-recomenda"><span class="nav-text">Bench Recomenda</span></a>
+            <a href="bench-data.html" data-nav-id="bench-data"><span class="nav-text">Bench Data</span></a>
+            <a href="fontes.html" data-nav-id="fontes"><span class="nav-text">Fontes</span></a>
+          </nav>
+        </div>
+        <div class="sidebar-actions" aria-label="Controles da sidebar">
+          <div class="sidebar-theme" data-theme-switch-host="sidebar">
+            <button class="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Mudar para tema escuro" title="Mudar para tema escuro" data-theme-switch>
+              <span class="theme-switch-track" aria-hidden="true">
+                <span class="theme-switch-thumb"></span>
+              </span>
+            </button>
+          </div>
+          <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-controls="sidebar" aria-label="Ocultar sidebar" title="Ocultar sidebar">‹</button>
+        </div>
       </aside>
 
       <main class="main" id="conteudo">
@@ -50,7 +67,13 @@
                 <h2 id="changelog-title">Changelog</h2>
               </div>
             </div>
+            <!-- Manter somente as 4 ultimas atualizacoes para o card nao crescer na home. -->
             <ol class="changelog-list" aria-label="Changelog do BenchAI">
+              <li>
+                <time datetime="2026-06-24">24 jun</time>
+                <strong>Sidebar v1 finalizada</strong>
+                <p>Consolidamos a versão planejada da sidebar com navegação visível, troca de tema e controle de abrir e fechar prontos para servir como base do restante do site.</p>
+              </li>
               <li>
                 <time datetime="2026-06-22">22 jun</time>
                 <strong>Bench Data consolidado</strong>
@@ -66,11 +89,6 @@
                 <strong>Bench News adicionado</strong>
                 <p>Adicionamos o Bench News como página dedicada para reunir curadoria semanal de notícia, paper e modelo relevantes para engenharia com IA.</p>
               </li>
-              <li>
-                <time datetime="2026-06-19">19 jun</time>
-                <strong>Mapa de harnesses publicado</strong>
-                <p>Página Harness compara IDEs, CLIs, agentes cloud, app builders e automações de delivery por superfície de execução.</p>
-              </li>
             </ol>
           </aside>
 
@@ -78,67 +96,75 @@
             <a class="snapshot" href="https://blog.jetbrains.com/research/2026/04/which-ai-coding-tools-do-developers-actually-use-at-work/" target="_blank" rel="noopener noreferrer" aria-label="Abrir fonte da métrica IA já é padrão">
               <div class="snapshot-label">IA já é padrão</div>
               <div class="snapshot-value">90%</div>
-              <p>Desenvolvedores profissionais usam regularmente pelo menos uma ferramenta de IA no trabalho para tarefas de coding e desenvolvimento.</p>
+              <p>90% dos devs profissionais já usam IA regularmente; a prioridade agora é definir ferramentas, políticas de dados e critérios por tarefa.</p>
             </a>
             <a class="snapshot" href="https://www.sonarsource.com/state-of-code-developer-survey-report.pdf" target="_blank" rel="noopener noreferrer" aria-label="Abrir fonte da métrica uso diário">
               <div class="snapshot-label">Uso diário</div>
               <div class="snapshot-value">72%</div>
-              <p>Entre devs que já testaram ferramentas de IA para coding, 72% usam todos os dias no fluxo de desenvolvimento.</p>
+              <p>72% dos devs que testaram IA usam todos os dias; o desafio passa a ser consistência: contexto, revisão e telemetria.</p>
             </a>
             <a class="snapshot" href="https://www.sonarsource.com/state-of-code-developer-survey-report.pdf" target="_blank" rel="noopener noreferrer" aria-label="Abrir fonte da métrica código IA-assistido">
               <div class="snapshot-label">Código IA-assistido</div>
               <div class="snapshot-value">42%</div>
-              <p>Desenvolvedores reportam que 42% do código que commitam ou contribuem hoje é gerado ou significativamente assistido por IA.</p>
+              <p>42% do código commitado já é gerado ou assistido por IA; o ganho real depende de testes, review e rastreabilidade.</p>
             </a>
             <a class="snapshot" href="https://www.sonarsource.com/state-of-code-developer-survey-report.pdf" target="_blank" rel="noopener noreferrer" aria-label="Abrir fonte da métrica confiança é o gargalo">
               <div class="snapshot-label">Confiança é o gargalo</div>
               <div class="snapshot-value">96%</div>
-              <p>96% dos desenvolvedores não confiam totalmente que código gerado por IA esteja funcionalmente correto; revisão humana continua essencial.</p>
+              <p>96% não confiam totalmente no código gerado por IA; isso exige validação, ownership claro e gates antes do merge.</p>
             </a>
           </div>
         </section>
 
         <section class="section home-signals" aria-label="Sinais de decisão">
           <div class="signal-grid">
-            <a class="source-card decision-signal" href="https://www.tbench.ai/leaderboard/terminal-bench/2.1" target="_blank" rel="noopener noreferrer" aria-label="Abrir fonte sobre comparação de scaffold no Terminal-Bench">
+            <a class="source-card decision-signal" href="https://www.tbench.ai/leaderboard/terminal-bench/2.1" target="_blank" rel="noopener noreferrer" aria-label="Abrir fonte sobre comparação de scaffold no Terminal-Bench" data-track="home-signal" data-signal-id="scaffold" data-reviewed-at="2026-06-24">
               <span class="tag blue">Scaffold</span>
-              <strong>Benchmark é modelo + agente + ambiente.</strong>
-              <span class="desc">Terminal-Bench roda tarefas reais em terminal/Docker com testes; Aider mostra que modo de edição, Architect/Editor e effort mudam score e custo. Compare resultados dentro do mesmo fluxo, não só pelo nome do modelo.</span>
+              <strong>Score só vale dentro do harness.</strong>
+              <span class="desc">Compare modelo + agente + ambiente. Terminal-Bench mede execução em terminal; Aider mostra que modo de edição e effort mudam score, tempo e custo.</span>
+              <span class="source-meta">Fonte: Terminal-Bench 2.1</span>
             </a>
-            <a class="source-card decision-signal" href="https://artificialanalysis.ai/agents/coding-agents" target="_blank" rel="noopener noreferrer" aria-label="Abrir Artificial Analysis Coding Agent Index">
-              <span class="tag good">Bench Data</span>
-              <strong>O mesmo modelo muda com o agente.</strong>
-              <span class="desc">Compare Claude Code, Cursor CLI, Codex, Opencode e afins como sistemas completos. Dois agentes com score parecido podem ter forças diferentes em patch de repo, terminal workflow e avaliação por rubric/Q&amp;A.</span>
+            <a class="source-card decision-signal" href="https://artificialanalysis.ai/agents/coding-agents" target="_blank" rel="noopener noreferrer" aria-label="Abrir Artificial Analysis Coding Agent Index" data-track="home-signal" data-signal-id="agent-model" data-reviewed-at="2026-06-24">
+              <span class="tag good">Agente + modelo</span>
+              <strong>O mesmo modelo muda quando muda o agente.</strong>
+              <span class="desc">Compare Claude Code, Codex, Cursor CLI e OpenCode como sistemas completos. Patch, terminal workflow e Q&amp;A por rubric não medem a mesma coisa.</span>
+              <span class="source-meta">Fonte: Artificial Analysis</span>
             </a>
-            <a class="source-card decision-signal" href="https://deepmind.google/blog/securing-the-future-of-ai-agents/" target="_blank" rel="noopener noreferrer" aria-label="Abrir roadmap da Google DeepMind sobre segurança de agentes">
-              <span class="tag teal">Governança</span>
-              <strong>Agente com tool access é automação privilegiada.</strong>
-              <span class="desc">Antes de colocar agente em fluxo padrão, defina sandbox, least privilege, allow-list, aprovação para ações destrutivas, logs, monitoramento e kill switch. Trate o agente como operador não confiável até prova em contrário.</span>
-            </a>
-            <a class="source-card decision-signal" href="https://opentelemetry.io/docs/specs/semconv/gen-ai/" target="_blank" rel="noopener noreferrer" aria-label="Abrir convenções GenAI do OpenTelemetry">
-              <span class="tag teal">Observabilidade</span>
-              <strong>Sem trace, agente vira caixa-preta.</strong>
-              <span class="desc">Logue cada run com modelo, prompt, arquivos tocados, tool calls, tempo, erro, tokens e custo. Isso permite debugar regressão, comparar rotas e criar SLOs reais para uso de IA no fluxo dev.</span>
-            </a>
-            <a class="source-card decision-signal" href="https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v4-1" target="_blank" rel="noopener noreferrer" aria-label="Abrir Artificial Analysis Intelligence Index v4.1">
+            <a class="source-card decision-signal" href="https://artificialanalysis.ai/agents/coding-agents" target="_blank" rel="noopener noreferrer" aria-label="Abrir comparação de custo e desempenho de agentes de coding" data-track="home-signal" data-signal-id="cost-per-task" data-reviewed-at="2026-06-24">
               <span class="tag warn">Custo por tarefa</span>
-              <strong>Meça $/PR, tempo ativo e tokens.</strong>
-              <span class="desc">A escolha boa para dev não é só "maior score": precisa registrar custo por tarefa, tempo de execução, tokens de saída e cache hit. Sem telemetria por PR, o ranking pode esconder uma rota cara demais para produção.</span>
+              <strong>Meça $/PR, não só score.</strong>
+              <span class="desc">Acompanhe custo por tarefa, tempo ativo, tokens de saída, cache hit e custo de revisão. Ranking sem custo operacional esconde rota cara.</span>
+              <span class="source-meta">Fonte: Artificial Analysis</span>
             </a>
-            <a class="source-card decision-signal" href="https://artificialanalysis.ai/articles/glm-5-2-is-the-new-leading-open-weights-model-on-the-artificial-analysis-intelligence-index" target="_blank" rel="noopener noreferrer" aria-label="Abrir artigo da Artificial Analysis sobre GLM-5.2">
-              <span class="tag purple">Open-weight</span>
-              <strong>Controle local não elimina custo de inferência.</strong>
-              <span class="desc">Open-weight ajuda em soberania, privacidade e customização, mas rotas locais precisam provar latência, memória, KV-cache, throughput e tokens por tarefa. Modelo aberto sem orçamento de infra vira gargalo.</span>
+            <a class="source-card decision-signal" href="https://aider.chat/docs/repomap.html" target="_blank" rel="noopener noreferrer" aria-label="Abrir documentação do Aider sobre repo map" data-track="home-signal" data-signal-id="context" data-reviewed-at="2026-06-24">
+              <span class="tag slate">Contexto</span>
+              <strong>Repo map vence dump do repo.</strong>
+              <span class="desc">Dê mapa do repo, arquivos relevantes, convenções e comandos de teste. Contexto irrelevante aumenta custo e piora patch.</span>
+              <span class="source-meta">Fonte: Aider Repo Map</span>
             </a>
-            <a class="source-card decision-signal" href="https://aider.chat/docs/repomap.html" target="_blank" rel="noopener noreferrer" aria-label="Abrir documentação do Aider sobre repo map">
-              <span class="tag brand">Contexto</span>
-              <strong>Contexto certo vale mais que contexto grande.</strong>
-              <span class="desc">Agentes performam melhor quando recebem mapa do repo, arquivos relevantes, convenções do projeto e comandos de build/test. Evite despejar o repositório inteiro: contexto irrelevante aumenta custo e piora patch.</span>
+            <a class="source-card decision-signal" href="https://github.com/open-telemetry/semantic-conventions-genai" target="_blank" rel="noopener noreferrer" aria-label="Abrir repositório de semantic conventions GenAI do OpenTelemetry" data-track="home-signal" data-signal-id="observability" data-reviewed-at="2026-06-24">
+              <span class="tag indigo">Observabilidade</span>
+              <strong>Sem trace não há SLO.</strong>
+              <span class="desc">Registre run_id, modelo, versão do prompt, arquivos tocados, tool calls, erros, tokens, cache, tempo e custo. Redija entradas sensíveis.</span>
+              <span class="source-meta">Fonte: OpenTelemetry GenAI</span>
             </a>
-            <a class="source-card decision-signal" href="https://openai.com/index/introducing-swe-bench-verified/" target="_blank" rel="noopener noreferrer" aria-label="Abrir fonte da OpenAI sobre SWE-bench Verified">
+            <a class="source-card decision-signal" href="https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html" target="_blank" rel="noopener noreferrer" aria-label="Abrir checklist OWASP de segurança para agentes de IA" data-track="home-signal" data-signal-id="governance" data-reviewed-at="2026-06-24">
+              <span class="tag teal">Governança</span>
+              <strong>Tool access é privilégio de produção.</strong>
+              <span class="desc">Antes de virar default, exija sandbox, allow-list, least privilege, aprovação humana para ações destrutivas, logs e kill switch.</span>
+              <span class="source-meta">Fonte: OWASP AI Agent Security</span>
+            </a>
+            <a class="source-card decision-signal" href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/managing-a-branch-protection-rule" target="_blank" rel="noopener noreferrer" aria-label="Abrir documentação do GitHub sobre branch protection e required checks" data-track="home-signal" data-signal-id="verification" data-reviewed-at="2026-06-24">
               <span class="tag bad">Verificação</span>
-              <strong>Merge só com evidência executável.</strong>
-              <span class="desc">Código IA-assistido deve passar por testes, revisão humana, análise estática, secret scan, dependency scan e gates de CI antes do merge. Use agente para acelerar, não para substituir evidência.</span>
+              <strong>Merge exige evidência executável.</strong>
+              <span class="desc">Agente pode acelerar, mas merge depende de testes, revisão, CI, análise estática, secret scan, dependency scan e checks obrigatórios.</span>
+              <span class="source-meta">Fonte: GitHub Branch Protection</span>
+            </a>
+            <a class="source-card decision-signal" href="https://docs.vllm.ai/en/stable/configuration/optimization/" target="_blank" rel="noopener noreferrer" aria-label="Abrir documentação do vLLM sobre otimização de serving" data-track="home-signal" data-signal-id="open-weight" data-reviewed-at="2026-06-24">
+              <span class="tag purple">Open-weight</span>
+              <strong>Soberania também tem P&amp;L.</strong>
+              <span class="desc">Open-weight ajuda em privacidade e controle, mas precisa provar latência, memória, KV-cache, throughput, tokens/s e custo de GPU.</span>
+              <span class="source-meta">Fonte: vLLM Optimization</span>
             </a>
           </div>
         </section>
@@ -149,7 +175,8 @@
       </main>
     </div>
 
-    <script src="assets/js/data.js?v=20260622-bench-data"></script>
-    <script src="assets/js/app.js?v=20260622-bench-data"></script>
+    <script src="assets/js/shell.js?v=20260624-sidebar-v1"></script>
+    <script src="assets/js/data.js?v=20260624-sidebar-v1"></script>
+    <script src="assets/js/app.js?v=20260624-sidebar-v1"></script>
   </body>
 </html>

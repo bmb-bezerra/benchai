@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Bench Data - BenchAI">
     <meta name="twitter:description" content="Painel único para visualizar modelos, harnesses e benchmarks de IA para engenharia.">
-    <link rel="stylesheet" href="assets/css/styles.css?v=20260622-bench-data">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260624-sidebar-v1">
   </head>
   <body data-page="bench-data">
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -27,9 +27,26 @@
           <span class="brand-mark" aria-hidden="true">BAI</span>
           <span><span class="brand-title">BenchAI</span></span>
         </a>
-        <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-controls="sidebar" aria-label="Ocultar sidebar" title="Ocultar sidebar">‹</button>
-        <div class="nav-label">Navegação</div>
-        <nav class="nav-list" id="siteNav"></nav>
+        <div class="sidebar-scroll">
+          <div class="nav-label">Navegação</div>
+          <nav class="nav-list" id="siteNav">
+            <a href="./" data-nav-id="home"><span class="nav-text">Início</span></a>
+            <a href="bench-news.html" data-nav-id="bench-news"><span class="nav-text">Bench News</span></a>
+            <a href="bench-recomenda.html" data-nav-id="bench-recomenda"><span class="nav-text">Bench Recomenda</span></a>
+            <a href="bench-data.html" data-nav-id="bench-data"><span class="nav-text">Bench Data</span></a>
+            <a href="fontes.html" data-nav-id="fontes"><span class="nav-text">Fontes</span></a>
+          </nav>
+        </div>
+        <div class="sidebar-actions" aria-label="Controles da sidebar">
+          <div class="sidebar-theme" data-theme-switch-host="sidebar">
+            <button class="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Mudar para tema escuro" title="Mudar para tema escuro" data-theme-switch>
+              <span class="theme-switch-track" aria-hidden="true">
+                <span class="theme-switch-thumb"></span>
+              </span>
+            </button>
+          </div>
+          <button class="sidebar-collapse" id="sidebarCollapse" type="button" aria-controls="sidebar" aria-label="Ocultar sidebar" title="Ocultar sidebar">‹</button>
+        </div>
       </aside>
 
       <main class="main" id="conteudo">
@@ -137,7 +154,8 @@
       </main>
     </div>
 
-    <script src="assets/js/data.js?v=20260622-bench-data"></script>
-    <script src="assets/js/app.js?v=20260622-bench-data"></script>
+    <script src="assets/js/shell.js?v=20260624-sidebar-v1"></script>
+    <script src="assets/js/data.js?v=20260624-sidebar-v1"></script>
+    <script src="assets/js/app.js?v=20260624-sidebar-v1"></script>
   </body>
 </html>
