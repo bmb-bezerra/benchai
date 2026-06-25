@@ -94,6 +94,9 @@ function currentNavId() {
 
 function syncNavCurrent() {
   const activeId = currentNavId();
+  const sidebarNav = document.getElementById("siteNav");
+  const previousActiveId = sidebarNav?.querySelector('a[data-nav-id][aria-current="page"]')?.dataset.navId || "";
+
   document.querySelectorAll("[data-nav-id]").forEach(link => {
     if (link.dataset.navId === activeId) {
       link.setAttribute("aria-current", "page");
@@ -101,6 +104,8 @@ function syncNavCurrent() {
       link.removeAttribute("aria-current");
     }
   });
+
+  if (window.BenchAIShell) window.BenchAIShell.updateNavIndicator(previousActiveId);
 }
 
 function renderTopbar() {
@@ -495,7 +500,7 @@ function setupSidebarCollapse() {
   if (!collapseButton || !revealButton || !sidebar) return;
 
   const storageKey = "benchai-sidebar-v1-collapsed";
-  const desktopQuery = window.matchMedia("(min-width: 721px)");
+  const desktopQuery = window.matchMedia("(min-width: 1121px)");
 
   const readStored = () => {
     try {

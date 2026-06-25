@@ -7,7 +7,7 @@ import { join, posix, resolve } from "node:path";
 const repoRoot = resolve(new URL("..", import.meta.url).pathname);
 const siteRoot = join(repoRoot, "site");
 const baseUrl = "https://bmb-bezerra.github.io/benchai/";
-const assetVersion = "20260624-sidebar-v1";
+const assetVersion = "20260625-sidebar-drop";
 const requiredPages = [
   "index.html",
   "bench-news.html",
